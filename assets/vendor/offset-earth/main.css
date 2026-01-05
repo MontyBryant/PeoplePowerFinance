@@ -1,0 +1,121 @@
+/* Desktops and laptops ----------- */
+
+@charset "UTF-8";
+
+@font-face { font-family: gota; src: url('../fonts/gota.otf'); } 
+@font-face { font-family: gota2; src: url('../fonts/gota_light.otf'); } 
+@font-face { font-family: dan; src: url('../fonts/dan.otf'); } 
+@font-face { font-family: goca; src: url('../fonts/goca.ttf'); } 
+@font-face { font-family: facet; src: url('../fonts/facet.ttf'); } 
+@font-face { font-family: facet2; src: url('../fonts/facet_ultra.ttf'); } 
+@font-face { font-family: Bebas1; src: url('../fonts/Bebas1.otf'); } 
+@font-face { font-family: Bebas2; src: url('../fonts/Bebas2.otf'); } 
+@font-face { font-family: Bebas3; src: url('../fonts/Bebas3.otf'); } 
+@font-face { font-family: Bebas4; src: url('../fonts/Bebas4.otf'); } 
+@font-face { font-family: Hero; src: url('../fonts/Hero.otf'); }
+@font-face { font-family: Hero2; src: url('../fonts/Hero2.otf'); }
+@font-face { font-family: Exo2reg; src: url('../fonts/Exo2-Regular.ttf'); }
+@font-face { font-family: Exo2blk; src: url('../fonts/Exo2-Black.ttf'); }
+@font-face { font-family: Exo2sb; src: url('../fonts/Exo2-SemiBold.ttf'); }
+@font-face { font-family: sofiapro; src: url('../fonts/sofiapro-light.otf'); }
+
+p{
+    font-weight:900;
+    font-family: 'hero2';
+    font-size: 14px;
+    font-style: normal;
+    font-variant: normal;
+    line-height: 20px;
+}
+
+b{
+    font-family: 'hero';
+}
+
+.white_text{
+    color: white;
+}
+
+h1, h2, h3 {
+    margin: 8px;
+    text-rendering: optimizeLegibility; 
+    -webkit-font-smoothing: antialiased;
+}
+
+h1 {
+    font-family: 'sofiapro';
+    font-size: 24px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
+    line-height: 26.4px;
+}
+
+h2 {
+    font-family: 'gota2';
+    font-size: 25px; 
+    letter-spacing: 3px;   
+}
+
+h3 {
+    font-family: 'bebas2';
+    font-size: 14px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 500;
+    line-height: 15.4px;
+}
+
+a {
+    text-decoration:none;
+    color: white;
+}
+
+a:hover{
+    text-shadow: 0.5px 0 white; 
+}
+
+.post_title{
+    font-family: 'bebas3';
+    font-size:40px; 
+    color:black; 
+    font-weight:900; 
+    display: inline-block; 
+    margin-top:0px; 
+    letter-spacing: 5px;
+    line-height: 40px;
+    margin-top: -20px;
+    margin-bottom: 20px;
+}
+
+.post_subtitle{
+    font-family: 'bebas3';
+    font-size:18px; 
+    line-height: 20px;
+    color:black; 
+    font-weight:900; 
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+.post_headers{
+    font-size:20px; 
+    color:black; 
+    font-weight:900; 
+    letter-spacing: 2px;
+}
+
+.post_txt{
+    font-family: hero;
+    letter-spacing: 1px;
+    font-size: 15px;
+}
+
+.link{
+    color: blue;
+}
+
+.t1{
+    text-align:right; 
+}
+
