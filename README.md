@@ -2,23 +2,21 @@
 
 An **experimental prototype** for a **regenerative + gamified investment platform**.
 
-I originally hacked this together in **2019**. With recent developments in **“vibecoding”**, I cleaned it up so it’s easier to publish on GitHub and view via **GitHub Pages**.
+I originally hacked this together in **2019**. With recent developments in **“vibecoding”**, I cleaned it up and started hacking on it again...
 
 ## What this repo is
 - A **static site prototype** (HTML/CSS/JS + assets) meant for quick iteration and demoing ideas.
 - A snapshot of a concept: **investing + impact + game mechanics** in one playful UI.
 
 ## View it
-- **GitHub Pages**: enable Pages for the repo and publish from the **root** (it serves `index.html`).
-- **Locally**: open `index.html` directly, or run a tiny static server:
+- **Online**: `https://montybryant.github.io/PeoplePowerFinance/`
+- **Locally**: download the repo and open `index.html` directly in your browser.
 
-```bash
-python3 -m http.server 8000
-```
-
-Then visit `http://localhost:8000`.
-
-## Notes
-- This is a **prototype**, not production software.
-- Some legacy styling/assets are vendored under `assets/vendor/offset-earth/` to preserve the original look and feel.
+## High-level features / ideas
+- **Impact wallet UI**: a playful “your world” homepage that reflects your impact over time.
+- **Clickable eco-assets**: projects like **wind** and **solar** act like portfolio positions with their own modals.
+- **Investment concept**: show **amount invested**, **yield/APY**, **earned yield**, and a **Harvest yield** action (prototype).
+- **Leaderboard**: compare heroes/villains and jump to profiles.
+- **Edit mode**: move on-page assets around to prototype layouts quickly (saved in-browser).
+- **Day / night theme**: glassy UI that looks good in both modes.
 
