@@ -10,9 +10,20 @@
 <link  href="assets/vendor/jquery.fancybox.min.css" rel="stylesheet">
 <script src="assets/vendor/jquery.fancybox.min.js"></script>
 
+    <script defer src="assets/js/theme-toggle.js"></script>
+<script defer src="assets/js/fancybox-scroll-lock.js"></script>
+    <script defer src="assets/js/profile-modal.js"></script>
+    <script defer src="assets/js/click-hints.js"></script>
+    <script defer src="assets/js/forest-modal.js"></script>
+    <script defer src="assets/js/investment-modals.js"></script>
+    <script defer src="assets/js/iframe-bridge.js"></script>
+    <script defer src="assets/js/scroll-reveal.js"></script>
+    <script defer src="assets/js/edit-mode.js"></script>
+
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="shortcut icon" href="https://offset.earth/favicon.ico">
+    <link rel="icon" type="image/png" href="assets/img/brandassets/favicon.png">
+    <link rel="apple-touch-icon" href="assets/img/brandassets/favicon.png">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no,maximum-scale=1">
     <meta name="theme-color" content="#1FAB74">
     <link rel="manifest" href="https://offset.earth/manifest.json">
@@ -32,49 +43,21 @@
     <link href="assets/vendor/offset-earth/2.79cefc03.chunk.css" rel="stylesheet">
     <link href="assets/vendor/offset-earth/main.56f85939.chunk.css" rel="stylesheet">
     <link href="assets/vendor/offset-earth/main.css" rel="stylesheet">
-    <link href="assets/css/market.css" rel="stylesheet">
-    <link href="assets/css/badges.css" rel="stylesheet">
-    <style></style>
-    <style type="text/css">
-
-    .fancybox-slide--iframe .fancybox-content {
-    width: 1000px !important;
-}	
-
-    .cute-string {
-        color: #f1fa8c;
-    }
-
-    .cute-number {
-        color: #50fa7b;
-    }
-
-    .cute-boolean {
-        color: #ff79c6;
-    }
-
-    .cute-function {
-        color: #bd93f9;
-    }
-
-    .cute-null {
-        color: #bd93f9;
-    }
-
-    .cute-undefined {
-        color: #bd93f9;
-    }
-
-    .cute-key {
-        color: #66d9ef;
-        margin-right: 5px;
-    }
-
-    .cute-colon {
-        color: #f8f8f2;
-        margin-left: 1px;
-    }
-    </style>
+    <link href="assets/css/base.css" rel="stylesheet">
+    <link href="assets/css/modals.css" rel="stylesheet">
+    <link id="pp-night-theme" href="assets/css/night.css" rel="stylesheet" media="not all">
+    <script>
+      (function () {
+        try {
+          var t = (localStorage.getItem("ppTheme") || "night").toLowerCase();
+          t = (t === "day") ? "day" : "night";
+          document.documentElement.setAttribute("data-pp-theme", t);
+          var link = document.getElementById("pp-night-theme");
+          if (link) link.media = (t === "night") ? "all" : "not all";
+        } catch (e) {}
+      })();
+    </script>
+    <link href="assets/css/theme-toggle.css" rel="stylesheet">
     <style type="text/css">
     #iubenda-cs-banner {
         font-size: 15px !important;
@@ -864,9 +847,9 @@
 
 
     <link rel="canonical" href="https://offset.earth/5d5e6db557f802000fe2bc83" data-react-helmet="true">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://offset.earth/images/favicon-32x32.png" data-react-helmet="true">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://offset.earth/images/favicon-16x16.png" data-react-helmet="true">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://offset.earth/images/apple-touch-icon.png" data-react-helmet="true">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/brandassets/favicon.png" data-react-helmet="true">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/brandassets/favicon.png" data-react-helmet="true">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/brandassets/favicon.png" data-react-helmet="true">
     <link rel="manifest" href="https://offset.earth/images/site.webmanifest" data-react-helmet="true">
     <meta name="apple-mobile-web-app-title" content="Offset Earth" data-react-helmet="true">
     <meta name="application-name" content="Offset Earth" data-react-helmet="true">
@@ -1428,8 +1411,6 @@
     .auth0-lock-social-button[data-provider^=evernote] .auth0-lock-social-button-icon {
         background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+Cjxzdmcgd2lkdGg9IjU0cHgiIGhlaWdodD0iNjVweCIgdmlld0JveD0iMCAwIDU0IDY1IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnNrZXRjaD0iaHR0cDovL3d3dy5ib2hlbWlhbmNvZGluZy5jb20vc2tldGNoL25zIj4KICAgIDwhLS0gR2VuZXJhdG9yOiBTa2V0Y2ggMy40ICgxNTU4OCkgLSBodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2ggLS0+CiAgICA8dGl0bGU+ZXZlcm5vdGU8L3RpdGxlPgogICAgPGRlc2M+Q3JlYXRlZCB3aXRoIFNrZXRjaC48L2Rlc2M+CiAgICA8ZGVmcz48L2RlZnM+CiAgICA8ZyBpZD0iUGFnZS0xIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIiBza2V0Y2g6dHlwZT0iTVNQYWdlIj4KICAgICAgICA8ZyBpZD0iZXZlcm5vdGUiIHNrZXRjaDp0eXBlPSJNU0xheWVyR3JvdXAiIGZpbGw9IiNGRkZGRkYiPgogICAgICAgICAgICA8cGF0aCBkPSJNNy41NDk1MTY1N2UtMTUsMjAuMzc1IEM3LjU0OTUxNjU3ZS0xNSwyMS4xODggMC4wNjMsMjIuMjUgMC4yNSwyMy42ODggQzAuNSwyNS4zNzYgMSwyOC4xODggMS43NSwzMi4xODggQzIuNTYzLDM2LjE4OCAzLjMxMywzOC45MzggNC4wNjMsNDAuNDM4IEM0LjU2Myw0MS42ODggNS4zNzYsNDIuNTAxIDYuMzc2LDQzLjAwMSBDOS40MzksNDQuMzE0IDEzLjYyNiw0NS4zMTQgMTkuMDY0LDQ2LjAwMSBDMjAuMzc3LDQ2LjMxNCAyMS41MDIsNDYuNTAxIDIyLjUwMiw0Ni41MDEgTDIyLjk0LDQ2LjUwMSBDMjQuMDAzLDQ2LjQzOCAyNC44MTUsNDUuOTM4IDI1LjI1Myw0NC44NzYgTDI1LjgxNiw0My4zMTMgQzI2LjU2Niw0MS4wNjMgMjYuOTQxLDM4LjUgMjYuOTQxLDM1LjYyNSBDMjYuOTQxLDM1LjU2MiAyNy4wMDQsMzUuNSAyNy4xMjksMzUuNSBDMjcuMTkyLDM1LjUgMjcuMjU0LDM1LjU2MyAyNy4yNTQsMzUuNjI1IEMyNy4yNTQsMzkuODc1IDI4LjM3OSw0Mi4zNzUgMzAuNjI5LDQzLjI1IEMzMi4wMDQsNDMuNjg4IDM0LjUwNCw0NC4xMjUgMzguMjU0LDQ0LjUgQzM5Ljg3OSw0NC43NSA0MS4xMjksNDUuNDM4IDQxLjg3OSw0Ni41NjMgQzQyLjY5Miw0Ny42ODggNDMuMDY3LDQ5Ljg3NiA0My4wNjcsNTMuMTI2IEM0My4wNjcsNTUuMjUxIDQyLjc1NCw1Ni41NjQgNDIuMDY3LDU3LjE4OSBDNDEuMzc5LDU3Ljc1MiAzOS44MTcsNTguMDAyIDM3LjM3OSw1OC4wMDIgTDM1LjMxNiw1OC4wMDIgQzM1LjAwMyw1OC4wMDIgMzQuNTAzLDU4LjAwMiAzMy44NzgsNTcuODc3IEMzMy4yNTMsNTcuODE0IDMyLjg3OCw1Ny42ODkgMzIuNzUzLDU3LjQzOSBDMzIuNTY1LDU3LjI1MSAzMi40NCw1Ni45MzkgMzIuMjUzLDU2LjU2NCBDMzIuMDY2LDU2LjE4OSAzMi4wMDMsNTUuNjg5IDMyLjAwMyw1NS4wNjQgQzMyLjEyOCw1NC44MTQgMzIuMTI4LDU0LjU2NCAzMi4wNjYsNTQuMzc2IEMzMi4wMDMsNTQuMTI2IDMyLjA2Niw1My45MzggMzIuMzE2LDUzLjc1MSBDMzIuNTY2LDUzLjYyNiAzMi42OTEsNTMuNTAxIDMyLjY5MSw1My4zNzYgQzMyLjYyOCw1My4zMTMgMzIuODE2LDUzLjE4OCAzMy4xOTEsNTMuMTI2IEMzMy41NjYsNTMuMDY0IDMzLjc1NCw1My4wMDEgMzMuNzU0LDUzLjAwMSBDMzMuNzU0LDUyLjkzOCAzMy45NDIsNTIuODc2IDM0LjM3OSw1Mi44NzYgTDM2LjMxNyw1Mi44NzYgQzM2LjU2Nyw1Mi44NzYgMzYuNjkyLDUyLjgxMyAzNi43NTUsNTIuNjg4IEMzNi43NTUsNTIuNTYzIDM2Ljc1NSw1Mi4zMTMgMzYuNjkyLDUxLjkzOCBDMzYuNTY3LDUxLjUgMzYuNTY3LDUxLjEyNSAzNi41NjcsNTAuNzUgQzM2LjU2Nyw1MC41IDM2LjU2Nyw1MC4xODcgMzYuNjMsNDkuODc1IEMzNi42OTMsNDkuNjI1IDM2Ljc1NSw0OS4zNzUgMzYuODE4LDQ5LjE4NyBDMzYuODgxLDQ4Ljk5OSAzNi45NDMsNDguODc0IDM3LjAwNiw0OC42ODcgQzM3LjA2OSw0OC41NjIgMzcuMDA2LDQ4LjQzNyAzNi45NDMsNDguMzc0IEMzNi44OCw0OC4zMTEgMzYuNzU1LDQ4LjMxMSAzNi42Myw0OC4zMTEgTDM0LjgxNyw0OC4zMTEgQzMzLjc1NCw0OC4zMTEgMzIuODc5LDQ4LjMxMSAzMi4yNTQsNDguMzc0IEMzMS4yNTQsNDguNDM3IDMwLjMxNiw0OC43NDkgMjkuMjU0LDQ5LjE4NyBDMjguMjU0LDQ5LjY4NyAyNy41NjYsNTAuNDM3IDI3LjE5MSw1MS42MjUgQzI2Ljc1Myw1Mi43NSAyNi41NjYsNTQuMjUgMjYuNTY2LDU2LjE4OCBDMjYuNTY2LDU5LjYyNiAyNy4zNzksNjEuODc2IDI4Ljk0MSw2My4wMDEgQzMwLjU2Niw2NC4wNjQgMzMuNjkxLDY0LjYyNiAzOC4yNTQsNjQuNjI2IEMzOS45NDIsNjQuNjI2IDQxLjE5Miw2NC41NjMgNDIuMDA0LDY0LjUwMSBDNDIuODc5LDY0LjQzOCA0My43NTQsNjQuMjUxIDQ0Ljc1NCw2NC4wMDEgQzQ1LjY5Miw2My42ODggNDYuNTA0LDYzLjE4OCA0Ny4wNjcsNjIuNTAxIEM0Ny42Myw2MS44MTQgNDguMjU1LDYwLjkzOCA0OC44MTcsNTkuODEzIEM0OS40NDIsNTguNjg4IDUwLjAwNSw1Ny4xODggNTAuNjMsNTUuMzc1IEM1MS43NTUsNTEuODc1IDUyLjY5Myw0Ni41IDUzLjM4LDM5LjEyNSBDNTMuNTA1LDM4IDUzLjU2OCwzNi41IDUzLjU2OCwzNC42MjUgQzUzLjU2OCwzMi4xMjUgNTMuNDQzLDI5IDUzLjI1NSwyNS4xODcgQzUyLjk0MiwxOC41NjIgNTIuNTA1LDE0LjEyNCA1Mi4xMywxMS43NDkgQzUxLjYzLDkuNDM2IDUwLjUwNSw3Ljk5OSA0OC42OTIsNy40MzYgQzQ3LjMxNyw2LjkzNiA0NC41NjcsNi40MzYgNDAuNDQyLDUuOTM2IEMzOC45NDIsNS43NDggMzcuMDA0LDUuNjIzIDM0Ljc1NCw1LjYyMyBDMzMuODE2LDUuNjIzIDMyLjgxNiw1LjYyMyAzMS42OTEsNS42ODYgQzMxLjM3OCwzLjY4NiAzMC40NDEsMi4zNzMgMjguODE2LDEuNjg2IEMyNy4xMjgsMS4wNjEgMjUuMDY2LDAuNjg2IDIyLjUwMywwLjYyMyBMMjEuMzE1LDAuNjIzIEMxOS41MDIsMC42MjMgMTguMzc3LDAuNzQ4IDE3Ljk0LDAuOTk4IEMxNi40NCwxLjQzNiAxNS4zNzcsMi4wNjEgMTQuNzUyLDIuOTk4IEMxNC4xODksMy44MTEgMTMuOTM5LDQuNzQ4IDEzLjkzOSw1LjgxMSBMMTMuOTM5LDkuNTYxIEMxNC4wMDIsMTAuNTYxIDE0LjAwMiwxMS40OTkgMTQuMDAyLDEyLjM3NCBDMTQuMDAyLDEzLjA2MiAxMy44MTQsMTMuNTYyIDEzLjMxNCwxNC4wNjIgQzEyLjgxNCwxNC41IDEyLjMxNCwxNC43NSAxMS42MjYsMTQuNzUgTDUuNjI2LDE0Ljc1IEM0LjM3NiwxNC43NSAzLjM3NiwxNC45MzggMi42MjYsMTUuMzEzIEMxLjg3NiwxNS42MjYgMS4zNzYsMTYuMDYzIDAuOTM4LDE2LjY4OCBDMC4zMTMsMTcuNDM4IDAsMTguNjg4IDAsMjAuMzc2IEw3LjU0OTUxNjU3ZS0xNSwyMC4zNzUgWiBNMC4zNzUsMTIuNzUgQzAuNTYzLDEyLjY4NyAwLjc1LDEyLjU2MiAwLjkzOCwxMi40MzcgQzIuMDAxLDExLjk5OSAzLjMxMywxMS43NDkgNC43NTEsMTEuNzQ5IEwxMC42ODksMTEuNzQ5IEMxMS4xMjcsMTEuNzQ5IDExLjMxNCwxMS41NjEgMTEuMzE0LDExLjEyNCBDMTEuMzE0LDcuNjg2IDExLjI1MSw1LjQzNiAxMS4yNTEsNC40OTkgQzExLjI1MSwzLjMxMSAxMS41MDEsMi4zMTEgMTEuOTM5LDEuNDM2IEwxMi4xODksMS4wNjEgQzEyLjEyNiwxLjA2MSAxMi4xMjYsMS4wNjEgMTIuMTI2LDEuMTI0IEwwLjM3NiwxMi42MjQgTDAuMzc2LDEyLjc0OSBMMC4zNzUsMTIuNzUgWiBNMzYuNzUsMzEuMzEzIEMzNi45MzgsMzAgMzcuMzEzLDI4LjkzOCAzNy45MzgsMjggQzM4LjU2MywyNy4xODcgMzkuNTAxLDI2Ljc1IDQwLjc1MSwyNi43NSBMNDAuOTM5LDI2Ljc1IEM0My41NjQsMjYuODEzIDQ0Ljg3NywyOC42ODggNDQuODc3LDMyLjMxMyBDNDMuMzE0LDMxLjU2MyA0MS42MjcsMzEuMTg4IDM5LjY4OSwzMS4xMjUgQzM4LjYyNiwzMS4xMjUgMzcuNjI2LDMxLjE4OCAzNi43NTEsMzEuMzEzIEwzNi43NSwzMS4zMTMgWiIgaWQ9IlNoYXBlIiBza2V0Y2g6dHlwZT0iTVNTaGFwZUdyb3VwIj48L3BhdGg+CiAgICAgICAgPC9nPgogICAgPC9nPgo8L3N2Zz4=");
     }
-
-    @charset "UTF-8";
 
     /* Animate.css - http://daneden.me/animate Licensed under the MIT license - http://opensource.org/licenses/MIT  Copyright (c) 2015 Daniel Eden */
     .animated {
@@ -3209,7 +3190,7 @@
               j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               'https://www.googletagmanager.com/gtm.js?id='+i+dl+ '&gtm_auth=Nd8EjTzz0H95-YWJYsoWMg&gtm_preview=env-1&gtm_cookies_win=x';f.parentNode.insertBefore(j,f);
               })(window,document,'script','dataLayer', 'GTM-TGZ8W6N');
-              </script><title>Monty Bryant | Ecologi</title><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=2"><link rel="manifest" href="https://ecologi.com/manifest.json"><meta name="fragment" content="!"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="icon" type="image/png" sizes="32x32" href="https://ecologi.com/favicon-32x32.png?v=eEvbNpqje5"><link rel="icon" type="image/png" sizes="16x16" href="https://ecologi.com/favicon-16x16.png?v=eEvbNpqje5"><link rel="shortcut icon" href="https://ecologi.com/favicon.ico?v=eEvbNpqje5"><link rel="apple-touch-icon" sizes="180x180" href="https://ecologi.com/apple-touch-icon.png?v=eEvbNpqje5"><link rel="mask-icon" href="https://ecologi.com/safari-pinned-tab.svg?v=eEvbNpqje5" color="#20bf85"><link href="https://ecologi.com/images/splashscreens/iphone5_splash.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image"><link href="https://ecologi.com/images/splashscreens/iphone6_splash.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image"><link href="https://ecologi.com/images/splashscreens/iphoneplus_splash.png" media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image"><link href="https://ecologi.com/images/splashscreens/iphonex_splash.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image"><link href="https://ecologi.com/images/splashscreens/iphonexr_splash.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image"><link href="https://ecologi.com/images/splashscreens/iphonexsmax_splash.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image"><link href="https://ecologi.com/images/splashscreens/ipad_splash.png" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image"><link href="https://ecologi.com/images/splashscreens/ipadpro1_splash.png" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image"><link href="https://ecologi.com/images/splashscreens/ipadpro3_splash.png" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image"><link href="https://ecologi.com/images/splashscreens/ipadpro2_splash.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image"><meta name="apple-mobile-web-app-title" content="Ecologi"><meta name="application-name" content="Ecologi"><meta name="msapplication-TileColor" content="rgb(233, 228, 223)"><meta name="theme-color" content="rgb(233, 228, 223)"><meta property="fb:app_id" content="2255982101156746"><meta property="og:type" content="website"><meta property="og:site_name" content="Ecologi"><meta name="twitter:app:name:googleplay" content="Ecologi"><meta name="twitter:app:name:ipad" content="Ecologi"><meta name="twitter:site" content="@Ecologi_hq"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://ecologi.com//5d5e6db557f802000fe2bc83"><meta name="description" content="View Monty Bryant&#39;s Ecologi profile. So far they&#39;ve offset 20.36 tonnes of CO2 and planted 402 trees!"><meta property="og:title" content="Monty Bryant"><meta property="og:url" content="https://ecologi.com//5d5e6db557f802000fe2bc83"><meta property="og:description" content="View Monty Bryant&#39;s Ecologi profile. So far they&#39;ve offset 20.36 tonnes of CO2 and planted 402 trees!"><meta name="msapplication-TileImage" content="https://ogi.sh/ChE-uiVy9?logo=https%3A%2F%2Foffset-earth-user-assets.imgix.net%2Fprofile-images%2F1e7ef4b3c47bdf1aa79733c5bd5ebf7d.png%3Fw%3D240%26h%3D240%26crop%3Dfaces%26faces%3D1%26fit%3Dfacearea%26facepad%3D2.5&amp;trees=402&amp;bg=https%3A%2F%2Foffset-earth-share-images.s3-eu-west-1.amazonaws.com%2Fog-bg-4.jpg"><meta property="og:image" content="https://ogi.sh/ChE-uiVy9?logo=https%3A%2F%2Foffset-earth-user-assets.imgix.net%2Fprofile-images%2F1e7ef4b3c47bdf1aa79733c5bd5ebf7d.png%3Fw%3D240%26h%3D240%26crop%3Dfaces%26faces%3D1%26fit%3Dfacearea%26facepad%3D2.5&amp;trees=402&amp;bg=https%3A%2F%2Foffset-earth-share-images.s3-eu-west-1.amazonaws.com%2Fog-bg-4.jpg"><meta name="twitter:image" content="https://ogi.sh/ChE-uiVy9?logo=https%3A%2F%2Foffset-earth-user-assets.imgix.net%2Fprofile-images%2F1e7ef4b3c47bdf1aa79733c5bd5ebf7d.png%3Fw%3D240%26h%3D240%26crop%3Dfaces%26faces%3D1%26fit%3Dfacearea%26facepad%3D2.5&amp;trees=402&amp;bg=https%3A%2F%2Foffset-earth-share-images.s3-eu-west-1.amazonaws.com%2Fog-bg-4.jpg"><meta name="next-head-count" content="40"><link rel="preload" href="./Monty Bryant _ Ecologi_files/2f7ae5000261bc914d7f.css" as="style"><link rel="stylesheet" href="./Monty Bryant _ Ecologi_files/2f7ae5000261bc914d7f.css" data-n-g=""><link rel="preload" href="./Monty Bryant _ Ecologi_files/000711bd0b7dad888df5.css" as="style"><link rel="stylesheet" href="./Monty Bryant _ Ecologi_files/000711bd0b7dad888df5.css" data-n-g=""><link rel="preload" href="./Monty Bryant _ Ecologi_files/f02edece3cab895df2d1.css" as="style"><link rel="stylesheet" href="./Monty Bryant _ Ecologi_files/f02edece3cab895df2d1.css" data-n-p=""><link rel="preload" href="./Monty Bryant _ Ecologi_files/99da9e863f033822ef59.css" as="style"><link rel="stylesheet" href="./Monty Bryant _ Ecologi_files/99da9e863f033822ef59.css" data-n-p=""><link rel="preload" href="./Monty Bryant _ Ecologi_files/cc6f4e9c103c87500e06.css" as="style"><link rel="stylesheet" href="./Monty Bryant _ Ecologi_files/cc6f4e9c103c87500e06.css" data-n-p=""><link rel="preload" href="./Monty Bryant _ Ecologi_files/84e7094a7ce95b2ebe12.css" as="style"><link rel="stylesheet" href="./Monty Bryant _ Ecologi_files/84e7094a7ce95b2ebe12.css" data-n-p=""><noscript data-n-css=""></noscript><link rel="preload" href="./Monty Bryant _ Ecologi_files/webpack-50bee04d1dc61f8adf5b.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/framework.11da6a647b46368ba923.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/commons.87954227a4f52951fba5.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/main-7554080982a6a01341d5.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/8040742c.c73df2f5694bbf9c8740.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/feb24052.e0c8c06f88fad3947df7.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/b802673650019c785ab4e00c5dfdb13f1d97dd4d.770a69e81f8385831f53.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/cb02291a19c62f002155f205bacd94fc6a2be7e8.c1b3a341125b7d40d53d.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/57d35c77c472408827e7529751caaf25e8798fb4.26ceaa4d1afd5e57bddd.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/162aa9bace4b0d5a59bdeda339216fb8162c28d1.e5b533ebf493b9ca91be.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/070cc7e8599e6b635d62cc98326b117d9daf501b.2312023cf4ddfd7a3fb6.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/22070517448acce27839f79da1dd8130610eb5bb.69f064e3ae6f339bffd8.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/b5fea1ac19007ac0ba51fa9b9b5dcd9e9519d80e.673ec50910522e676c98.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/6ac69b71e6238e403fe4020130a0958d83c34dcf.e6e3efb3a351d09c0f5a.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/a3e98731a84078fdd3cb203edee9bf2623ab8865.abf8a232f8baa7f21285.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/6d6c768073596ae61b8d0a43da2b8eed039f8fe3.f2b21ebb0d78364c02aa.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/06f3b9fd05c5d0770a21ec945de375175dbf4dae.09bc5b7024105ead827d.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/_app-fa3b652b7eab68f734cf.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/6b859938.6366c5ffdce4baee62eb.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/66c41a01.a6bc182a3c36b29b19d0.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/3a69b39ef519375a073e84704367f9c1063c7a6d.b4c644fd1e5aa1d962da.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/43b03b7f7ce9c0c2649eb4fa61e5887e48d141a7.49aa4f1265c3e01466cc.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/f42add7fb9745419357ceb5e9f1adeef98218b47.0b40a5187b4fd4029fe4.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/fbeba8f395f69517cd67d5e502148c12dbd670d7.2708dddf3037e79c2bc7.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/66c2b50449aaf757fb73a1484b74d002e01b4e36.275ffda26e0c2dcb425a.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/85950b9ad6fe82d647c0798e7c9ac0c8fb7e5ea6.3f6428205f6a39bb5cc2.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/368693b48cbf1431aa4b282f0145be558c1835ac_CSS.42d75f8de5a9c3bada2c.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/368693b48cbf1431aa4b282f0145be558c1835ac.d7cf10d1afe7192d8003.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/b29cd64c603a8a97ad040294fe2b1810e92c03c3.b3dc1a54c51ec7defb85.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/b29cd64c603a8a97ad040294fe2b1810e92c03c3_CSS.deebbea4b29d02f21992.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/[usernameOrId]-0a516cc543b7dfde524c.js" as="script"><style type="text/css">/* Copyright 2014-present Evernote Corporation. All rights reserved. */
+              </script><title>Monty Bryant | Ecologi</title><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=2"><link rel="manifest" href="https://ecologi.com/manifest.json"><meta name="fragment" content="!"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="icon" type="image/png" sizes="32x32" href="assets/img/brandassets/favicon.png"><link rel="icon" type="image/png" sizes="16x16" href="assets/img/brandassets/favicon.png"><link rel="shortcut icon" href="assets/img/brandassets/favicon.png"><link rel="apple-touch-icon" sizes="180x180" href="assets/img/brandassets/favicon.png"><link rel="mask-icon" href="https://ecologi.com/safari-pinned-tab.svg?v=eEvbNpqje5" color="#20bf85"><link href="https://ecologi.com/images/splashscreens/iphone5_splash.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image"><link href="https://ecologi.com/images/splashscreens/iphone6_splash.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image"><link href="https://ecologi.com/images/splashscreens/iphoneplus_splash.png" media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image"><link href="https://ecologi.com/images/splashscreens/iphonex_splash.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image"><link href="https://ecologi.com/images/splashscreens/iphonexr_splash.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image"><link href="https://ecologi.com/images/splashscreens/iphonexsmax_splash.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image"><link href="https://ecologi.com/images/splashscreens/ipad_splash.png" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image"><link href="https://ecologi.com/images/splashscreens/ipadpro1_splash.png" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image"><link href="https://ecologi.com/images/splashscreens/ipadpro3_splash.png" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image"><link href="https://ecologi.com/images/splashscreens/ipadpro2_splash.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image"><meta name="apple-mobile-web-app-title" content="Ecologi"><meta name="application-name" content="Ecologi"><meta name="msapplication-TileColor" content="rgb(233, 228, 223)"><meta name="theme-color" content="rgb(233, 228, 223)"><meta property="fb:app_id" content="2255982101156746"><meta property="og:type" content="website"><meta property="og:site_name" content="Ecologi"><meta name="twitter:app:name:googleplay" content="Ecologi"><meta name="twitter:app:name:ipad" content="Ecologi"><meta name="twitter:site" content="@Ecologi_hq"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://ecologi.com//5d5e6db557f802000fe2bc83"><meta name="description" content="View Monty Bryant&#39;s Ecologi profile. So far they&#39;ve offset 20.36 tonnes of CO2 and planted 402 trees!"><meta property="og:title" content="Monty Bryant"><meta property="og:url" content="https://ecologi.com//5d5e6db557f802000fe2bc83"><meta property="og:description" content="View Monty Bryant&#39;s Ecologi profile. So far they&#39;ve offset 20.36 tonnes of CO2 and planted 402 trees!"><meta name="msapplication-TileImage" content="https://ogi.sh/ChE-uiVy9?logo=https%3A%2F%2Foffset-earth-user-assets.imgix.net%2Fprofile-images%2F1e7ef4b3c47bdf1aa79733c5bd5ebf7d.png%3Fw%3D240%26h%3D240%26crop%3Dfaces%26faces%3D1%26fit%3Dfacearea%26facepad%3D2.5&amp;trees=402&amp;bg=https%3A%2F%2Foffset-earth-share-images.s3-eu-west-1.amazonaws.com%2Fog-bg-4.jpg"><meta property="og:image" content="https://ogi.sh/ChE-uiVy9?logo=https%3A%2F%2Foffset-earth-user-assets.imgix.net%2Fprofile-images%2F1e7ef4b3c47bdf1aa79733c5bd5ebf7d.png%3Fw%3D240%26h%3D240%26crop%3Dfaces%26faces%3D1%26fit%3Dfacearea%26facepad%3D2.5&amp;trees=402&amp;bg=https%3A%2F%2Foffset-earth-share-images.s3-eu-west-1.amazonaws.com%2Fog-bg-4.jpg"><meta name="twitter:image" content="https://ogi.sh/ChE-uiVy9?logo=https%3A%2F%2Foffset-earth-user-assets.imgix.net%2Fprofile-images%2F1e7ef4b3c47bdf1aa79733c5bd5ebf7d.png%3Fw%3D240%26h%3D240%26crop%3Dfaces%26faces%3D1%26fit%3Dfacearea%26facepad%3D2.5&amp;trees=402&amp;bg=https%3A%2F%2Foffset-earth-share-images.s3-eu-west-1.amazonaws.com%2Fog-bg-4.jpg"><meta name="next-head-count" content="40"><link rel="preload" href="./Monty Bryant _ Ecologi_files/2f7ae5000261bc914d7f.css" as="style"><link rel="stylesheet" href="./Monty Bryant _ Ecologi_files/2f7ae5000261bc914d7f.css" data-n-g=""><link rel="preload" href="./Monty Bryant _ Ecologi_files/000711bd0b7dad888df5.css" as="style"><link rel="stylesheet" href="./Monty Bryant _ Ecologi_files/000711bd0b7dad888df5.css" data-n-g=""><link rel="preload" href="./Monty Bryant _ Ecologi_files/f02edece3cab895df2d1.css" as="style"><link rel="stylesheet" href="./Monty Bryant _ Ecologi_files/f02edece3cab895df2d1.css" data-n-p=""><link rel="preload" href="./Monty Bryant _ Ecologi_files/99da9e863f033822ef59.css" as="style"><link rel="stylesheet" href="./Monty Bryant _ Ecologi_files/99da9e863f033822ef59.css" data-n-p=""><link rel="preload" href="./Monty Bryant _ Ecologi_files/cc6f4e9c103c87500e06.css" as="style"><link rel="stylesheet" href="./Monty Bryant _ Ecologi_files/cc6f4e9c103c87500e06.css" data-n-p=""><link rel="preload" href="./Monty Bryant _ Ecologi_files/84e7094a7ce95b2ebe12.css" as="style"><link rel="stylesheet" href="./Monty Bryant _ Ecologi_files/84e7094a7ce95b2ebe12.css" data-n-p=""><noscript data-n-css=""></noscript><link rel="preload" href="./Monty Bryant _ Ecologi_files/webpack-50bee04d1dc61f8adf5b.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/framework.11da6a647b46368ba923.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/commons.87954227a4f52951fba5.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/main-7554080982a6a01341d5.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/8040742c.c73df2f5694bbf9c8740.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/feb24052.e0c8c06f88fad3947df7.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/b802673650019c785ab4e00c5dfdb13f1d97dd4d.770a69e81f8385831f53.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/cb02291a19c62f002155f205bacd94fc6a2be7e8.c1b3a341125b7d40d53d.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/57d35c77c472408827e7529751caaf25e8798fb4.26ceaa4d1afd5e57bddd.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/162aa9bace4b0d5a59bdeda339216fb8162c28d1.e5b533ebf493b9ca91be.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/070cc7e8599e6b635d62cc98326b117d9daf501b.2312023cf4ddfd7a3fb6.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/22070517448acce27839f79da1dd8130610eb5bb.69f064e3ae6f339bffd8.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/b5fea1ac19007ac0ba51fa9b9b5dcd9e9519d80e.673ec50910522e676c98.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/6ac69b71e6238e403fe4020130a0958d83c34dcf.e6e3efb3a351d09c0f5a.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/a3e98731a84078fdd3cb203edee9bf2623ab8865.abf8a232f8baa7f21285.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/6d6c768073596ae61b8d0a43da2b8eed039f8fe3.f2b21ebb0d78364c02aa.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/06f3b9fd05c5d0770a21ec945de375175dbf4dae.09bc5b7024105ead827d.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/_app-fa3b652b7eab68f734cf.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/6b859938.6366c5ffdce4baee62eb.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/66c41a01.a6bc182a3c36b29b19d0.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/3a69b39ef519375a073e84704367f9c1063c7a6d.b4c644fd1e5aa1d962da.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/43b03b7f7ce9c0c2649eb4fa61e5887e48d141a7.49aa4f1265c3e01466cc.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/f42add7fb9745419357ceb5e9f1adeef98218b47.0b40a5187b4fd4029fe4.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/fbeba8f395f69517cd67d5e502148c12dbd670d7.2708dddf3037e79c2bc7.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/66c2b50449aaf757fb73a1484b74d002e01b4e36.275ffda26e0c2dcb425a.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/85950b9ad6fe82d647c0798e7c9ac0c8fb7e5ea6.3f6428205f6a39bb5cc2.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/368693b48cbf1431aa4b282f0145be558c1835ac_CSS.42d75f8de5a9c3bada2c.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/368693b48cbf1431aa4b282f0145be558c1835ac.d7cf10d1afe7192d8003.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/b29cd64c603a8a97ad040294fe2b1810e92c03c3.b3dc1a54c51ec7defb85.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/b29cd64c603a8a97ad040294fe2b1810e92c03c3_CSS.deebbea4b29d02f21992.js" as="script"><link rel="preload" href="./Monty Bryant _ Ecologi_files/[usernameOrId]-0a516cc543b7dfde524c.js" as="script"><style type="text/css">/* Copyright 2014-present Evernote Corporation. All rights reserved. */
 @keyframes caretBlink {
     from { opacity: 1.0; }
     to { opacity: 0.0; }
@@ -3303,7 +3284,7 @@
 
 </head>
 
-<body data-gr-c-s-loaded="true">
+<body class="pp-home" data-gr-c-s-loaded="true" data-pp-theme-toggle="true">
     <div id="root">
         <div style="--top-bar-background:#00848e; --top-bar-color:#f9fafb; --top-bar-background-lighter:#1d9ba4;">
 
@@ -3318,7 +3299,25 @@
 !-->
 
 
-<img alt="Logo" class="" src="assets/img/sun.png" style="width: 300px; margin-left: -141px; margin-top: -128px; position: absolute;">
+<div class="pp-celestial" aria-hidden="true">
+  <img class="pp-celestial__sun" src="assets/img/sun.png" alt="">
+  <img class="pp-celestial__moon" src="assets/img/moon.svg" alt="">
+</div>
+
+<!-- Header menu bar (homepage only) -->
+<header class="pp-topbar" aria-label="Primary">
+  <a class="pp-topbar__brand" href="#" aria-label="PeoplePower">
+    <img class="pp-topbar__logo" src="assets/img/brandassets/icon%20white.png" alt="">
+    <span class="pp-topbar__name">PeoplePower.fi</span>
+  </a>
+  <div class="pp-topbar__actions">
+    <div id="pp-theme-toggle-container" class="pp-topbar__toggle"></div>
+    <a class="pp-topbar__wallet" aria-label="Connected wallet" data-fancybox data-type="inline" data-src="#pp-profile-modal" href="javascript:;">
+      <span class="pp-topbar__walletDot" aria-hidden="true"></span>
+      <span class="pp-topbar__walletName">montymerlin.eth</span>
+    </a>
+  </div>
+</header>
 
 
                               <section class="ProfileHeader_profileText__3hDCO" style="visibility: hidden;">
@@ -3337,7 +3336,7 @@
 
 
 
-                <main style="flex: 1 1 0%; margin-top: 81px;">
+                <main style="flex: 1 1 0%;">
                     <div class="react-reveal" style="animation-fill-mode: both; animation-duration: 1000ms; animation-delay: 0ms; animation-iteration-count: 1; opacity: 1; animation-name: react-reveal-441534136075590-1;">
                         <div class="Wrapper_wrapper__2gcWR">
                         </div>
@@ -3350,53 +3349,57 @@
 
                                     <div class="ProfileForest_headingTreesNumber__VrPdm">
 
-                                    <img alt="Logo" class="" src="assets/img/ppw.png" style="width: 300px; margin-bottom: 10px;">
+                                    <div class="pp-heroPanel" aria-label="Build a better future">
+                                      <div class="pp-heroPanel__header">
+                                        <img alt="" class="pp-heroPanel__logo" src="assets/img/brandassets/icon%20white.png">
+                                        <div class="pp-heroPanel__titles">
+                                          <div class="pp-heroPanel__kicker">PeoplePower.fi</div>
+                                          <div class="pp-heroPanel__headline">Invest for a better future</div>
+                                          <div class="pp-heroPanel__desc">
+                                            A gamified impact wallet.
+                                            Invest in real-world projects, collect eco-assets, and watch your personal impact landscape grow.
+                                          </div>
+                                        </div>
+                                      </div>
 
-                                    <h2 style="width: 500px; float: center; margin-bottom: 30px; font-size: 20px; font-weight: 900;">
-                                    <b>BUILD A BETTER FUTURE</b>
-                                    </h2>
+                                      <div class="pp-heroPanel__walletSection" aria-label="Your Wallet">
+                                        <div class="pp-heroPanel__sectionTitle">Your Wallet</div>
 
-                                    <!-- <center><hr style="width: 60%; border: 1px solid; margin: 20px;"></center> background: rgba(0, 0, 10, 0.6); Build A Better Future -->
+                                        <div class="pp-heroPanel__wallet">
+                                          <div class="pp-heroStat">
+                                            <img class="pp-heroStat__icon" src="assets/img/co2w.png" alt="">
+                                            <div class="pp-heroStat__label">Carbon Credits</div>
+                                            <div class="pp-heroStat__value">843</div>
+                                          </div>
+                                          <div class="pp-heroStat">
+                                            <img class="pp-heroStat__icon" src="assets/img/ppcoin.png" alt="">
+                                            <div class="pp-heroStat__label">PeoplePower Points</div>
+                                            <div class="pp-heroStat__value">1117</div>
+                                          </div>
+                                        </div>
 
-                                    <center>
-                                    <center><hr style="width: 60%; border: 1px solid; margin: 20px; margin-top: 0px;"></center>
-                                    <table style=" padding: 20px; padding-top: 0px; padding-left: 10px; padding-right: 10px;">
-                                    <tbody>
-                                        <tr style="">
-                                            <th colspan="2">
-                                                <center><h1 style="margin-bottom: 5px; font-size: 29px;">Digital Wallet</h1></center>
-                                            </th>
-                                        </tr>
-                                        <tr style="">
-                                            <td style="width: 150px;">
-                                                <center>
-                                                <img src="assets/img/co2w.png" style="width: 30px;">
-                                                <div class="cccccc" style="color: white; line-height: 28px;">
-                                                Carbon Credits <br><b>843</b>
-                                                </div>
-                                                </center>
-                                            </td>
-                                            <td style="width: 150px">
-                                                <center>
-                                                <img src="assets/img/ppcoin.png" style="width: 30px;">
-                                                <div class="cccccc" style="color: white; line-height: 28px;">
-                                                People Power<br><b>1117</b>
-                                                </div>
-                                                </center>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                    </table>
-                                    <center><hr style="width: 60%; border: 1px solid; margin: 20px; margin-top: 0px;"></center>
-                                    </center>
+                                        <div class="pp-heroPanel__holdings">
+                                          <span class="pp-heroPill"><b>3</b> Eco-Assets</span>
+                                          <span class="pp-heroPill"><b>28</b> Trees</span>
+                                          <span class="pp-heroPill"><b>1</b> NFT Collectible</span>
+                                        </div>
+                                      </div>
 
-									
-									<p class="Text_text__1O0TZ" style="font-size: 18px; margin-bottom: 2px; margin-left: 40px; margin-right: 40px; margin-top: 30px;">
-You own: <br><b>3 Eco-Assets,</b> <b>28 Trees</b>, <b>and 1 NFT Collectible.</b><br>Get more in the marketplace!<br>|<br>v
-									</p>
-                                  	<button class="Button_button__2Lf63 Button_buttonPrimary__3LC6Z Button_buttonSmall__ccNzV" style="border-radius: 3px; display: block; margin: 15px auto 0px;" data-fancybox data-type="iframe" data-src="market/eco_assets.html" href="javascript:;">
-                                      Marketplace
-                                  	</button></div>
+                                      <div class="pp-heroPanel__ctaRow">
+                                        <div class="pp-heroPanel__ctaButtons">
+                                          <a class="Button_button__2Lf63 Button_buttonPrimary__3LC6Z Button_buttonSmall__ccNzV pp-heroPanel__cta"
+                                            data-fancybox data-type="inline" data-src="#pp-profile-modal" href="javascript:;">
+                                            View Profile
+                                          </a>
+                                          <button class="Button_button__2Lf63 Button_buttonPrimary__3LC6Z Button_buttonSmall__ccNzV pp-heroPanel__cta"
+                                            data-fancybox data-type="iframe" data-src="pages/marketplace.html" type="button">
+                                            Open Marketplace
+                                          </button>
+                                        </div>
+                                        <div class="pp-heroPanel__hint">Explore the Marketplace to pick new assets and customise your world.</div>
+                                      </div>
+                                    </div>
+                                  </div>
                                 </div>
 
 
@@ -3415,33 +3418,50 @@ You own: <br><b>3 Eco-Assets,</b> <b>28 Trees</b>, <b>and 1 NFT Collectible.</b>
                                 </div>
 
 
-<a class="doorhover" data-fancybox data-src="#teslainfo" href="javascript:;">
-    <img src="assets/img/doors@1.png" class="door1" style="">
-  <img src="assets/img/doors@2.png" class="door2" style="">
+<a class="doorhover" data-fancybox data-src="#teslainfo" data-pp-clickhint="true" data-pp-clickhint-placement="center" data-pp-clickhint-offset="-10,0" aria-label="Open Tesla asset" href="javascript:;">
+    <img src="assets/img/doors@1.png" class="door1" data-pp-edit-group="doors" data-pp-edit-handle="true" data-pp-edit-label="Doors" style="">
+  <img src="assets/img/doors@2.png" class="door2" data-pp-edit-group="doors" data-pp-edit-handle="true" data-pp-edit-label="Doors" style="">
 </a>
 
 
-<a data-fancybox data-src="#windinfo" href="javascript:;">
-  <div class="BusinessPageHero_hills__3Rmsg"></div>
+<a data-fancybox data-type="inline" data-src="#pp-wind-modal" data-pp-clickhint="true" data-pp-clickhint-placement="top-right" data-pp-clickhint-offset="-160,-500" aria-label="Open wind asset" href="javascript:;">
+  <div class="BusinessPageHero_hills__3Rmsg" data-pp-edit-group="wind" data-pp-edit-label="Wind">
+    <!-- Edit handle: positioned to match the actual turbine art (drawn via :after) -->
+    <div class="pp-wind-edit-handle" data-pp-edit-handle="true" data-pp-edit-label="Wind turbine" aria-hidden="true"></div>
+  </div>
 </a>
 
-<li class="HomePageHero_leaderCol__HZ0gN" style="margin-top: -205px; margin-left: 130px;"></li> 
-<li class="HomePageHero_leaderCol__HZ0gN" style="margin-top: -205px; margin-left: -630px;"></li> 
+<li class="HomePageHero_leaderCol__HZ0gN" data-pp-edit-group="forestCollect" data-pp-edit-label="Forest collectible trees" style="margin-top: -205px; margin-left: 130px;"></li> 
+<li class="HomePageHero_leaderCol__HZ0gN" data-pp-edit-group="forestCollect" data-pp-edit-label="Forest collectible trees" style="margin-top: -205px; margin-left: -630px;"></li> 
 
                           
-<li class="HomePageHero_leaderCol__HZ0gN" style="margin-top:175px; margin-left: 130px;"></li> 
-<li class="HomePageHero_leaderCol__HZ0gN" style="margin-top:175px; margin-left: -630px;"></li> 
+<li class="HomePageHero_leaderCol__HZ0gN" data-pp-edit-group="forestCollect" data-pp-edit-label="Forest collectible trees" style="margin-top:175px; margin-left: 130px;"></li> 
+<li class="HomePageHero_leaderCol__HZ0gN" data-pp-edit-group="forestCollect" data-pp-edit-label="Forest collectible trees" style="margin-top:175px; margin-left: -630px;"></li> 
 
-<a data-fancybox data-src="#solarinfo" href="javascript:;">
-  <img src="assets/img/solar.png" style="position: absolute; width: 290px; left: -1%; margin-top: -750px;">
-  <img src="assets/img/solar.png" style="position: absolute; width: 290px; left: 3%; margin-top: -670px;">
+<!-- Single handle/outline + drag hit-area for forestCollect (viewport coords) -->
+<div class="pp-forestCollect-handle"
+     data-pp-edit-group="forestCollect"
+     data-pp-edit-handle="true"
+     data-pp-edit-label="Forest collectible trees"
+     aria-hidden="true"
+     style="left: 558px; top: 355px; width: 769px; height: 242px;"></div>
+
+<a data-fancybox data-type="inline" data-src="#pp-solar-modal" data-pp-clickhint="true" data-pp-clickhint-placement="center" data-pp-clickhint-offset="40,0" aria-label="Open Hooke Solar Farm asset" href="javascript:;">
+  <img src="assets/img/solar.png" data-pp-edit-group="solar" data-pp-edit-handle="true" data-pp-edit-label="Hooke Solar" style="position: absolute; width: 290px; left: -1%; margin-top: -750px;">
+  <img src="assets/img/solar.png" data-pp-edit-group="solar" data-pp-edit-handle="true" data-pp-edit-label="Hooke Solar" style="position: absolute; width: 290px; left: 3%; margin-top: -670px;">
 </a>
 
 
 
 
 
-                                <div title="Click to earn more trees" class="ProfileForest_scoreboard__2d1gG ProfileForest_scoreboardCenter__ZiNpF">
+                                <div title="Click to earn more trees"
+                                     class="ProfileForest_scoreboard__2d1gG ProfileForest_scoreboardCenter__ZiNpF"
+                                     role="button" tabindex="0" aria-label="Open Forest details"
+                                     data-fancybox data-type="inline" data-src="#pp-forest-modal"
+                                     data-pp-clickhint="true"
+                                     data-pp-clickhint-placement="right"
+                                     data-pp-clickhint-offset="18,-14">
                                 </div>
                             </section>
                             <div style="height: 0px; visibility: hidden;">
@@ -3531,22 +3551,8 @@ You own: <br><b>3 Eco-Assets,</b> <b>28 Trees</b>, <b>and 1 NFT Collectible.</b>
 
 
 
-<!-- background-color: rgb(0,119,190); #f2f2f2 --> 
-
-                            <section class="Profile_cards__25UJa" style="padding: 30px; padding-top: 50px; padding-bottom: 15px; background-color: #f2f2f2;">
-                                <div class="Card_card__2plM_ undefined">
-                                    <div class="Card_cardNumber__37duz"><span class="Card_cardNumberWrapper__382Wf post_headers" style="font-size: 26px;">21<span class="Card_cardNumberSuffix__1ZEnI"> DAYS </span></span></div>
-                                    <div class="post_headers" style="font-size: 16px;">Investing In PeoplePower</div>
-                                </div>
-                                <div class="Card_card__2plM_ Card_trees__265dD">
-                                    <div class="Card_cardNumber__37duz"><span class="Card_cardNumberWrapper__382Wf post_headers" style="font-size: 26px;">1052</span></div>
-                                    <div class="post_headers" style="font-size: 16px;">PPCoins Earned</div>
-                                </div>                                
-                                <div class="Card_card__2plM_ Card_carbon__2Ec4C">
-                                    <div class="Card_cardNumber__37duz"><span class="Card_cardNumberWrapper__382Wf post_headers" style="font-size: 26px;">1.17<span class="Card_cardNumberSuffix__1ZEnI">T</span></span></div>
-                                    <div class="post_headers" style="font-size: 16px;">Of Carbon Offset</div>
-                                </div>
-                            </section>
+<!-- Combined “Impact + Badges” section (night mode styling lives in `assets/css/night.css`) -->
+<section class="pp-impact-badges" id="impact">
 
 
 
@@ -3557,9 +3563,8 @@ You own: <br><b>3 Eco-Assets,</b> <b>28 Trees</b>, <b>and 1 NFT Collectible.</b>
 
 
                         <section class="react-reveal ProfileImpact_profileImpact__orp8H" style="background-color: #f2f2f2; animation-fill-mode: both; animation-duration: 1000ms; animation-delay: 0ms; animation-iteration-count: 1; opacity: 1; animation-name: react-reveal-441534136075590-1;">
-                          <hr style="width: 70%; border: 1px solid; margin-bottom: 60px;">
                             <div class="Wrapper_wrapper__2gcWR">
-                                <h1 class="Text_textHeading__37o8k Text_textCenter__o_1cm Text_text__1O0TZ" style="margin-bottom: 4px;">Your Impact Visualised</h1>
+                                <h1 class="Text_textHeading__37o8k Text_textCenter__o_1cm Text_text__1O0TZ pp-section-title" style="margin-bottom: 4px;">Your Impact</h1>
                                 <h2 class="Text_textSubeading__3xsOT Text_textCenter__o_1cm Text_text__1O0TZ post_headers" style="margin-bottom: 30px; padding: 0px 12px;">Your 1.17 tonnes of CO2 is equivalent to one of the following</h2>
                                 <div class="ProfileImpact_profileImpactCards__1DAsy">
                                     <ul class="CarbonEquivalents_carbonEquivalentsList__1z_X5">
@@ -3577,57 +3582,96 @@ You own: <br><b>3 Eco-Assets,</b> <b>28 Trees</b>, <b>and 1 NFT Collectible.</b>
                                         </li>
                                     </ul>
                                 </div>
+
+                                <section class="ProfileAchievementsRow_ProfileAchievementsRow__1P_iw">
+                                  <div class="Wrapper_wrapper__25zXU" id="tour-achievements" style="position:relative">
+                                    <div style="text-align:center">
+                                      <div class="AchievementRow_badgesWrapper__3Wgor" style="padding:30px 0 10px">
+                                        <div class="AchievementRow_badge__4mLIk" data-large="true">
+                                          <div class="AchievementBadge_achievementBadge__2QO3K">
+                                            <button class="AchievementBadge_achievementBadgeButton__2-xnu" data-badge-category="carbon-reduction" data-badge-id="offsetTonnes10" data-complete="true" data-static="true" type="button"></button>
+                                            Offset 10 tonnes of CO2
+                                          </div>
+                                        </div>
+                                        <div class="AchievementRow_badge__4mLIk" data-large="true">
+                                          <div class="AchievementBadge_achievementBadge__2QO3K">
+                                            <button class="AchievementBadge_achievementBadgeButton__2-xnu" data-badge-category="climate-positive" data-badge-id="climatePositiveMonths3" data-complete="true" data-static="true" type="button"></button>
+                                            3 months climate positive
+                                          </div>
+                                        </div>
+                                        <div class="AchievementRow_badge__4mLIk" data-large="true">
+                                          <div class="AchievementBadge_achievementBadge__2QO3K">
+                                            <button class="AchievementBadge_achievementBadgeButton__2-xnu" data-badge-category="climate-positive" data-badge-id="climatePositiveMonths6" data-complete="true" data-static="true" type="button"></button>
+                                            6 months climate positive
+                                          </div>
+                                        </div>
+                                        <div class="AchievementRow_badge__4mLIk" data-large="true">
+                                          <div class="AchievementBadge_achievementBadge__2QO3K">
+                                            <button class="AchievementBadge_achievementBadgeButton__2-xnu" data-badge-category="climate-positive" data-badge-id="climatePositiveMonths12" data-complete="true" data-static="true" type="button"></button>
+                                            1 year climate positive
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <a class="Button_button__2Lf63 Button_buttonPrimary__3LC6Z Button_buttonSmall__ccNzV"
+                                         data-fancybox data-type="inline" data-src="#pp-profile-modal" href="javascript:;"
+                                         style="display:inline-block; margin: 10px auto 0; padding: 12px 18px; font-size: 18px; border-radius: 999px;">
+                                        View profile
+                                      </a>
+                                    </div>
+                                  </div>
+                                </section>
                             </div>
                                                 </div>
                         </section>
 
-
-
-
-
-<section class="ProfileAchievementsRow_ProfileAchievementsRow__1P_iw"><div class="Wrapper_wrapper__25zXU" id="tour-achievements" style="position:relative"><h4 class="ProfileAchievementsRow_title__29dkx">Badges</h4><div style="text-align:center"><div class="AchievementRow_badgesWrapper__3Wgor" style="padding:30px 0 10px"><div class="AchievementRow_badge__4mLIk" data-large="true"><div class="AchievementBadge_achievementBadge__2QO3K"><button class="AchievementBadge_achievementBadgeButton__2-xnu" data-badge-category="carbon-reduction" data-badge-id="offsetTonnes10" data-complete="true" data-static="true" type="button"></button>Offset 10 tonnes of CO2</div></div><div class="AchievementRow_badge__4mLIk" data-large="true"><div class="AchievementBadge_achievementBadge__2QO3K"><button class="AchievementBadge_achievementBadgeButton__2-xnu" data-badge-category="climate-positive" data-badge-id="climatePositiveMonths3" data-complete="true" data-static="true" type="button"></button>3 months climate positive</div></div><div class="AchievementRow_badge__4mLIk" data-large="true"><div class="AchievementBadge_achievementBadge__2QO3K"><button class="AchievementBadge_achievementBadgeButton__2-xnu" data-badge-category="climate-positive" data-badge-id="climatePositiveMonths6" data-complete="true" data-static="true" type="button"></button>6 months climate positive</div></div><div class="AchievementRow_badge__4mLIk" data-large="true"><div class="AchievementBadge_achievementBadge__2QO3K"><button class="AchievementBadge_achievementBadgeButton__2-xnu" data-badge-category="climate-positive" data-badge-id="climatePositiveMonths12" data-complete="true" data-static="true" type="button"></button>1 year climate positive</div></div></div><a class="Button_button__3zi57 Button_buttonPrimary__12Kak" href="#">See more</a></div></div></section>
-
-
-
-
-
-
-
-<section class="AboutPageHero_globe__1eami">
-  <button class="Button_button__2Lf63 Button_buttonPrimary__3LC6Z Button_buttonSmall__ccNzV" style="border-radius: 3px; display: block; margin: 15px auto 0px; position: absolute; padding: 20px; font-size: 20px;" data-fancybox data-type="iframe" data-src="pages/leaderboard.html" href="javascript:;">
-      Leaderboard
-  </button>
+<!-- Dedicated leaderboard hero (with original SVG earth) -->
+<section class="AboutPageHero_globe__1eami pp-leaderboard-hero" id="leaderboard">
+  <div class="pp-leaderboard-hero__inner">
+    <h2 class="pp-leaderboard-hero__title pp-section-title">Leaderboard</h2>
+    <p class="pp-leaderboard-hero__subtitle">See the top regen heroes and villains.</p>
+    <button class="Button_button__2Lf63 Button_buttonPrimary__3LC6Z Button_buttonSmall__ccNzV pp-leaderboard-hero__button"
+            data-fancybox data-type="iframe" data-src="pages/leaderboard.html" href="javascript:;">
+      Open leaderboard
+    </button>
+  </div>
+  <div class="pp-leaderboard-hero__globe" aria-hidden="true">
+    <img class="pp-leaderboard-hero__globeImg" src="assets/img/earth.svg" alt="">
+    <img class="pp-leaderboard-hero__globeBadge" src="assets/img/leaderboard-badge.svg" alt="">
+  </div>
 </section>
 
 
 
 
 
-<section class="" style="background-color: #f2f2f2; padding: 40px;">
-  <center>
+<section class="pp-impact-badges pp-game-section" id="world">
+  <div class="pp-game">
+    <div class="pp-game__media">
+      <img class="pp-game__img" src="assets/img/hh2.png" alt="PeoplePower Game preview">
+    </div>
 
-    <h1 style="font-size: 35px; padding-bottom: 25px;">PeoplePower Game</h1>
+    <div class="pp-game__content">
+      <h2 class="pp-game__title pp-section-title">PeoplePower World</h2>
+      <p class="pp-game__copy">
+        An interactive globe showing devastation: Ice caps melted, Flooding, Animal Extinction, Desertification, Economic Ruin, Natural Disaster — a desolate Earth.
+      </p>
+      <p class="pp-game__copy">
+        Slowly players will transform this uninhabitable world into a new thriving civilisation — The PeoplePower World.
+      </p>
+      <p class="pp-game__copy">
+        Your PeoplePower eco-assets can help to build a better future and visualise the new world order.
+      </p>
 
-    <img src="assets/img/hh2.png" style="width: 45%; padding-bottom: 30px;">
+      <div class="pp-game__actions">
+        <button class="Button_button__2Lf63 Button_buttonPrimary__3LC6Z Button_buttonSmall__ccNzV pp-game__cta"
+                data-fancybox data-type="image" data-src="assets/img/hh.jpg" href="javascript:;">
+          Play game
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <h1 style="font-size: 16px; margin-left: 20%; margin-right: 20%">
-<b>Earth in 2100</b>
-<br><br>
-An interactive globe showing devastation: Ice caps melted, Flooding, Animal Extinction, Desertification, Economic Ruin, Natural Disaster - a desolate earth.
-<br><br>
-Slowly players will transform this uninhabitable world, into a new thriving civilisation - The PeoplePower World. 
-<br><br>
-Your PeoplePower eco-assets can help to build a better future and visualise the new world order.
-<br><br>
-    </h1>
-
-    <button class="Button_button__2Lf63 Button_buttonPrimary__3LC6Z Button_buttonSmall__ccNzV" style="border-radius: 3px; display: block; margin: 0px auto 0px; padding: 10px; font-size: 20px;" data-fancybox data-type="image" data-src="assets/img/hh.jpg" href="javascript:;">
-      Play Game
-    </button>
-
-<br><br><br><br>
-
-  </center> 
 </section>
 
 
@@ -3656,7 +3700,9 @@ Your PeoplePower eco-assets can help to build a better future and visualise the 
                                 <li class="Footer_footerBoxItemHeader__3atQE">
                                     <h2 class="Footer_footerBoxHeader__3O_4k">Members</h2>
                                 </li>
-                                <li class="Footer_footerItem__1VJjD"><a class="Footer_footerLink__38Wi9 " href="#">View profile</a></li>
+                                <li class="Footer_footerItem__1VJjD">
+                                  <a class="Footer_footerLink__38Wi9" data-fancybox data-type="inline" data-src="#pp-profile-modal" href="javascript:;">View profile</a>
+                                </li>
                                 <li class="Footer_footerItem__1VJjD"><a class="Footer_footerLink__38Wi9" href="#">Log out</a></li>
                             </ul>
                             <ul class="Footer_footerBox__q6Ada">
@@ -3913,7 +3959,432 @@ Your PeoplePower eco-assets can help to build a better future and visualise the 
             </div>
         </div>
 
-    </div><iframe frameborder="0" allowtransparency="true" scrolling="no" name="__privateStripeController1" allowpaymentrequest="true" src="assets/vendor/offset-earth/controller-e3a37969eb837630e43331c43f3ddaf6.html" aria-hidden="true" tabindex="-1" style="border: none !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; visibility: hidden !important; position: fixed !important; height: 1px !important; pointer-events: none !important; user-select: none !important;"></iframe>
+    </div>
+
+    <!-- Profile modal (inline Fancybox) -->
+    <div style="display:none;">
+      <section id="pp-profile-modal" class="pp-profileModal" aria-label="Profile: montymerlin.eth">
+        <header class="pp-profileModal__header">
+          <div class="pp-profileModal__avatar" aria-hidden="true">
+            <img src="assets/img/montymerlinPP.jpeg" alt="">
+          </div>
+          <div class="pp-profileModal__identity">
+            <div class="pp-profileModal__name">montymerlin.eth</div>
+            <div class="pp-profileModal__meta">PeoplePower.fi • Impact Wallet</div>
+            <p class="pp-profileModal__bio">
+              “Love PeoplePower. Earning money and doing good, what could be better.”
+            </p>
+          </div>
+          <div class="pp-profileModal__actions">
+            <button class="Button_button__2Lf63 Button_buttonPrimary__3LC6Z Button_buttonSmall__ccNzV pp-profileModal__action"
+              data-fancybox data-type="iframe" data-src="pages/marketplace.html" type="button">
+              Open Marketplace
+            </button>
+            <button class="Button_button__2Lf63 Button_buttonSmall__ccNzV pp-profileModal__action pp-profileModal__action--ghost"
+              data-fancybox data-type="iframe" data-src="pages/leaderboard.html" type="button">
+              View Leaderboard
+            </button>
+            <button class="Button_button__2Lf63 Button_buttonSmall__ccNzV pp-profileModal__action pp-profileModal__action--ghost"
+              type="button" data-pp-go-tab="edit">
+              Edit Profile
+            </button>
+          </div>
+        </header>
+
+        <section class="pp-profileModal__stats" aria-label="Key stats">
+          <div class="pp-profileStat">
+            <div class="pp-profileStat__label">CO2 Offset</div>
+            <div class="pp-profileStat__value">1.17t</div>
+          </div>
+          <div class="pp-profileStat">
+            <div class="pp-profileStat__label">Carbon Credits</div>
+            <div class="pp-profileStat__value">843</div>
+          </div>
+          <div class="pp-profileStat">
+            <div class="pp-profileStat__label">PeoplePower</div>
+            <div class="pp-profileStat__value">1117</div>
+          </div>
+          <div class="pp-profileStat">
+            <div class="pp-profileStat__label">Trees</div>
+            <div class="pp-profileStat__value">28</div>
+          </div>
+        </section>
+
+        <nav class="pp-profileModal__tabs" aria-label="Profile tabs">
+          <button class="pp-profileTab is-active" type="button" data-pp-tab="overview">Overview</button>
+          <button class="pp-profileTab" type="button" data-pp-tab="activity">Activity</button>
+          <button class="pp-profileTab" type="button" data-pp-tab="edit">Edit</button>
+        </nav>
+
+        <section class="pp-profileModal__panels">
+          <div class="pp-profilePanel is-active" data-pp-panel="overview">
+            <div class="pp-profileGrid">
+              <div class="pp-profileCard">
+                <div class="pp-profileCard__title">Your impact world</div>
+                <div class="pp-profileCard__body">
+                  Your landscape evolves as you invest—projects you support become assets, achievements unlock, and your impact footprint grows.
+                </div>
+              </div>
+              <div class="pp-profileCard">
+                <div class="pp-profileCard__title">Next step</div>
+                <div class="pp-profileCard__body">
+                  Pick a new project in the Marketplace to expand your world and earn credits.
+                </div>
+              </div>
+            </div>
+
+            <div class="pp-profileSectionTitle">Portfolio</div>
+            <div class="pp-profileList">
+              <div class="pp-profileItem">
+                <div class="pp-profileItem__left">
+                  <img src="assets/img/windmill.svg" alt="" class="pp-profileItem__icon">
+                  <div>
+                    <div class="pp-profileItem__title">Eco-Assets</div>
+                    <div class="pp-profileItem__sub">3 collected</div>
+                  </div>
+                </div>
+                <div class="pp-profileItem__right">Diversify to unlock new biomes</div>
+              </div>
+              <div class="pp-profileItem">
+                <div class="pp-profileItem__left">
+                  <img src="assets/img/oak.png" alt="" class="pp-profileItem__icon">
+                  <div>
+                    <div class="pp-profileItem__title">Trees</div>
+                    <div class="pp-profileItem__sub">28 planted</div>
+                  </div>
+                </div>
+                <div class="pp-profileItem__right">Planting streak: 180 days</div>
+              </div>
+              <div class="pp-profileItem">
+                <div class="pp-profileItem__left">
+                  <img src="assets/img/heart.png" alt="" class="pp-profileItem__icon">
+                  <div>
+                    <div class="pp-profileItem__title">Collectibles</div>
+                    <div class="pp-profileItem__sub">1 NFT collectible</div>
+                  </div>
+                </div>
+                <div class="pp-profileItem__right">Customise your world aesthetic</div>
+              </div>
+            </div>
+
+            <div class="pp-profileSectionTitle">Achievements</div>
+            <div class="pp-profileBadges" aria-label="Badges">
+              <div class="pp-profileBadge">
+                <img src="assets/img/badges/download1.svg" alt="">
+                <div class="pp-profileBadge__label">10t CO2</div>
+              </div>
+              <div class="pp-profileBadge">
+                <img src="assets/img/badges/download2.svg" alt="">
+                <div class="pp-profileBadge__label">3 months</div>
+              </div>
+              <div class="pp-profileBadge">
+                <img src="assets/img/badges/download3.svg" alt="">
+                <div class="pp-profileBadge__label">6 months</div>
+              </div>
+              <div class="pp-profileBadge">
+                <img src="assets/img/badges/download4.svg" alt="">
+                <div class="pp-profileBadge__label">12 months</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pp-profilePanel" data-pp-panel="activity">
+            <div class="pp-profileTimeline">
+              <div class="pp-profileEvent">
+                <div class="pp-profileEvent__dot"></div>
+                <div class="pp-profileEvent__content">
+                  <div class="pp-profileEvent__title">Earned 200 PPCoins</div>
+                  <div class="pp-profileEvent__meta">Supported “Wind power in Turkey”</div>
+                </div>
+              </div>
+              <div class="pp-profileEvent">
+                <div class="pp-profileEvent__dot"></div>
+                <div class="pp-profileEvent__content">
+                  <div class="pp-profileEvent__title">Offset +0.12t CO2</div>
+                  <div class="pp-profileEvent__meta">Solar farm contribution</div>
+                </div>
+              </div>
+              <div class="pp-profileEvent">
+                <div class="pp-profileEvent__dot"></div>
+                <div class="pp-profileEvent__content">
+                  <div class="pp-profileEvent__title">Unlocked new badge progress</div>
+                  <div class="pp-profileEvent__meta">Climate positive streak</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pp-profilePanel" data-pp-panel="edit">
+            <form class="pp-profileForm" action="javascript:;" aria-label="Edit profile (prototype)">
+              <label class="pp-profileField">
+                <span class="pp-profileField__label">Display name</span>
+                <input class="pp-profileField__input" type="text" value="montymerlin.eth">
+              </label>
+              <label class="pp-profileField">
+                <span class="pp-profileField__label">Bio</span>
+                <textarea class="pp-profileField__input pp-profileField__textarea" rows="4">Love PeoplePower. Earning money and doing good, what could be better.</textarea>
+              </label>
+              <div class="pp-profileForm__row">
+                <button class="Button_button__2Lf63 Button_buttonPrimary__3LC6Z Button_buttonSmall__ccNzV pp-profileForm__save" type="button" disabled>
+                  Save (prototype)
+                </button>
+                <div class="pp-profileForm__note">Editing is a prototype UI for now (no persistence yet).</div>
+              </div>
+            </form>
+          </div>
+        </section>
+      </section>
+
+      <!-- Investment modals (inline Fancybox) -->
+      <section id="pp-wind-modal" class="pp-profileModal pp-investModal pp-investModal--wind" aria-label="Investment: Wind power in Turkey">
+        <header class="pp-profileModal__header">
+          <div class="pp-profileModal__avatar pp-investModal__avatar" aria-hidden="true">
+            <img src="assets/img/windmill.svg" alt="">
+          </div>
+          <div class="pp-profileModal__identity">
+            <div class="pp-profileModal__name">Wind Power • Turkey</div>
+            <div class="pp-profileModal__meta">Eco-Asset Investment • Akbuk Wind Plant</div>
+            <p class="pp-profileModal__bio">
+              Your stake helps keep 31.5MW of clean generation online. Yield accrues daily and can be harvested to your wallet.
+            </p>
+            <div class="pp-investModal__badgeRow" aria-label="Investment highlights">
+              <span class="pp-investPill">LIVE</span>
+              <span class="pp-investPill pp-investPill--muted">Risk: Medium</span>
+              <span class="pp-investPill pp-investPill--muted">Payout: Weekly</span>
+            </div>
+          </div>
+          <div class="pp-profileModal__actions">
+            <button class="Button_button__2Lf63 Button_buttonPrimary__3LC6Z Button_buttonSmall__ccNzV pp-profileModal__action"
+              type="button" data-pp-invest-harvest="wind">
+              Harvest yield
+            </button>
+            <button class="Button_button__2Lf63 Button_buttonSmall__ccNzV pp-profileModal__action pp-profileModal__action--ghost"
+              data-fancybox data-type="iframe" data-src="pages/marketplace.html" type="button">
+              Increase stake
+            </button>
+          </div>
+        </header>
+
+        <section class="pp-profileModal__stats" aria-label="Wind investment stats">
+          <div class="pp-profileStat">
+            <div class="pp-profileStat__label">Amount invested</div>
+            <div class="pp-profileStat__value"><span data-pp-invest="wind" data-field="invested">£1,250</span></div>
+          </div>
+          <div class="pp-profileStat">
+            <div class="pp-profileStat__label">Yield (APY)</div>
+            <div class="pp-profileStat__value"><span data-pp-invest="wind" data-field="apy">7.4%</span></div>
+          </div>
+          <div class="pp-profileStat">
+            <div class="pp-profileStat__label">Yield earned</div>
+            <div class="pp-profileStat__value"><span data-pp-invest="wind" data-field="earned">£38.90</span></div>
+          </div>
+          <div class="pp-profileStat">
+            <div class="pp-profileStat__label">CO₂ offset</div>
+            <div class="pp-profileStat__value"><span data-pp-invest="wind" data-field="co2">0.88t</span></div>
+          </div>
+        </section>
+
+        <section class="pp-profileModal__panels">
+          <div class="pp-profilePanel is-active">
+            <div class="pp-profileSectionTitle">Position details</div>
+            <div class="pp-profileList">
+              <div class="pp-profileItem">
+                <div class="pp-profileItem__left">
+                  <img src="assets/img/ppcoin.png" alt="" class="pp-profileItem__icon">
+                  <div>
+                    <div class="pp-profileItem__title">Yield harvested to date</div>
+                    <div class="pp-profileItem__sub">Total paid out to your wallet</div>
+                  </div>
+                </div>
+                <div class="pp-profileItem__right"><span data-pp-invest="wind" data-field="harvested">£12.30</span></div>
+              </div>
+              <div class="pp-profileItem">
+                <div class="pp-profileItem__left">
+                  <img src="assets/img/heart.png" alt="" class="pp-profileItem__icon">
+                  <div>
+                    <div class="pp-profileItem__title">Days invested</div>
+                    <div class="pp-profileItem__sub">Keeping your climate streak strong</div>
+                  </div>
+                </div>
+                <div class="pp-profileItem__right"><span data-pp-invest="wind" data-field="days">180</span> days</div>
+              </div>
+              <div class="pp-profileItem">
+                <div class="pp-profileItem__left">
+                  <img src="assets/img/co2w.png" alt="" class="pp-profileItem__icon">
+                  <div>
+                    <div class="pp-profileItem__title">Next payout</div>
+                    <div class="pp-profileItem__sub">Estimated</div>
+                  </div>
+                </div>
+                <div class="pp-profileItem__right"><span data-pp-invest="wind" data-field="nextPayout">2d</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section id="pp-solar-modal" class="pp-profileModal pp-investModal pp-investModal--solar" aria-label="Investment: Hooke Solar Farm">
+        <header class="pp-profileModal__header">
+          <div class="pp-profileModal__avatar pp-investModal__avatar" aria-hidden="true">
+            <img src="assets/img/solar.png" alt="">
+          </div>
+          <div class="pp-profileModal__identity">
+            <div class="pp-profileModal__name">Hooke Solar Farm</div>
+            <div class="pp-profileModal__meta">Eco-Asset Investment • West Dorset</div>
+            <p class="pp-profileModal__bio">
+              Your capital backs community solar generation. Yield accrues daily; harvest anytime or reinvest to grow your position.
+            </p>
+            <div class="pp-investModal__badgeRow" aria-label="Investment highlights">
+              <span class="pp-investPill">LIVE</span>
+              <span class="pp-investPill pp-investPill--muted">Risk: Low</span>
+              <span class="pp-investPill pp-investPill--muted">Payout: Daily</span>
+            </div>
+          </div>
+          <div class="pp-profileModal__actions">
+            <button class="Button_button__2Lf63 Button_buttonPrimary__3LC6Z Button_buttonSmall__ccNzV pp-profileModal__action"
+              type="button" data-pp-invest-harvest="solar">
+              Harvest yield
+            </button>
+            <button class="Button_button__2Lf63 Button_buttonSmall__ccNzV pp-profileModal__action pp-profileModal__action--ghost"
+              data-fancybox data-type="iframe" data-src="pages/marketplace.html" type="button">
+              Add funds
+            </button>
+          </div>
+        </header>
+
+        <section class="pp-profileModal__stats" aria-label="Solar investment stats">
+          <div class="pp-profileStat">
+            <div class="pp-profileStat__label">Amount invested</div>
+            <div class="pp-profileStat__value"><span data-pp-invest="solar" data-field="invested">£900</span></div>
+          </div>
+          <div class="pp-profileStat">
+            <div class="pp-profileStat__label">Yield (APY)</div>
+            <div class="pp-profileStat__value"><span data-pp-invest="solar" data-field="apy">5.8%</span></div>
+          </div>
+          <div class="pp-profileStat">
+            <div class="pp-profileStat__label">Yield earned</div>
+            <div class="pp-profileStat__value"><span data-pp-invest="solar" data-field="earned">£21.44</span></div>
+          </div>
+          <div class="pp-profileStat">
+            <div class="pp-profileStat__label">CO₂ offset</div>
+            <div class="pp-profileStat__value"><span data-pp-invest="solar" data-field="co2">0.62t</span></div>
+          </div>
+        </section>
+
+        <section class="pp-profileModal__panels">
+          <div class="pp-profilePanel is-active">
+            <div class="pp-profileSectionTitle">Position details</div>
+            <div class="pp-profileList">
+              <div class="pp-profileItem">
+                <div class="pp-profileItem__left">
+                  <img src="assets/img/ppcoin.png" alt="" class="pp-profileItem__icon">
+                  <div>
+                    <div class="pp-profileItem__title">Yield harvested to date</div>
+                    <div class="pp-profileItem__sub">Total paid out to your wallet</div>
+                  </div>
+                </div>
+                <div class="pp-profileItem__right"><span data-pp-invest="solar" data-field="harvested">£6.10</span></div>
+              </div>
+              <div class="pp-profileItem">
+                <div class="pp-profileItem__left">
+                  <img src="assets/img/heart.png" alt="" class="pp-profileItem__icon">
+                  <div>
+                    <div class="pp-profileItem__title">Days invested</div>
+                    <div class="pp-profileItem__sub">Building compounding impact</div>
+                  </div>
+                </div>
+                <div class="pp-profileItem__right"><span data-pp-invest="solar" data-field="days">180</span> days</div>
+              </div>
+              <div class="pp-profileItem">
+                <div class="pp-profileItem__left">
+                  <img src="assets/img/co2w.png" alt="" class="pp-profileItem__icon">
+                  <div>
+                    <div class="pp-profileItem__title">Next payout</div>
+                    <div class="pp-profileItem__sub">Estimated</div>
+                  </div>
+                </div>
+                <div class="pp-profileItem__right"><span data-pp-invest="solar" data-field="nextPayout">8h</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- Forest modal (inline Fancybox) -->
+      <section id="pp-forest-modal" class="pp-profileModal pp-forestModal" aria-label="Forest details">
+        <header class="pp-profileModal__header">
+          <div class="pp-profileModal__avatar" aria-hidden="true">
+            <img src="assets/img/oak.png" alt="">
+          </div>
+          <div class="pp-profileModal__identity">
+            <div class="pp-profileModal__name">Your Forest</div>
+            <div class="pp-profileModal__meta">Tree growth • Rewards • Impact</div>
+            <p class="pp-profileModal__bio">
+              Earn trees by staying climate positive and supporting projects. Your forest becomes part of your PeoplePower world.
+            </p>
+          </div>
+          <div class="pp-profileModal__actions">
+            <button class="Button_button__2Lf63 Button_buttonPrimary__3LC6Z Button_buttonSmall__ccNzV pp-profileModal__action"
+              data-fancybox data-type="iframe" data-src="pages/marketplace.html" type="button">
+              Grow your forest
+            </button>
+            <button class="Button_button__2Lf63 Button_buttonSmall__ccNzV pp-profileModal__action pp-profileModal__action--ghost"
+              data-fancybox data-type="inline" data-src="#pp-profile-modal" type="button">
+              View profile
+            </button>
+          </div>
+        </header>
+
+        <section class="pp-profileModal__stats" aria-label="Forest stats">
+          <div class="pp-profileStat">
+            <div class="pp-profileStat__label">Trees planted</div>
+            <div class="pp-profileStat__value">28</div>
+          </div>
+          <div class="pp-profileStat">
+            <div class="pp-profileStat__label">Streak</div>
+            <div class="pp-profileStat__value">180d</div>
+          </div>
+          <div class="pp-profileStat">
+            <div class="pp-profileStat__label">Next tree in</div>
+            <div class="pp-profileStat__value">2d</div>
+          </div>
+          <div class="pp-profileStat">
+            <div class="pp-profileStat__label">Biome</div>
+            <div class="pp-profileStat__value">Forest</div>
+          </div>
+        </section>
+
+        <section class="pp-profileModal__panels">
+          <div class="pp-profilePanel is-active">
+            <div class="pp-profileSectionTitle">How to earn trees</div>
+            <div class="pp-profileList">
+              <div class="pp-profileItem">
+                <div class="pp-profileItem__left">
+                  <img src="assets/img/heart.png" alt="" class="pp-profileItem__icon">
+                  <div>
+                    <div class="pp-profileItem__title">Support projects</div>
+                    <div class="pp-profileItem__sub">Invest in eco-assets</div>
+                  </div>
+                </div>
+                <div class="pp-profileItem__right">Each support period contributes to growth</div>
+              </div>
+              <div class="pp-profileItem">
+                <div class="pp-profileItem__left">
+                  <img src="assets/img/co2.png" alt="" class="pp-profileItem__icon">
+                  <div>
+                    <div class="pp-profileItem__title">Stay climate positive</div>
+                    <div class="pp-profileItem__sub">Keep your streak alive</div>
+                  </div>
+                </div>
+                <div class="pp-profileItem__right">Consistency unlocks faster growth</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+    </div>
+
+    <iframe frameborder="0" allowtransparency="true" scrolling="no" name="__privateStripeController1" allowpaymentrequest="true" src="assets/vendor/offset-earth/controller-e3a37969eb837630e43331c43f3ddaf6.html" aria-hidden="true" tabindex="-1" style="border: none !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; visibility: hidden !important; position: fixed !important; height: 1px !important; pointer-events: none !important; user-select: none !important;"></iframe>
 
 
 

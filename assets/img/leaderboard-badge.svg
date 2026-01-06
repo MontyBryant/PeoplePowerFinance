@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Trophy">
+  <defs>
+    <linearGradient id="gold" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#ffe79a"/>
+      <stop offset="0.6" stop-color="#f8ce57"/>
+      <stop offset="1" stop-color="#c9921c"/>
+    </linearGradient>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feColorMatrix in="b" type="matrix"
+        values="1 0 0 0 0
+                0 1 0 0 0
+                0 0 1 0 0
+                0 0 0 .45 0" result="g"/>
+      <feMerge>
+        <feMergeNode in="g"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <g filter="url(#glow)">
+    <!-- cup -->
+    <path d="M44 26h40v18c0 14-9.5 24-20 24s-20-10-20-24V26z" fill="url(#gold)"/>
+
+    <!-- handles -->
+    <path d="M34 30h10v10c0 9-5 16-10 18v-10c3-2 4-5 4-8V30h-4z" fill="url(#gold)"/>
+    <path d="M94 30H84v10c0 9 5 16 10 18V48c-3-2-4-5-4-8V30h4z" fill="url(#gold)"/>
+
+    <!-- stem + base -->
+    <rect x="56" y="68" width="16" height="10" rx="5" fill="url(#gold)"/>
+    <rect x="46" y="78" width="36" height="12" rx="6" fill="url(#gold)"/>
+    <rect x="40" y="92" width="48" height="14" rx="7" fill="rgba(0,0,0,0.24)"/>
+  </g>
+</svg>
+

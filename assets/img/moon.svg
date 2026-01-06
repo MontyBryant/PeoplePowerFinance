@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Moon">
+  <defs>
+    <radialGradient id="g" cx="35%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.92"/>
+      <stop offset="60%" stop-color="#dbe7ff" stop-opacity="0.86"/>
+      <stop offset="100%" stop-color="#8fb7ff" stop-opacity="0.70"/>
+    </radialGradient>
+
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="7" result="b"/>
+      <feColorMatrix in="b" type="matrix"
+        values="1 0 0 0 0
+                0 1 0 0 0
+                0 0 1 0 0
+                0 0 0 .45 0" result="g2"/>
+      <feMerge>
+        <feMergeNode in="g2"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Mask creates a clean crescent (prevents “double moon” look) -->
+    <mask id="crescent">
+      <rect width="256" height="256" fill="black"/>
+      <circle cx="128" cy="128" r="92" fill="white"/>
+      <circle cx="164" cy="108" r="92" fill="black"/>
+    </mask>
+  </defs>
+
+  <g filter="url(#glow)">
+    <circle cx="128" cy="128" r="92" fill="url(#g)" mask="url(#crescent)"/>
+
+    <!-- subtle craters -->
+    <g opacity="0.22">
+      <circle cx="94" cy="106" r="10" fill="#cfe0ff"/>
+      <circle cx="112" cy="154" r="7" fill="#cfe0ff"/>
+      <circle cx="76" cy="142" r="5" fill="#cfe0ff"/>
+    </g>
+  </g>
+</svg>
+

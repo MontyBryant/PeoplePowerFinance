@@ -9,30 +9,23 @@ set -euo pipefail
 # - Remove duplicate site copies in `docs/` + `site/`
 # - Consolidate assets under `assets/`
 #
-# This script is idempotent-ish: it prefers moving duplicates into `archive/old/`.
+# This script is idempotent-ish: it used to move duplicates into `archive/old/`.
+# Note: `archive/old/` was removed in the 2026 cleanup.
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
 
 echo "==> Working in: $ROOT_DIR"
 
-mkdir -p "archive/old"
 mkdir -p "assets/css" "assets/img" "assets/fonts" "assets/vendor"
 
-echo "==> Backing up duplicate site copies (docs/, site/) to archive/old/ (if present)"
-if [[ -d "docs" ]]; then
-  rm -rf "archive/old/docs" || true
-  mv "docs" "archive/old/docs"
-fi
-if [[ -d "site" ]]; then
-  rm -rf "archive/old/site" || true
-  mv "site" "archive/old/site"
-fi
+echo "==> Skipping legacy backups (docs/, site/) - archive/old no longer exists"
 
 echo "==> Moving large saved-export folders into archive/vendor (if present)"
 if [[ -d "Monty Bryant _ Ecologi_files" ]]; then
-  rm -rf "archive/old/ecologi_files" || true
-  mv "Monty Bryant _ Ecologi_files" "archive/old/ecologi_files"
+  rm -rf "archive/ecologi_files" || true
+  mkdir -p "archive"
+  mv "Monty Bryant _ Ecologi_files" "archive/ecologi_files"
 fi
 if [[ -d "Monty Bryant _ Offset Earth_files" ]]; then
   rm -rf "assets/vendor/offset-earth" || true
@@ -71,7 +64,7 @@ fi
 
 echo "==> Moving CSS into assets/css/"
 if [[ -f "market/market.css" ]]; then
-  mv "market/market.css" "assets/css/market.css"
+  mv "market/market.css" "assets/css/modals.css"
 fi
 
 echo "==> Removing fancybox source tree (kept dist copies only)"
@@ -112,10 +105,10 @@ def rewrite_html(p: Path, is_root: bool) -> None:
     t = t.replace("./Monty Bryant _ Offset Earth_files/", "assets/vendor/offset-earth/" if is_root else "../assets/vendor/offset-earth/")
     t = t.replace("../Monty Bryant _ Offset Earth_files/", "assets/vendor/offset-earth/" if is_root else "../assets/vendor/offset-earth/")
 
-    # Point to consolidated market css
-    t = t.replace('href="market/market.css"', 'href="assets/css/market.css"' if is_root else 'href="../assets/css/market.css"')
-    t = t.replace('href="../market/market.css"', 'href="assets/css/market.css"' if is_root else 'href="../assets/css/market.css"')
-    t = t.replace('href="market.css"', 'href="../assets/css/market.css"')
+    # Point to consolidated modals css
+    t = t.replace('href="market/market.css"', 'href="assets/css/modals.css"' if is_root else 'href="../assets/css/modals.css"')
+    t = t.replace('href="../market/market.css"', 'href="assets/css/modals.css"' if is_root else 'href="../assets/css/modals.css"')
+    t = t.replace('href="market.css"', 'href="../assets/css/modals.css"')
 
     # Images: img/* and root-level pngs moved into assets/img
     if is_root:
@@ -156,13 +149,13 @@ for p in (root/"pages").glob("*.html") if (root/"pages").exists() else []:
 print("rewrote HTML files")
 PY
 
-echo "==> Rewriting market.css for new paths (fonts + icons), removing external http @import"
+echo "==> Rewriting modals.css for new paths (fonts + icons), removing external http @import"
 python3 - <<'PY'
 from pathlib import Path
 
-p = Path("assets/css/market.css")
+p = Path("assets/css/modals.css")
 if not p.exists():
-    raise SystemExit("assets/css/market.css not found")
+    raise SystemExit("assets/css/modals.css not found")
 
 t = p.read_text(encoding="utf-8", errors="ignore")
 t2 = t.replace("@import url(http://fonts.googleapis.com/css?family=Raleway);",
@@ -182,7 +175,7 @@ t2 = t2.replace("background-image: url(../co2.png);", "background-image: url(../
 
 if t2 != t:
     p.write_text(t2, encoding="utf-8")
-print("rewrote assets/css/market.css")
+print("rewrote assets/css/modals.css")
 PY
 
 echo "==> Removing redundant copies of market css + jquery inside market/ (we now use assets/)"

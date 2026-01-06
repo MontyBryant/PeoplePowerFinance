@@ -1,0 +1,605 @@
+/* PeoplePower — Night mode overrides (glassy)
+   Renamed from legacy `assets/css/theme.css` for clarity. */
+
+/* PeoplePower — Glass Theme (site-wide)
+   Intentionally overrides vendor + legacy CSS to unify look/feel. */
+
+:root{
+  --pp-font-sans: sofiapro, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+  --pp-font-display: sofiapro, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+
+  /* deeper night */
+  --pp-bg-0: #04050b;
+  --pp-bg-1: #070a14;
+  --pp-bg-2: #0a1222;
+
+  --pp-text: rgba(255,255,255,.92);
+  --pp-text-dim: rgba(255,255,255,.72);
+  --pp-text-faint: rgba(255,255,255,.55);
+
+  --pp-border: rgba(255,255,255,.12);
+  --pp-border-strong: rgba(255,255,255,.20);
+
+  /* darker glass surfaces */
+  --pp-glass: rgba(12, 18, 30, .48);
+  --pp-glass-strong: rgba(12, 18, 30, .62);
+  --pp-glass-weak: rgba(12, 18, 30, .32);
+
+  --pp-shadow: 0 18px 55px rgba(0,0,0,.45);
+  --pp-shadow-soft: 0 12px 30px rgba(0,0,0,.28);
+
+  --pp-accent: #20bf85;
+  --pp-accent-2: #66d9ef;
+  --pp-danger: #e74c3c;
+  --pp-warn: #f8ce57;
+
+  --pp-radius-xl: 24px;
+  --pp-radius-lg: 18px;
+  --pp-radius-md: 14px;
+  --pp-radius-sm: 12px;
+
+  --pp-blur: 18px;
+}
+
+*,
+*::before,
+*::after{ box-sizing: border-box; }
+
+html, body{
+  height: 100%;
+}
+
+body{
+  font-family: var(--pp-font-sans);
+  color: var(--pp-text);
+  background:
+    radial-gradient(1200px 900px at 14% 10%, rgba(32,191,133,.16), transparent 60%),
+    radial-gradient(900px 700px at 86% 16%, rgba(102,217,239,.12), transparent 55%),
+    radial-gradient(900px 900px at 50% 105%, rgba(231,76,60,.08), transparent 60%),
+    linear-gradient(180deg, var(--pp-bg-0), var(--pp-bg-1) 35%, var(--pp-bg-2));
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+
+/* Starfield */
+body::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: .55;
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(255,255,255,.85) 1px, transparent 2px),
+    radial-gradient(circle at 22% 42%, rgba(255,255,255,.65) 1px, transparent 2px),
+    radial-gradient(circle at 38% 16%, rgba(255,255,255,.75) 1px, transparent 2px),
+    radial-gradient(circle at 52% 28%, rgba(255,255,255,.55) 1px, transparent 2px),
+    radial-gradient(circle at 68% 14%, rgba(255,255,255,.75) 1px, transparent 2px),
+    radial-gradient(circle at 84% 30%, rgba(255,255,255,.60) 1px, transparent 2px),
+    radial-gradient(circle at 78% 52%, rgba(255,255,255,.70) 1px, transparent 2px),
+    radial-gradient(circle at 60% 44%, rgba(255,255,255,.55) 1px, transparent 2px),
+    radial-gradient(circle at 30% 64%, rgba(255,255,255,.60) 1px, transparent 2px);
+  background-size:
+    220px 220px,
+    260px 260px,
+    300px 300px,
+    340px 340px,
+    280px 280px,
+    320px 320px,
+    360px 360px,
+    400px 400px,
+    520px 520px;
+}
+
+body::after{
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: .18;
+  background-image:
+    radial-gradient(circle at 18% 22%, rgba(255,255,255,.9) 2px, transparent 6px),
+    radial-gradient(circle at 72% 18%, rgba(255,255,255,.9) 2px, transparent 6px),
+    radial-gradient(circle at 82% 44%, rgba(255,255,255,.9) 2px, transparent 6px);
+  filter: blur(.2px);
+}
+
+/* Homepage hero sky: show more sky above the mountains in night mode */
+html[data-pp-theme="night"] body.pp-home .ProfileForest_wrapper__2BSF4:before{
+  top: -145px; /* vendor is -170px; tuned to avoid showing too much sky */
+}
+
+/* HERO PANEL (night mode) */
+html[data-pp-theme="night"] body.pp-home .pp-heroPanel{
+  background: var(--pp-glass-strong);
+  border: 1px solid var(--pp-border);
+  box-shadow: var(--pp-shadow);
+}
+html[data-pp-theme="night"] body.pp-home .pp-heroPanel__logo{
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.14);
+}
+html[data-pp-theme="night"] body.pp-home .pp-heroPanel__kicker{
+  color: rgba(255,255,255,.72);
+}
+html[data-pp-theme="night"] body.pp-home .pp-heroPanel__headline{
+  color: rgba(255,255,255,.96);
+}
+html[data-pp-theme="night"] body.pp-home .pp-heroPanel__walletSection{
+  border-top-color: rgba(255,255,255,.14);
+}
+html[data-pp-theme="night"] body.pp-home .pp-heroPanel__sectionTitle{
+  color: rgba(255,255,255,.70);
+}
+html[data-pp-theme="night"] body.pp-home .pp-heroStat{
+  background: rgba(12, 18, 30, .40);
+  border-color: rgba(255,255,255,.14);
+}
+html[data-pp-theme="night"] body.pp-home .pp-heroStat__label{
+  color: rgba(255,255,255,.70);
+}
+html[data-pp-theme="night"] body.pp-home .pp-heroStat__value{
+  color: rgba(255,255,255,.96);
+}
+html[data-pp-theme="night"] body.pp-home .pp-heroPill{
+  background: rgba(12, 18, 30, .40);
+  border-color: rgba(255,255,255,.14);
+  color: rgba(255,255,255,.82);
+}
+html[data-pp-theme="night"] body.pp-home .pp-heroPill b{
+  color: #fff;
+}
+html[data-pp-theme="night"] body.pp-home .pp-heroPanel__desc{
+  color: rgba(255,255,255,.82);
+}
+html[data-pp-theme="night"] body.pp-home .pp-heroPanel__hint{
+  color: rgba(255,255,255,.68);
+}
+
+/* Profile modal (night mode) */
+html[data-pp-theme="night"] .pp-profileModal__name{ color: rgba(255,255,255,.96); }
+html[data-pp-theme="night"] .pp-profileModal__meta{ color: rgba(255,255,255,.70); }
+html[data-pp-theme="night"] .pp-profileModal__bio{ color: rgba(255,255,255,.78); }
+html[data-pp-theme="night"] .pp-profileModal__avatar{
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.14);
+}
+html[data-pp-theme="night"] .pp-profileModal__action--ghost{
+  background: rgba(12, 18, 30, .40) !important;
+  color: rgba(255,255,255,.92) !important;
+  border-color: rgba(255,255,255,.16) !important;
+}
+
+/* Investment modals (night mode): override day-mode white gradients */
+html[data-pp-theme="night"] .pp-investModal{
+  background:
+    radial-gradient(1200px 520px at 18% -10%, rgba(32,191,133,.22), rgba(0,0,0,0) 62%),
+    radial-gradient(900px 480px at 110% 10%, rgba(102,217,239,.18), rgba(0,0,0,0) 58%),
+    rgba(12, 18, 30, .72);
+  border: 1px solid rgba(255,255,255,.14);
+  box-shadow: var(--pp-shadow);
+}
+html[data-pp-theme="night"] .pp-investPill{
+  background: rgba(12, 18, 30, .45);
+  border-color: rgba(255,255,255,.14);
+  color: rgba(255,255,255,.88);
+}
+html[data-pp-theme="night"] .pp-investPill::before{
+  background: rgba(32,191,133,.95);
+  box-shadow: 0 0 0 3px rgba(32,191,133,.22);
+}
+html[data-pp-theme="night"] .pp-investPill--muted::before{
+  background: rgba(255,255,255,.35);
+  box-shadow: none;
+}
+html[data-pp-theme="night"] .pp-profileStat,
+html[data-pp-theme="night"] .pp-profileCard,
+html[data-pp-theme="night"] .pp-profileItem,
+html[data-pp-theme="night"] .pp-profileBadge,
+html[data-pp-theme="night"] .pp-profileEvent{
+  background: rgba(12, 18, 30, .40);
+  border-color: rgba(255,255,255,.14);
+}
+html[data-pp-theme="night"] .pp-profileStat__label,
+html[data-pp-theme="night"] .pp-profileCard__title,
+html[data-pp-theme="night"] .pp-profileBadge__label,
+html[data-pp-theme="night"] .pp-profileEvent__title,
+html[data-pp-theme="night"] .pp-profileItem__title{
+  color: rgba(255,255,255,.82);
+}
+html[data-pp-theme="night"] .pp-profileStat__value{ color: rgba(255,255,255,.96); }
+html[data-pp-theme="night"] .pp-profileCard__body,
+html[data-pp-theme="night"] .pp-profileItem__sub,
+html[data-pp-theme="night"] .pp-profileItem__right,
+html[data-pp-theme="night"] .pp-profileEvent__meta{
+  color: rgba(255,255,255,.72);
+}
+html[data-pp-theme="night"] .pp-profileTab{
+  border-color: rgba(255,255,255,.14);
+  background: rgba(12, 18, 30, .35);
+  color: rgba(255,255,255,.88);
+}
+html[data-pp-theme="night"] .pp-profileTab.is-active{
+  background: rgba(32,191,133,.20);
+  border-color: rgba(32,191,133,.40);
+}
+
+html[data-pp-theme="night"] .pp-profileSectionTitle{
+  color: rgba(255,255,255,.78);
+}
+
+html[data-pp-theme="night"] .pp-profileField__label{ color: rgba(255,255,255,.78); }
+html[data-pp-theme="night"] .pp-profileField__input{
+  background: rgba(12, 18, 30, .40);
+  border-color: rgba(255,255,255,.14);
+  color: rgba(255,255,255,.92);
+}
+html[data-pp-theme="night"] .pp-profileForm__note{ color: rgba(255,255,255,.70); }
+
+html[data-pp-theme="night"] .fancybox-close-small{
+  background: rgba(12, 18, 30, .60) !important;
+  border-color: rgba(255,255,255,.16) !important;
+  color: rgba(255,255,255,.92) !important;
+  box-shadow: 0 18px 55px rgba(0,0,0,.45) !important;
+}
+html[data-pp-theme="night"] .fancybox-close-small:hover{
+  background: rgba(12, 18, 30, .74) !important;
+}
+
+/* Combined “Impact + Badges” section (night mode) */
+.pp-impact-badges{
+  margin: 24px auto 26px;
+  padding: 92px 0;
+  background: var(--pp-glass-weak);
+  border-top: 1px solid rgba(255,255,255,.10);
+  border-bottom: 1px solid rgba(255,255,255,.10);
+  -webkit-backdrop-filter: blur(var(--pp-blur)) saturate(170%);
+  backdrop-filter: blur(var(--pp-blur)) saturate(170%);
+}
+.pp-impact-badges:not(.pp-game-section){
+  margin-top: 56px; /* match spacing rhythm used before the footer */
+}
+
+/* Make the game section match the same night-mode surface */
+.pp-game-section{
+  background: linear-gradient(rgba(4, 5, 11, 0.3), rgba(4, 5, 11, 0.3)), url("../img/gamebackground.png") no-repeat center center !important;
+  background-size: cover !important;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  border-bottom: 1px solid rgba(255,255,255,.10);
+  margin-bottom: 56px; /* show sky/background before footer (consistent spacing) */
+}
+
+/* PeoplePower Game (homepage) — night-mode treatment */
+.pp-game__media{
+  background: rgba(12, 18, 30, .40);
+  border-color: rgba(255,255,255,.14);
+  box-shadow: 0 18px 55px rgba(0,0,0,.35);
+  -webkit-backdrop-filter: blur(14px) saturate(170%);
+  backdrop-filter: blur(14px) saturate(170%);
+}
+.pp-game__copy{
+  color: var(--pp-text-dim);
+}
+.pp-impact-badges hr{
+  border-color: rgba(255,255,255,.16) !important;
+}
+
+/* Keep the badges-section “panel” vibe, but make it night-friendly */
+.pp-impact-badges .ProfileImpact_profileImpact__orp8H{
+  background: transparent !important;
+}
+.pp-impact-badges .ProfileAchievementsRow_ProfileAchievementsRow__1P_iw{
+  background: transparent !important;
+}
+
+/* Make legacy pages (market/ pages/) stop fighting the global background */
+body:not(.board_page){
+  background-color: transparent;
+}
+
+a{ color: rgba(255,255,255,.88); text-decoration: none; }
+a:hover{ color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+
+h1, h2, h3, h4, h5{
+  font-family: var(--pp-font-display);
+  color: #fff;
+  letter-spacing: .2px;
+}
+
+p, li, span{
+  color: var(--pp-text);
+}
+
+/* Generic glass surface */
+.pp-glass{
+  background: var(--pp-glass);
+  border: 1px solid var(--pp-border);
+  border-radius: var(--pp-radius-xl);
+  box-shadow: var(--pp-shadow-soft);
+  -webkit-backdrop-filter: blur(var(--pp-blur)) saturate(170%);
+  backdrop-filter: blur(var(--pp-blur)) saturate(170%);
+}
+
+/* Fix legacy black text inside night mode (notably `.icon` in market pages) */
+.icon{
+  color: var(--pp-text) !important;
+}
+
+/* Fancybox (modals) */
+.fancybox-bg{ background: rgba(0,0,0,.62) !important; }
+.fancybox-slide--iframe .fancybox-content,
+.fancybox-content{
+  border-radius: var(--pp-radius-xl) !important;
+  overflow: hidden !important;
+  box-shadow: var(--pp-shadow) !important;
+  background: rgba(6, 8, 14, .72) !important;
+  border: 1px solid rgba(255,255,255,.14) !important;
+  -webkit-backdrop-filter: blur(var(--pp-blur)) saturate(170%);
+  backdrop-filter: blur(var(--pp-blur)) saturate(170%);
+}
+
+/* Ensure all text inside fancybox is readable in night mode */
+.fancybox-content,
+.fancybox-content *{
+  color: var(--pp-text) !important;
+}
+.fancybox-content a{
+  color: rgba(102,217,239,.92) !important;
+  text-decoration-color: rgba(102,217,239,.55);
+}
+.fancybox-content a:hover{
+  color: #fff !important;
+}
+
+/* ProjectCard modals (Hooke Solar / Wind Turkey) */
+.ProjectCard_projectCard__1P8xH{
+  background: rgba(6, 8, 14, .74) !important;
+  border: 1px solid rgba(255,255,255,.14) !important;
+  border-radius: var(--pp-radius-lg) !important;
+  box-shadow: var(--pp-shadow-soft) !important;
+}
+.ProjectCard_projectCardName__1zxb7{
+  color: #fff !important;
+}
+.ProjectCard_projectCardDescription__2ue2r{
+  color: var(--pp-text-dim) !important;
+}
+
+/* Top nav (market pages and board pages) */
+#cssmenu{
+  border-bottom: none !important;
+  background: rgba(6, 8, 14, .62) !important;
+  -webkit-backdrop-filter: blur(var(--pp-blur)) saturate(170%);
+  backdrop-filter: blur(var(--pp-blur)) saturate(170%);
+  box-shadow: var(--pp-shadow-soft) !important;
+}
+#cssmenu ul{
+  background: transparent !important;
+}
+#cssmenu > ul > li > a{
+  font-family: var(--pp-font-sans) !important;
+  color: rgba(255,255,255,.86) !important;
+  border-radius: 999px;
+}
+#cssmenu > ul > li > a:after{ content: none !important; }
+#cssmenu > ul > li.active > a,
+#cssmenu > ul > li:hover > a,
+#cssmenu > ul > li > a:hover{
+  color: #fff !important;
+  background: rgba(32,191,133,.22) !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+}
+
+/* Buttons (legacy + vendor-ish) */
+/* Do NOT globally restyle every <button> in night mode (it breaks badge SVG buttons).
+   Only restyle known button classes. */
+[class*="Button_button"],
+.buy_button,
+.buycoinbtn{
+  font-family: var(--pp-font-sans) !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(255,255,255,.14) !important;
+  color: #fff !important;
+  background: rgba(255,255,255,.10) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(170%);
+  backdrop-filter: blur(14px) saturate(170%);
+  box-shadow: 0 10px 26px rgba(0,0,0,.22);
+  transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+
+/* Ensure achievement badge buttons keep their SVG background images in night mode */
+.AchievementBadge_achievementBadgeButton__2-xnu{
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+button:hover,
+[class*="Button_button"]:hover,
+.buy_button:hover,
+.buycoinbtn:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.14) !important;
+  border-color: rgba(255,255,255,.22) !important;
+  box-shadow: 0 16px 40px rgba(0,0,0,.32);
+  text-decoration: none;
+}
+
+/* Market list items -> glass cards */
+.li_item{
+  border-bottom: 1px solid rgba(255,255,255,.10) !important;
+  background: rgba(12, 18, 30, .40);
+  border-radius: var(--pp-radius-lg);
+  margin: 12px 14px;
+  box-shadow: 0 10px 28px rgba(0,0,0,.20);
+  -webkit-backdrop-filter: blur(14px) saturate(170%);
+  backdrop-filter: blur(14px) saturate(170%);
+}
+.li_item:hover{
+  background: rgba(12, 18, 30, .52) !important;
+  box-shadow: 0 18px 45px rgba(0,0,0,.28) !important;
+}
+
+.item_titles{ color: #fff !important; }
+.item_excerpt{ color: var(--pp-text-dim) !important; }
+.post_headers{ color: #fff !important; font-family: var(--pp-font-sans) !important; }
+
+/* Tags/badges: unify with glass look */
+.Badge_badge__3px7Q{
+  border: 1px solid rgba(255,255,255,.14) !important;
+  background: rgba(12, 18, 30, .46) !important;
+  color: #fff !important;
+  -webkit-backdrop-filter: blur(14px) saturate(170%);
+  backdrop-filter: blur(14px) saturate(170%);
+}
+
+/* Achievements ("Badges" section on home) */
+.ProfileAchievementsRow_ProfileAchievementsRow__1P_iw{
+  background: transparent !important;
+}
+.ProfileAchievementsRow_title__29dkx{
+  background: rgba(6, 8, 14, .70) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255,255,255,.14) !important;
+  border-radius: 999px;
+  box-shadow: var(--pp-shadow-soft) !important;
+  -webkit-backdrop-filter: blur(var(--pp-blur)) saturate(170%);
+  backdrop-filter: blur(var(--pp-blur)) saturate(170%);
+}
+
+/* Kill leftover light panels (including inline styles) */
+[style*="background: white"],
+[style*="background:#fff"],
+[style*="background: #fff"],
+[style*="background-color: white"],
+[style*="background-color:#fff"],
+[style*="background-color: #fff"],
+[style*="background-color: #f2f2f2"],
+[style*="background-color:#f2f2f2"],
+[style*="background: #f2f2f2"],
+[style*="background:#f2f2f2"],
+[style*="background-color: rgb(255, 255, 255"],
+[style*="background: rgb(255, 255, 255"]{
+  background: rgba(6, 8, 14, .62) !important;
+  border-color: rgba(255,255,255,.14) !important;
+}
+
+/* Keep “Your Impact Visualised” clean inside the combined section (no extra overlay panel) */
+.pp-impact-badges .ProfileImpact_profileImpact__orp8H,
+.pp-impact-badges .ProfileImpact_profileImpact__orp8H[style]{
+  background: transparent !important;
+}
+
+/* Leaderboard hero: remove extra night-mode overlay (use original globe background) */
+.pp-leaderboard-hero{
+  background: transparent !important;
+}
+.pp-leaderboard-hero__inner{
+  text-align: center;
+  padding: 24px 18px;
+  max-width: 720px;
+}
+.pp-leaderboard-hero__title{
+  margin: 0 0 8px;
+  color: #fff;
+}
+.pp-leaderboard-hero__subtitle{
+  margin: 0 0 16px;
+  color: var(--pp-text-dim);
+}
+.pp-leaderboard-hero__button{
+  font-size: 18px !important;
+  padding: 12px 18px !important;
+}
+
+/* Make the overlay badge pop a bit more in night mode */
+.pp-leaderboard-hero__globeBadge{
+  filter: drop-shadow(0 16px 32px rgba(0,0,0,.45));
+}
+
+/* Section titles are unified in `assets/css/base.css` */
+
+/* Common “card-ish” containers from the legacy export.
+   Use *starts-with* selectors so we don't accidentally match `ProjectCard_*` (which needs background-images). */
+[class^="Card_"],
+[class^="Profile"],
+[class^="Wrapper_wrapper"],
+[class^="EquivalentCard_"]{
+  color: var(--pp-text) !important;
+}
+[class^="Card_"][style*="background"],
+[class^="Profile"][style*="background"],
+[class^="Wrapper_wrapper"][style*="background"]{
+  background: rgba(6, 8, 14, .55) !important;
+}
+
+/* Small screens: reduce chrome */
+@media (max-width: 520px){
+  .li_item{ margin: 10px 10px; }
+  .fancybox-slide--iframe .fancybox-content{ width: calc(100vw - 16px) !important; }
+}
+
+/* Footer: modern glass panels (night mode) */
+.Footer_footer__7dIj9{
+  background: transparent !important;
+}
+
+/* Ensure the homepage topbar stays dark-glass in night mode */
+.pp-topbar{
+  background: rgba(6, 8, 14, .62);
+  border-bottom-color: rgba(255,255,255,.14);
+}
+
+.pp-topbar__wallet{
+  background: rgba(12, 18, 30, .45);
+  border: 1px solid rgba(255,255,255,.14);
+  color: rgba(255,255,255,.90);
+}
+.pp-edit-toggle {
+  background: rgba(12, 18, 30, .45);
+  border: 1px solid rgba(255,255,255,.14);
+  color: rgba(255,255,255,.90);
+}
+.pp-topbar__walletDot{
+  box-shadow: 0 0 0 4px rgba(32,191,133,.22);
+}
+.Footer_footerGrid__25W64{
+  gap: 16px;
+}
+.Footer_footerBox__q6Ada{
+  background: rgba(12, 18, 30, .40) !important;
+  border: 1px solid rgba(255,255,255,.14) !important;
+  border-radius: 18px;
+  box-shadow: 0 18px 55px rgba(0,0,0,.30);
+  -webkit-backdrop-filter: blur(var(--pp-blur)) saturate(170%);
+  backdrop-filter: blur(var(--pp-blur)) saturate(170%);
+}
+.Footer_footerBoxItemHeader__3atQE{
+  border-bottom-color: rgba(255,255,255,.16) !important;
+}
+.Footer_footerBoxHeader__3O_4k{
+  color: #fff !important;
+  /* Match day-mode heading font/style */
+  font-family: gota2, sofiapro, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif !important;
+  letter-spacing: 3px !important;
+}
+.Footer_footerLink__38Wi9{
+  color: rgba(255,255,255,.86) !important;
+  border-bottom-color: transparent !important;
+}
+.Footer_footerLink__38Wi9:hover{
+  color: #fff !important;
+  border-bottom-color: rgba(255,255,255,.55) !important;
+}
+
+
+/* Clickable asset hint: brighter + more contrast in night mode */
+html[data-pp-theme="night"]{
+  --pp-clickhint-dot: rgba(255,255,255,.98);
+  --pp-clickhint-ring: rgba(255,255,255,.60);
+  --pp-clickhint-glow: rgba(255,255,255,.22);
+}

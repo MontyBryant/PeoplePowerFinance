@@ -1,0 +1,110 @@
+/* Day/Night toggle button (minimal, should not disturb legacy layout) */
+.pp-theme-toggle{
+  position: relative;
+  top: auto;
+  right: auto;
+  z-index: 1;
+
+  display: inline-grid;
+  place-items: center;
+
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,.16);
+  background: rgba(255,255,255,.72);
+  color: rgba(0,0,0,.86);
+
+  font-size: 0; /* icon-only */
+  line-height: 0;
+  box-shadow: 0 12px 30px rgba(0,0,0,.18);
+
+  cursor: pointer;
+  user-select: none;
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  backdrop-filter: blur(12px) saturate(160%);
+
+  transition: transform .15s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+.pp-theme-toggle:hover{
+  transform: translateY(-1px);
+}
+
+/* Icon */
+.pp-theme-toggle::before{
+  content: "";
+  width: 22px;
+  height: 22px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-image: url(../img/sun.png);
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,.22));
+}
+
+/* Night mode: knob slides right + glassy background */
+html[data-pp-theme="night"] .pp-theme-toggle{
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(12, 18, 30, .55);
+  color: rgba(255,255,255,.92);
+  box-shadow: 0 18px 45px rgba(0,0,0,.38);
+}
+html[data-pp-theme="night"] .pp-theme-toggle::before{
+  background-image: url(../img/moon.svg);
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,.45));
+}
+
+/* Sun/Moon swap animation on the homepage */
+.pp-celestial{
+  position: absolute; /* stays in the top section; scrolls away with the page */
+  top: 0;
+  left: 0;
+  width: 320px;  /* larger sky window */
+  height: 340px; /* larger sky window */
+  overflow: hidden; /* makes the sun "disappear behind the mountain" */
+  z-index: 0; /* low priority like the original: should get covered by the mountains/grass */
+  pointer-events: none;
+}
+.pp-celestial__sun,
+.pp-celestial__moon{
+  position: absolute;
+  left: -141px;  /* matches the original inline style */
+  top: -128px;   /* matches the original inline style */
+  width: 300px;
+  height: auto;
+  will-change: transform, opacity;
+  opacity: 1;
+}
+
+/* Nudge the moon a bit more into view (still anchored top-left) */
+.pp-celestial__moon{
+  left: -60px;
+  top: -88px; /* move moon down slightly */
+  width: 260px;
+}
+
+/* Moon starts hidden above the viewport */
+.pp-celestial__moon{
+  opacity: 0;
+  transform: translateY(-60px);
+}
+
+/* Only animate after the JS marks the page "ready" */
+html.pp-theme-ready .pp-celestial__sun,
+html.pp-theme-ready .pp-celestial__moon{
+  transition: transform 900ms cubic-bezier(.2,.9,.2,1), opacity 700ms ease;
+}
+
+/* Night mode: sun drops down and gets clipped; moon comes down into place */
+html[data-pp-theme="night"] .pp-celestial__sun{
+  transform: translateY(170px);
+  opacity: 0;
+}
+html[data-pp-theme="night"] .pp-celestial__moon{
+  transform: translateY(0);
+  opacity: 1;
+}
+
+

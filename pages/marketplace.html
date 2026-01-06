@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Marketplace</title>
+
+  <link rel="stylesheet" type="text/css" href="../assets/css/base.css">
+  <link rel="stylesheet" type="text/css" href="../assets/css/modals.css">
+  <link id="pp-night-theme" rel="stylesheet" type="text/css" href="../assets/css/night.css" media="not all">
+  <script>
+    (function () {
+      try {
+        var t = (localStorage.getItem("ppTheme") || "night").toLowerCase();
+        t = (t === "day") ? "day" : "night";
+        document.documentElement.setAttribute("data-pp-theme", t);
+        var link = document.getElementById("pp-night-theme");
+        if (link) link.media = (t === "night") ? "all" : "not all";
+      } catch (e) {}
+    })();
+  </script>
+  <script defer src="../assets/js/theme-toggle.js"></script>
+
+  <style>
+    .pp-tab-panel{ display:none; }
+    .pp-tab-panel.is-active{ display:block; }
+  </style>
+</head>
+
+<body class="market_page">
+  <div id="cssmenu">
+    <ul>
+      <li class="active"><a href="#eco-assets" class="post_headers" data-tab="eco-assets">Eco-Assets</a></li>
+      <li><a href="#investments" class="post_headers" data-tab="investments">Investments</a></li>
+      <li><a href="#collectibles" class="post_headers" data-tab="collectibles">NFT Collectibles</a></li>
+      <li><a href="#p2p" class="post_headers" data-tab="p2p">Peer-To-Peer</a></li>
+      <li><a href="#upgrades" class="post_headers" data-tab="upgrades">Upgrades</a></li>
+      <li><a href="#buy-coins" class="post_headers" data-tab="buy-coins">Buy Coins</a></li>
+    </ul>
+  </div>
+
+  <!-- Eco-Assets -->
+  <section class="pp-tab-panel is-active" id="eco-assets" data-panel="eco-assets">
+    <ul class="li_container">
+      <li class="li_item">
+        <img class="item_thumbnail" src="../assets/img/solar.png" alt="">
+        <p class="item_titles post_headers">Hooke Ground Mounted Solar (Completed)</p>
+        <a class="buy_button" href="" title="Update your profile" style="margin-top: -5px;">Invest</a>
+        <div class="item_excerpt">
+          <p>A solar farm in sunny West Dorset. You can buy shares in this project and recive a portion of it's revenue.</p>
+          <p><b>Income / Month &nbsp:</b> <span class="icon ppcoin">&nbsp 100 PPCoin</span> &nbsp + &nbsp<span class="icon co2">160 Carbon Credits</span></p>
+        </div>
+      </li>
+
+      <li class="li_item">
+        <img class="item_thumbnail item_thumbnail--contain" src="../assets/img/windmill.svg" alt="Wind farm">
+        <p class="item_titles post_headers">Offshore Cornish Wind Farm (Proposed)</p>
+        <a class="buy_button" href="" title="Update your profile" style="margin-top: 5px;">Invest</a>
+        <div class="item_excerpt" style="margin-left: 130px;">
+          <p>The PeoplePower network is aiming to fund a wind farm off the coast of Cornwall. Any investments will help make this project a reality and with the potential of huge returns once the project gets completed. Don't miss out!</p>
+          <p><b>Income / Month &nbsp:</b> <span class="icon ppcoin">&nbsp 3000 PPCoin</span> &nbsp + &nbsp<span class="icon co2">4600 Carbon Credits</span></p>
+        </div>
+      </li>
+
+      <li class="li_item">
+        <img class="item_thumbnail" src="../assets/img/oak.png" alt="">
+        <p class="item_titles post_headers">English Oak Tree</p>
+        <a class="buy_button" href="" title="Update your profile" style="margin-top: -10px;">Invest</a>
+        <div class="item_excerpt">
+          <p>Invest in your future by planting some Oak Trees in Somerset.</p>
+          <p><b>Income / Month &nbsp:</b> <span class="icon co2">100 Carbon Credits</span></p>
+        </div>
+      </li>
+
+      <li class="li_item">
+        <img class="item_thumbnail" src="../assets/img/seagrass.jpg" alt="">
+        <p class="item_titles post_headers">Sea Grass</p>
+        <a class="buy_button" href="" title="Update your profile" style="margin-top: 5px;">Invest</a>
+        <div class="item_excerpt">
+          <p>New studies have shown that Sea Grass are a powerful carbon sink, locking it up in the ocean. Deep water seagrass meadows will help to mitigate climate change. By investing in this, you will fund a vast sea grass meadow in the Atlantic.</p>
+          <p><b>Income / Month &nbsp:</b> <span class="icon co2">500 Carbon Credits</span></p>
+        </div>
+      </li>
+
+      <li class="li_item">
+        <img class="item_thumbnail" src="../assets/img/treecoin.png" alt="">
+        <p class="item_titles post_headers">TreeCoin</p>
+        <a class="buy_button" href="" title="Update your profile" style="margin-top: -5px;">Invest</a>
+        <div class="item_excerpt">
+          <p>For every Tree Token you invest in, a fast gowing Eucalyptus Hybrid tree will be planted in Paraguay. Eventually this tree will be cut down and you will earn money from the sale of this sustainable timber. These trees will not only be carbon sinks, but will also earn you money! Learn more about about the project at <a href="https://tree-coin.io/">tree-coin.io</a></p>
+          <p><b>Income / Month &nbsp:</b> <span class="icon ppcoin">&nbsp 30 PPCoin</span> &nbsp + &nbsp<span class="icon co2">46 Carbon Credits</span></p>
+        </div>
+      </li>
+
+      <li class="li_item">
+        <img class="item_thumbnail" src="../assets/img/fan.png" alt="">
+        <p class="item_titles post_headers">Carbon Capture Plant</p>
+        <a class="buy_button" href="" title="Update your profile" style="margin-top: -5px;">Invest</a>
+        <div class="item_excerpt">
+          <p>This plant will remove carbon dioxide directly from the atmosphere and turn it into a useful product. This will not only remove carbon dioxide from the atmosphere but also earn you money. Furthermore, by investing in this technology when it is at such an early stage, you will help to improve the technology, making it more effecient in the future. <br> Learn more about about the project at <a href="https://www.climeworks.com/">climeworks.com</a></p>
+          <p><b>Income / Month &nbsp:</b> <span class="icon ppcoin">&nbsp 30 PPCoin</span> &nbsp + &nbsp<span class="icon co2">85 Carbon Credits</span></p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Investments -->
+  <section class="pp-tab-panel" id="investments" data-panel="investments">
+    <ul class="li_container">
+      <li class="li_item">
+        <img class="item_thumbnail" src="../assets/img/compound.png" alt="">
+        <p class="item_titles post_headers">Compound Finance</p>
+        <a class="buy_button" href="" title="Update your profile" style="margin-top: -5px;">Invest</a>
+        <div class="item_excerpt">
+          <p>Lend funds to the Compound Finance protocol, and in return, you will be rewarded with interest payments. <br> Learn more about about the project at <a href="https://compound.finance/">compound.finance</a></p>
+          <p><b>Income &nbsp:</b> <span class="icon ppcoin">&nbsp 10%</span></p>
+        </div>
+      </li>
+
+      <li class="li_item">
+        <img class="item_thumbnail" src="../assets/img/pool.png" alt="">
+        <p class="item_titles post_headers">Pool Together</p>
+        <a class="buy_button" href="" title="Update your profile" style="margin-top: -5px;">Invest</a>
+        <div class="item_excerpt">
+          <p>This is a zero-loss lottery. This is how it works: Lots of people buy tickets and the money from this is put into an interest earning smart contract. At the end of the Pool everyone gets their money back but one lucky winner recives all the interest accumulated in that time. Learn more about about the project at <a href="https://www.pooltogether.us">pooltogether.us</a></p>
+          <p><b>Winner Recives &nbsp:</b> <span class="icon ppcoin">&nbsp 100 PPCoin</span></p>
+        </div>
+      </li>
+
+      <li class="li_item">
+        <img class="item_thumbnail" src="../assets/img/solar.png" alt="">
+        <p class="item_titles post_headers">Hooke Ground Mounted Solar (Completed)</p>
+        <a class="buy_button" href="" title="Update your profile" style="margin-top: -5px;">Invest</a>
+        <div class="item_excerpt">
+          <p>A solar farm in sunny West Dorset. You can buy shares in this project and recive a portion of it's revenue.</p>
+          <p><b>Income / Month &nbsp:</b> <span class="icon ppcoin">&nbsp 100 PPCoin</span> &nbsp + &nbsp<span class="icon co2">160 Carbon Credits</span></p>
+        </div>
+      </li>
+
+      <li class="li_item">
+        <img class="item_thumbnail item_thumbnail--contain" src="../assets/img/windmill.svg" alt="Wind farm">
+        <p class="item_titles post_headers">Offshore Cornish Wind Farm (Proposed)</p>
+        <a class="buy_button" href="" title="Update your profile" style="margin-top: 5px;">Invest</a>
+        <div class="item_excerpt" style="margin-left: 130px;">
+          <p>The PeoplePower network is aiming to fund a wind farm off the coast of Cornwall. Any investments will help make this project a reality and with the potential of huge returns once the project gets completed. Don't miss out!</p>
+          <p><b>Income / Month &nbsp:</b> <span class="icon ppcoin">&nbsp 3000 PPCoin</span> &nbsp + &nbsp<span class="icon co2">4600 Carbon Credits</span></p>
+        </div>
+      </li>
+
+      <li class="li_item">
+        <img class="item_thumbnail" src="../assets/img/treecoin.png" alt="">
+        <p class="item_titles post_headers">TreeCoin</p>
+        <a class="buy_button" href="" style="margin-top: -5px;">Invest</a>
+        <div class="item_excerpt">
+          <p>For every Tree Token you invest in, a fast gowing Eucalyptus Hybrid tree will be planted in Paraguay. Eventually this tree will be cut down and you will earn money from the sale of this sustainable timber. These trees will not only be carbon sinks, but will also earn you money! Learn more about about the project at <a href="https://tree-coin.io/">tree-coin.io</a></p>
+          <p><b>Income / Month &nbsp:</b> <span class="icon ppcoin">&nbsp 30 PPCoin</span> &nbsp + &nbsp<span class="icon co2">46 Carbon Credits</span></p>
+        </div>
+      </li>
+
+      <li class="li_item">
+        <img class="item_thumbnail" src="../assets/img/fan.png" alt="">
+        <p class="item_titles post_headers">Carbon Capture Plant</p>
+        <a class="buy_button" href="" title="Update your profile" style="margin-top: -5px;">Invest</a>
+        <div class="item_excerpt">
+          <p>This plant will remove carbon dioxide directly from the atmosphere and turn it into a useful product. This will not only remove carbon dioxide from the atmosphere but also earn you money. Furthermore, by investing in this technology when it is at such an early stage, you will help to improve the technology, making it more effecient in the future. <br> Learn more about about the project at <a href="https://www.climeworks.com/">climeworks.com</a></p>
+          <p><b>Income / Month &nbsp:</b> <span class="icon ppcoin">&nbsp 30 PPCoin</span> &nbsp + &nbsp<span class="icon co2">85 Carbon Credits</span></p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Collectibles -->
+  <section class="pp-tab-panel" id="collectibles" data-panel="collectibles">
+    <ul class="li_container">
+      <li class="li_item">
+        <img class="item_thumbnail" src="../assets/img/burn.png" alt="">
+        <p class="item_titles post_headers">Stop Bolsonaro Burning The Amazon</p>
+        <a class="buy_button" href="" title="Update your profile" style="margin-top: -5px;">Support</a>
+        <div class="item_excerpt">
+          <p>Help support the Amazon by supporting Greenpeace's campaign focing companies to take a stand aginst Brazil's government who are aiding this destrucution. By clicking Support you will sign the petition and donate to the cause. In return you will recive a flaming tree to add to your farm.</p>
+          <p><b>Reward &nbsp: &nbsp Flaming Tree &nbsp + &nbsp<span class="icon co2">360 Carbon Credits</span></b></p>
+        </div>
+      </li>
+
+      <li class="li_item">
+        <img class="item_thumbnail" src="../assets/img/xr.jpg" alt="">
+        <p class="item_titles post_headers">Extinction Rebellion London Protests</p>
+        <a class="buy_button" href="" title="Update your profile" style="margin-top: -5px;">Support</a>
+        <div class="item_excerpt">
+          <p>To earn this collectible you must attend the Extinction Rebellion protest in Waterloo. When your at that location at the time of the protest, come back to this page and collect your reward!</p>
+          <p><b>Reward &nbsp: &nbsp XR Flag &nbsp + &nbsp<span class="icon co2">360 Carbon Credits</span></b></p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- P2P -->
+  <section class="pp-tab-panel" id="p2p" data-panel="p2p">
+    <ul class="li_container">
+      <li class="li_item">
+        <img class="item_thumbnail" src="../assets/img/geo.png" alt="">
+        <p class="item_titles post_headers">Eden Project - Geothermal Energy Power Plant</p>
+        <a class="buy_button" href="" title="Update your profile" style="margin-top: -5px;"><center>Make<br>Offer</center></a>
+        <div class="item_excerpt">
+          <p>A year ago I invested in a 7MW geothermal power plant that has generated renewable energy for the Eden Project site and the surrounding community. If anyone wants to buy these shares off me, send me an offer and I will consider it.</p>
+          <p><b>Income / Month &nbsp:</b> <span class="icon ppcoin">&nbsp 240 PPCoin</span> &nbsp + &nbsp<span class="icon co2">360 Carbon Credits</span></p>
+        </div>
+      </li>
+
+      <li class="li_item">
+        <img class="item_thumbnail" src="../assets/img/tide.jpg" alt="">
+        <p class="item_titles post_headers">Tidal Power</p>
+        <a class="buy_button" href="" title="Update your profile" style="margin-top: -10px;"><center>Make<br>Offer</center></a>
+        <div class="item_excerpt">
+          <p>The Government estimates that wave & tidal stream energy combined has the potential to deliver around 20 per cent of the UK’s current electricity needs which equates to an installed capacity of around 30 – 50GW.</p>
+          <p><b>Income / Month &nbsp:</b> <span class="icon ppcoin">&nbsp 180 PPCoin</span> &nbsp + &nbsp<span class="icon co2">240 Carbon Credits</span></p>
+        </div>
+      </li>
+
+      <li class="li_item">
+        <img class="item_thumbnail" src="../assets/img/willow.jpeg" alt="">
+        <p class="item_titles post_headers">Willow Tree</p>
+        <a class="buy_button" href="" title="Update your profile" style="margin-top: -20px;"><center>Make<br>Offer</center></a>
+        <div class="item_excerpt">
+          <p>Got a few willow trees so willing to sell one so I can buy an oak tree on the market.</p>
+          <p><b>Income / Month &nbsp:</b> <span class="icon co2">100 Carbon Credits</span></p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Upgrades -->
+  <section class="pp-tab-panel" id="upgrades" data-panel="upgrades">
+    <ul class="li_container">
+      <li class="li_item">
+        <img class="item_thumbnail" src="../assets/img/grass.jpg" alt="">
+        <p class="item_titles post_headers" style="margin-top: 10px;">Grass</p>
+        <a class="buy_button" href="" title="Update your profile" style="margin-top: -15px;">Buy</a>
+        <div class="item_excerpt">
+          <p style="margin-top: 20px;">Buy grass to turn those desert tiles into green spaces!</p>
+          <p style="margin-top: 15px;"><b>Cost &nbsp:</b> &nbsp<span class="icon co2">1 Carbon Credit</span></p>
+        </div>
+      </li>
+
+      <li class="li_item">
+        <img class="item_thumbnail" src="../assets/img/beach.jpg" alt="">
+        <p class="item_titles post_headers" style="margin-top: 10px;">Beach</p>
+        <a class="buy_button" href="" title="Update your profile" style="margin-top: -15px;">Buy</a>
+        <div class="item_excerpt">
+          <p style="margin-top: 20px;">Add a beach to your world. This unlocks an ocean clean up project!</p>
+          <p style="margin-top: 15px;"><b>Cost &nbsp:</b> &nbsp<span class="icon co2">80 Carbon Credits</span></p>
+        </div>
+      </li>
+
+      <li class="li_item">
+        <img class="item_thumbnail" src="../assets/img/river.png" alt="">
+        <p class="item_titles post_headers" style="margin-top: 10px;">River</p>
+        <a class="buy_button" href="" title="Update your profile" style="margin-top: -10px;">Buy</a>
+        <div class="item_excerpt">
+          <p style="margin-top: 20px;">Add a river winding down from the mountains to the ocean. This unlocks a new Collectible as well.</p>
+          <p style="margin-top: 15px;"><b>Cost &nbsp:</b> &nbsp<span class="icon co2">60 Carbon Credits</span></p>
+        </div>
+      </li>
+
+      <li class="li_item">
+        <img class="item_thumbnail" src="../assets/img/flower.png" alt="">
+        <p class="item_titles post_headers" style="margin-top: 10px;">Flower</p>
+        <a class="buy_button" href="" title="Update your profile" style="margin-top: -15px;">Buy</a>
+        <div class="item_excerpt">
+          <p style="margin-top: 20px;">Add flowers to your world!</p>
+          <p style="margin-top: 15px;"><b>Cost &nbsp:</b> &nbsp<span class="icon co2">5 Carbon Credits</span></p>
+        </div>
+      </li>
+
+      <li class="li_item">
+        <img class="item_thumbnail" src="../assets/img/arctic.jpg" alt="">
+        <p class="item_titles post_headers" style="margin-top: 10px;">The Arctic</p>
+        <a class="buy_button" href="" title="Update your profile" style="margin-top: -15px;">Buy</a>
+        <div class="item_excerpt">
+          <p style="margin-top: 20px;">Add ice land to your world - The Arctic. This unlocks a Save The Arctic project!</p>
+          <p style="margin-top: 15px;"><b>Cost &nbsp:</b> &nbsp<span class="icon co2">150 Carbon Credits</span></p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Buy Coins -->
+  <section class="pp-tab-panel" id="buy-coins" data-panel="buy-coins">
+    <div class="wallet" style="margin-top: 80px;">
+      <center>
+        <div><h1>Your Wallet</h1></div>
+        <br>
+        <div class="ProfileHeader_customerNumber__ppcoin">
+          <span style="color: rgba(0, 0, 0, .7)">Username :</span> <br>&nbsp&nbsp&nbsp&nbspMerlin
+        </div>
+        <br>
+        <div class="ProfileHeader_customerNumber__ppcoin cc_icon">
+          <span style="color: rgba(0, 0, 0, .7)">Carbon Credits :</span> <br>1117
+        </div>
+        <br>
+        <div class="ProfileHeader_customerNumber__ppcoin ppcoin_icon">
+          <span style="color: rgba(0, 0, 0, .7)">PPCoins :</span> <br>256
+        </div>
+        <br>
+      </center>
+    </div>
+
+    <div class="buycoins" style="margin-top: 80px;">
+      <center>
+        <div><h1>Buy Coins</h1></div>
+        <br>
+        <div class="ProfileHeader_customerNumber__ppcoin">
+          <span style="color: rgba(0, 0, 0, .7)">Payment Method :</span>
+          <form>
+            <br>&nbsp&nbsp
+            <span class="visa"><input type="radio" name="payment" value="Visa" checked>Visa</span>
+            &nbsp &nbsp
+            <span class="paypal"><input type="radio" name="payment" value="Paypal">Paypal</span>
+            &nbsp&nbsp
+            <span class="crypto"><input type="radio" name="payment" value="Crypto">Crypto</span>
+          </form>
+        </div>
+        <br>
+        <a class="buycoinbtn" href="">Buy Coins</a>
+        <br>
+      </center>
+    </div>
+  </section>
+
+  <script>
+    (function(){
+      const panels = Array.from(document.querySelectorAll("[data-panel]"));
+      const links = Array.from(document.querySelectorAll("#cssmenu a[data-tab]"));
+      const lis = links.map(a => a.closest("li"));
+
+      function setActive(tab){
+        const t = tab || "eco-assets";
+        panels.forEach(p => p.classList.toggle("is-active", p.getAttribute("data-panel") === t));
+        lis.forEach(li => li && li.classList.remove("active"));
+        const activeLink = links.find(a => a.getAttribute("data-tab") === t);
+        if (activeLink && activeLink.closest("li")) activeLink.closest("li").classList.add("active");
+      }
+
+      function currentTab(){
+        const h = (location.hash || "").replace("#","");
+        return h || "eco-assets";
+      }
+
+      window.addEventListener("hashchange", () => setActive(currentTab()));
+      setActive(currentTab());
+    })();
+  </script>
+</body>
+</html>
+
+
