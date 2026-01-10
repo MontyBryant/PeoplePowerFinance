@@ -118,7 +118,7 @@ html[data-pp-theme="night"] body.pp-home .pp-heroPanel{
   border: 1px solid var(--pp-border);
   box-shadow: var(--pp-shadow);
 }
-html[data-pp-theme="night"] body.pp-home .pp-heroPanel__logo{
+html[data-pp-theme="night"] body.pp-home .pp-heroPanel__logoWrap{
   background: rgba(255,255,255,.08);
   border-color: rgba(255,255,255,.14);
 }
@@ -174,13 +174,20 @@ html[data-pp-theme="night"] .pp-profileModal__action--ghost{
 }
 
 /* Investment modals (night mode): override day-mode white gradients */
-html[data-pp-theme="night"] .pp-investModal{
+html[data-pp-theme="night"] .pp-investModal,
+html[data-pp-theme="night"] .pp-forestModal{
   background:
     radial-gradient(1200px 520px at 18% -10%, rgba(32,191,133,.22), rgba(0,0,0,0) 62%),
     radial-gradient(900px 480px at 110% 10%, rgba(102,217,239,.18), rgba(0,0,0,0) 58%),
     rgba(12, 18, 30, .72);
   border: 1px solid rgba(255,255,255,.14);
   box-shadow: var(--pp-shadow);
+}
+
+/* Forest modal: use a green-tinted “project avatar” like other project modals */
+html[data-pp-theme="night"] .pp-forestModal .pp-profileModal__avatar{
+  background: radial-gradient(circle at 30% 20%, rgba(32,191,133,.55), rgba(0,0,0,.88) 70%);
+  border-color: rgba(255,255,255,.14);
 }
 html[data-pp-theme="night"] .pp-investPill{
   background: rgba(12, 18, 30, .45);
@@ -202,6 +209,10 @@ html[data-pp-theme="night"] .pp-profileBadge,
 html[data-pp-theme="night"] .pp-profileEvent{
   background: rgba(12, 18, 30, .40);
   border-color: rgba(255,255,255,.14);
+}
+html[data-pp-theme="night"] .pp-profileItem:hover{
+  background: rgba(12, 18, 30, .55);
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
 }
 html[data-pp-theme="night"] .pp-profileStat__label,
 html[data-pp-theme="night"] .pp-profileCard__title,
@@ -597,9 +608,52 @@ button:hover,
 }
 
 
+/* Night mode overrides */
+html[data-pp-theme="night"] .pp-clickhint-tooltip{
+  background: rgba(12, 18, 30, 0.85);
+  border-color: rgba(255,255,255,0.15);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+html[data-pp-theme="night"] .pp-clickhint-tooltip::after{
+  border-color: rgba(255,255,255,0.15);
+}
+html[data-pp-theme="night"] .pp-clickhint-tooltip__name{
+  color: #fff;
+}
+html[data-pp-theme="night"] .pp-clickhint-tooltip__stat{
+  color: rgba(255,255,255,0.7);
+}
+html[data-pp-theme="night"] .pp-clickhint-tooltip__cta{
+  color: rgba(255,255,255,0.5);
+  border-top-color: rgba(255,255,255,0.1);
+}
+
 /* Clickable asset hint: brighter + more contrast in night mode */
 html[data-pp-theme="night"]{
   --pp-clickhint-dot: rgba(255,255,255,.98);
   --pp-clickhint-ring: rgba(255,255,255,.60);
   --pp-clickhint-glow: rgba(255,255,255,.22);
+}
+
+/* Night mode for Info Tooltip */
+html[data-pp-theme="night"] .pp-heroStat__info{
+  background: rgba(255,255,255,.12);
+  color: rgba(255,255,255,.65);
+}
+html[data-pp-theme="night"] .pp-heroStat__info:hover{
+  background: rgba(255,255,255,.22);
+  color: #fff;
+}
+html[data-pp-theme="night"] .pp-heroStat__tooltip{
+  background: rgba(6, 8, 14, .95);
+  border-color: rgba(255,255,255,.16);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 12px 36px rgba(0,0,0,.45);
+}
+html[data-pp-theme="night"] .pp-heroStat__tooltip h3{
+  color: #fff;
+}
+html[data-pp-theme="night"] .pp-heroStat__tooltip p{
+  color: rgba(255,255,255,.80);
 }

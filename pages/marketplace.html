@@ -9,6 +9,7 @@
 
   <link rel="stylesheet" type="text/css" href="../assets/css/base.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/modals.css">
+  <link rel="stylesheet" type="text/css" href="../assets/css/day.css">
   <link id="pp-night-theme" rel="stylesheet" type="text/css" href="../assets/css/night.css" media="not all">
   <script>
     (function () {
@@ -24,33 +25,376 @@
   <script defer src="../assets/js/theme-toggle.js"></script>
 
   <style>
-    .pp-tab-panel{ display:none; }
-    .pp-tab-panel.is-active{ display:block; }
+    /* Smooth, non-jumpy panel transitions:
+       - Only the active panel is in normal flow (position:relative)
+       - Inactive/exiting panels are positioned absolutely and fade/slide over the current height */
+    .pp-market-panels{ position: relative; }
+
+    .pp-tab-panel{
+      /* default: hidden as overlay so it doesn't affect layout */
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      opacity: 0;
+      transform: translateY(14px);
+      visibility: hidden;
+      pointer-events: none;
+      transition:
+        opacity 420ms cubic-bezier(.16,1,.3,1),
+        transform 520ms cubic-bezier(.16,1,.3,1),
+        visibility 0s linear 520ms;
+      will-change: opacity, transform;
+    }
+
+    .pp-tab-panel.is-active{
+      position: relative; /* take space */
+      inset: auto;
+      opacity: 1;
+      transform: none;
+      visibility: visible;
+      pointer-events: auto;
+      transition-delay: 0s, 0s, 0s;
+    }
+
+    /* Exiting stays overlay while fading out */
+    .pp-tab-panel.is-exiting{
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transform: translateY(-8px);
+      visibility: hidden;
+      pointer-events: none;
+      transition:
+        opacity 360ms cubic-bezier(.16,1,.3,1),
+        transform 360ms cubic-bezier(.16,1,.3,1),
+        visibility 0s linear 360ms;
+    }
+
+    /* Category header + items: subtle stagger using transitions (not keyframes) */
+    .pp-tab-panel .category-header{
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: opacity 360ms cubic-bezier(.16,1,.3,1), transform 520ms cubic-bezier(.16,1,.3,1);
+    }
+    .pp-tab-panel.is-active .category-header{
+      opacity: 1;
+      transform: none;
+      transition-delay: 80ms;
+    }
+
+    .pp-tab-panel .li_container > .li_item{
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 420ms cubic-bezier(.16,1,.3,1), transform 520ms cubic-bezier(.16,1,.3,1);
+    }
+    .pp-tab-panel.is-active .li_container > .li_item{
+      opacity: 1;
+      transform: none;
+    }
+    .pp-tab-panel.is-active .li_container > .li_item:nth-child(1){ transition-delay: 120ms; }
+    .pp-tab-panel.is-active .li_container > .li_item:nth-child(2){ transition-delay: 160ms; }
+    .pp-tab-panel.is-active .li_container > .li_item:nth-child(3){ transition-delay: 200ms; }
+    .pp-tab-panel.is-active .li_container > .li_item:nth-child(4){ transition-delay: 240ms; }
+    .pp-tab-panel.is-active .li_container > .li_item:nth-child(5){ transition-delay: 280ms; }
+    .pp-tab-panel.is-active .li_container > .li_item:nth-child(6){ transition-delay: 320ms; }
+
+    /* Overview cards: same treatment */
+    .pp-tab-panel#overview .overview-grid > .overview-card{
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 420ms cubic-bezier(.16,1,.3,1), transform 520ms cubic-bezier(.16,1,.3,1);
+    }
+    .pp-tab-panel#overview.is-active .overview-grid > .overview-card{
+      opacity: 1;
+      transform: none;
+    }
+    .pp-tab-panel#overview.is-active .overview-grid > .overview-card:nth-child(1){ transition-delay: 120ms; }
+    .pp-tab-panel#overview.is-active .overview-grid > .overview-card:nth-child(2){ transition-delay: 160ms; }
+    .pp-tab-panel#overview.is-active .overview-grid > .overview-card:nth-child(3){ transition-delay: 200ms; }
+    .pp-tab-panel#overview.is-active .overview-grid > .overview-card:nth-child(4){ transition-delay: 240ms; }
+    .pp-tab-panel#overview.is-active .overview-grid > .overview-card:nth-child(5){ transition-delay: 280ms; }
+
+    /* Click feedback on the tab pill you press */
+    #cssmenu a[data-tab]{ transition: transform 220ms cubic-bezier(.16,1,.3,1); }
+    #cssmenu a[data-tab].is-pressed{ transform: translateY(1px) scale(.985); }
+
+    @media (prefers-reduced-motion: reduce){
+      .pp-tab-panel,
+      .pp-tab-panel.is-active,
+      .pp-tab-panel.is-exiting,
+      .pp-tab-panel .category-header,
+      .pp-tab-panel .li_container > .li_item,
+      .pp-tab-panel#overview .overview-grid > .overview-card{
+        transition: none !important;
+        transform: none !important;
+      }
+      #cssmenu a[data-tab]{ transition: none !important; }
+      #cssmenu a[data-tab].is-pressed{ transform: none !important; }
+    }
   </style>
 </head>
 
 <body class="market_page">
   <div id="cssmenu">
     <ul>
-      <li class="active"><a href="#eco-assets" class="post_headers" data-tab="eco-assets">Eco-Assets</a></li>
+      <li class="active"><a href="#overview" class="post_headers" data-tab="overview">Overview</a></li>
       <li><a href="#investments" class="post_headers" data-tab="investments">Investments</a></li>
-      <li><a href="#collectibles" class="post_headers" data-tab="collectibles">NFT Collectibles</a></li>
-      <li><a href="#p2p" class="post_headers" data-tab="p2p">Peer-To-Peer</a></li>
+      <li><a href="#eco-assets" class="post_headers" data-tab="eco-assets">Eco-Assets</a></li>
+      <li><a href="#collectibles" class="post_headers" data-tab="collectibles">Collectibles</a></li>
+      <li><a href="#liquidity" class="post_headers" data-tab="liquidity">Provide Liquidity</a></li>
       <li><a href="#upgrades" class="post_headers" data-tab="upgrades">Upgrades</a></li>
-      <li><a href="#buy-coins" class="post_headers" data-tab="buy-coins">Buy Coins</a></li>
     </ul>
   </div>
 
-  <!-- Eco-Assets -->
-  <section class="pp-tab-panel is-active" id="eco-assets" data-panel="eco-assets">
+  <main class="pp-market-panels" aria-label="Marketplace panels">
+  <!-- Overview -->
+  <section class="pp-tab-panel is-active" id="overview" data-panel="overview">
+    <div class="overview-container">
+      <div class="overview-header">
+        <h1>Marketplace Overview</h1>
+        <p>Explore opportunities to invest, collect, and upgrade your impact world.</p>
+      </div>
+      
+      <div class="overview-grid">
+        <a href="#investments" onclick="document.querySelector('[data-tab=investments]').click()" class="overview-card">
+          <div class="overview-card__icon">
+            <img src="../assets/img/ppcoin.png" alt="Investments">
+          </div>
+          <div class="overview-card__content">
+            <h3>Investments</h3>
+            <p>Assets that generate a financial yield (APY). Grow your wealth while supporting green energy and DeFi protocols.</p>
+            <span class="overview-card__cta">View Investments &rarr;</span>
+          </div>
+        </a>
+
+        <a href="#eco-assets" onclick="document.querySelector('[data-tab=eco-assets]').click()" class="overview-card">
+          <div class="overview-card__icon">
+            <img src="../assets/img/leaf_icon.png" alt="Eco-Assets">
+          </div>
+          <div class="overview-card__content">
+            <h3>Eco-Assets</h3>
+            <p>Real-world ecological assets like trees and seagrass that yield Carbon Credits and Points to boost your impact.</p>
+            <span class="overview-card__cta">View Eco-Assets &rarr;</span>
+          </div>
+        </a>
+
+        <a href="#collectibles" onclick="document.querySelector('[data-tab=collectibles]').click()" class="overview-card">
+          <div class="overview-card__icon">
+            <img src="../assets/img/heart.png" alt="Collectibles">
+          </div>
+          <div class="overview-card__content">
+            <h3>Collectibles</h3>
+            <p>Support social movements and organizations you care about. Earn unique NFT badges for your profile.</p>
+            <span class="overview-card__cta">View Collectibles &rarr;</span>
+          </div>
+        </a>
+
+        <a href="#liquidity" onclick="document.querySelector('[data-tab=liquidity]').click()" class="overview-card">
+          <div class="overview-card__icon">
+            <img src="../assets/img/gold.png" alt="Liquidity">
+          </div>
+          <div class="overview-card__content">
+            <h3>Provide Liquidity</h3>
+            <p>Supply funds to investment pools to enable trading for others. Earn fees and yield in return.</p>
+            <span class="overview-card__cta">View Liquidity &rarr;</span>
+          </div>
+        </a>
+
+        <a href="#upgrades" onclick="document.querySelector('[data-tab=upgrades]').click()" class="overview-card">
+          <div class="overview-card__icon">
+            <img src="../assets/img/gamebackground.png" style="border-radius: 50%; object-fit: cover;" alt="Upgrades">
+          </div>
+          <div class="overview-card__content">
+            <h3>Upgrades</h3>
+            <p>Visual and aesthetic upgrades for your world. Spend points and credits to customize your landscape.</p>
+            <span class="overview-card__cta">View Upgrades &rarr;</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    /* Scoped styles for the new overview to keep it sleek */
+    .overview-container {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 0 24px 60px;
+    }
+    .overview-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .overview-header h1 {
+      font-family: var(--pp-font-display, sans-serif);
+      font-weight: 900;
+      font-size: 32px;
+      margin: 0 0 12px;
+      color: #222;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .overview-header p {
+      font-size: 16px;
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .overview-card {
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 20px;
+      padding: 24px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      height: 100%;
+    }
+    .overview-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+      border-color: rgba(32, 191, 133, 0.3);
+      text-decoration: none;
+    }
+
+    .overview-card__icon {
+      width: 56px;
+      height: 56px;
+      background: rgba(0,0,0,0.04);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+    .overview-card__icon img {
+      width: 32px;
+      height: 32px;
+      display: block;
+    }
+
+    .overview-card__content h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      font-weight: 800;
+      color: #222;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .overview-card__content p {
+      margin: 0 0 16px;
+      font-size: 14px;
+      color: #666;
+      line-height: 1.5;
+      flex-grow: 1;
+    }
+    .overview-card__cta {
+      font-size: 13px;
+      font-weight: 700;
+      color: #20bf85;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    /* Category Header Styles */
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      /* Background + sticky handled by `assets/css/modals.css` for better integration */
+      margin-bottom: 0;
+      /* Sticky positioning handled in CSS file, but ensure defaults here are clean */
+    }
+    .category-header__icon {
+      width: 52px;
+      height: 52px;
+      background: rgba(0,0,0,0.04);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .category-header__icon img {
+      width: 28px;
+      height: 28px;
+      display: block;
+    }
+    .category-header__content h2 {
+      margin: 0 0 6px;
+      font-size: 24px;
+      font-weight: 900;
+      color: #222;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-family: var(--pp-font-display, sans-serif);
+    }
+    .category-header__content p {
+      margin: 0;
+      font-size: 15px;
+      color: #666;
+      line-height: 1.4;
+      max-width: 600px;
+    }
+
+    /* Night mode overrides */
+    html[data-pp-theme="night"] .overview-header h1 { color: #fff !important; }
+    html[data-pp-theme="night"] .overview-header p { color: rgba(255,255,255,0.72); }
+    /* Adjust icon background for seamless header integration */
+    .category-header__icon {
+      background: rgba(0,0,0,0.04);
+      box-shadow: none;
+    }
+    
+    html[data-pp-theme="night"] .category-header__icon {
+      background: rgba(255,255,255,0.08);
+    }
+    html[data-pp-theme="night"] .category-header__content h2 { color: #fff; }
+    html[data-pp-theme="night"] .category-header__content p { color: rgba(255,255,255,0.7); }
+    
+    html[data-pp-theme="night"] .overview-card {
+      background: var(--pp-market-surface, rgba(12, 18, 30, 0.62));
+      border-color: var(--pp-market-border, rgba(255,255,255,0.12));
+    }
+    html[data-pp-theme="night"] .overview-card:hover {
+      background: var(--pp-market-surface-2, rgba(12, 18, 30, 0.78));
+      border-color: rgba(32,191,133,.45);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    }
+    html[data-pp-theme="night"] .overview-card__icon {
+      background: rgba(255,255,255,0.08);
+    }
+    html[data-pp-theme="night"] .overview-card__content h3 { color: #fff; }
+    html[data-pp-theme="night"] .overview-card__content p { color: rgba(255,255,255,0.7); }
+  </style>
+
+  <!-- Investments -->
+  <section class="pp-tab-panel" id="investments" data-panel="investments">
+    <div class="category-header">
+      <div class="category-header__icon"><img src="../assets/img/ppcoin.png" alt=""></div>
+      <div class="category-header__content">
+        <h2>Investments</h2>
+        <p>Assets that generate a financial yield (APY) and return. Grow your wealth while supporting green energy and DeFi protocols.</p>
+      </div>
+    </div>
     <ul class="li_container">
       <li class="li_item">
         <img class="item_thumbnail" src="../assets/img/solar.png" alt="">
         <p class="item_titles post_headers">Hooke Ground Mounted Solar (Completed)</p>
         <a class="buy_button" href="" title="Update your profile" style="margin-top: -5px;">Invest</a>
         <div class="item_excerpt">
-          <p>A solar farm in sunny West Dorset. You can buy shares in this project and recive a portion of it's revenue.</p>
-          <p><b>Income / Month &nbsp:</b> <span class="icon ppcoin">&nbsp 100 PPCoin</span> &nbsp + &nbsp<span class="icon co2">160 Carbon Credits</span></p>
+          <p>A solar farm in sunny West Dorset. You can buy shares in this project and receive a portion of its revenue.</p>
+          <p><b>Yield / Month &nbsp:</b> <span class="icon ppcoin">&nbsp 5.8% APY</span> &nbsp + &nbsp<span class="icon co2">160 Carbon Credits</span></p>
         </div>
       </li>
 
@@ -59,63 +403,18 @@
         <p class="item_titles post_headers">Offshore Cornish Wind Farm (Proposed)</p>
         <a class="buy_button" href="" title="Update your profile" style="margin-top: 5px;">Invest</a>
         <div class="item_excerpt" style="margin-left: 130px;">
-          <p>The PeoplePower network is aiming to fund a wind farm off the coast of Cornwall. Any investments will help make this project a reality and with the potential of huge returns once the project gets completed. Don't miss out!</p>
-          <p><b>Income / Month &nbsp:</b> <span class="icon ppcoin">&nbsp 3000 PPCoin</span> &nbsp + &nbsp<span class="icon co2">4600 Carbon Credits</span></p>
+          <p>The PeoplePower network is aiming to fund a wind farm off the coast of Cornwall. Invest to help make this reality.</p>
+          <p><b>Yield / Month &nbsp:</b> <span class="icon ppcoin">&nbsp 7.4% APY</span> &nbsp + &nbsp<span class="icon co2">4600 Carbon Credits</span></p>
         </div>
       </li>
 
-      <li class="li_item">
-        <img class="item_thumbnail" src="../assets/img/oak.png" alt="">
-        <p class="item_titles post_headers">English Oak Tree</p>
-        <a class="buy_button" href="" title="Update your profile" style="margin-top: -10px;">Invest</a>
-        <div class="item_excerpt">
-          <p>Invest in your future by planting some Oak Trees in Somerset.</p>
-          <p><b>Income / Month &nbsp:</b> <span class="icon co2">100 Carbon Credits</span></p>
-        </div>
-      </li>
-
-      <li class="li_item">
-        <img class="item_thumbnail" src="../assets/img/seagrass.jpg" alt="">
-        <p class="item_titles post_headers">Sea Grass</p>
-        <a class="buy_button" href="" title="Update your profile" style="margin-top: 5px;">Invest</a>
-        <div class="item_excerpt">
-          <p>New studies have shown that Sea Grass are a powerful carbon sink, locking it up in the ocean. Deep water seagrass meadows will help to mitigate climate change. By investing in this, you will fund a vast sea grass meadow in the Atlantic.</p>
-          <p><b>Income / Month &nbsp:</b> <span class="icon co2">500 Carbon Credits</span></p>
-        </div>
-      </li>
-
-      <li class="li_item">
-        <img class="item_thumbnail" src="../assets/img/treecoin.png" alt="">
-        <p class="item_titles post_headers">TreeCoin</p>
-        <a class="buy_button" href="" title="Update your profile" style="margin-top: -5px;">Invest</a>
-        <div class="item_excerpt">
-          <p>For every Tree Token you invest in, a fast gowing Eucalyptus Hybrid tree will be planted in Paraguay. Eventually this tree will be cut down and you will earn money from the sale of this sustainable timber. These trees will not only be carbon sinks, but will also earn you money! Learn more about about the project at <a href="https://tree-coin.io/">tree-coin.io</a></p>
-          <p><b>Income / Month &nbsp:</b> <span class="icon ppcoin">&nbsp 30 PPCoin</span> &nbsp + &nbsp<span class="icon co2">46 Carbon Credits</span></p>
-        </div>
-      </li>
-
-      <li class="li_item">
-        <img class="item_thumbnail" src="../assets/img/fan.png" alt="">
-        <p class="item_titles post_headers">Carbon Capture Plant</p>
-        <a class="buy_button" href="" title="Update your profile" style="margin-top: -5px;">Invest</a>
-        <div class="item_excerpt">
-          <p>This plant will remove carbon dioxide directly from the atmosphere and turn it into a useful product. This will not only remove carbon dioxide from the atmosphere but also earn you money. Furthermore, by investing in this technology when it is at such an early stage, you will help to improve the technology, making it more effecient in the future. <br> Learn more about about the project at <a href="https://www.climeworks.com/">climeworks.com</a></p>
-          <p><b>Income / Month &nbsp:</b> <span class="icon ppcoin">&nbsp 30 PPCoin</span> &nbsp + &nbsp<span class="icon co2">85 Carbon Credits</span></p>
-        </div>
-      </li>
-    </ul>
-  </section>
-
-  <!-- Investments -->
-  <section class="pp-tab-panel" id="investments" data-panel="investments">
-    <ul class="li_container">
       <li class="li_item">
         <img class="item_thumbnail" src="../assets/img/compound.png" alt="">
         <p class="item_titles post_headers">Compound Finance</p>
         <a class="buy_button" href="" title="Update your profile" style="margin-top: -5px;">Invest</a>
         <div class="item_excerpt">
-          <p>Lend funds to the Compound Finance protocol, and in return, you will be rewarded with interest payments. <br> Learn more about about the project at <a href="https://compound.finance/">compound.finance</a></p>
-          <p><b>Income &nbsp:</b> <span class="icon ppcoin">&nbsp 10%</span></p>
+          <p>Lend funds to the Compound Finance protocol, and in return, you will be rewarded with interest payments.</p>
+          <p><b>Income &nbsp:</b> <span class="icon ppcoin">&nbsp 10% APY</span></p>
         </div>
       </li>
 
@@ -124,38 +423,18 @@
         <p class="item_titles post_headers">Pool Together</p>
         <a class="buy_button" href="" title="Update your profile" style="margin-top: -5px;">Invest</a>
         <div class="item_excerpt">
-          <p>This is a zero-loss lottery. This is how it works: Lots of people buy tickets and the money from this is put into an interest earning smart contract. At the end of the Pool everyone gets their money back but one lucky winner recives all the interest accumulated in that time. Learn more about about the project at <a href="https://www.pooltogether.us">pooltogether.us</a></p>
-          <p><b>Winner Recives &nbsp:</b> <span class="icon ppcoin">&nbsp 100 PPCoin</span></p>
+          <p>This is a zero-loss lottery. Money is put into an interest earning smart contract. One winner takes the interest.</p>
+          <p><b>Winner Receives &nbsp:</b> <span class="icon ppcoin">&nbsp 100 PPCoin</span></p>
         </div>
       </li>
-
-      <li class="li_item">
-        <img class="item_thumbnail" src="../assets/img/solar.png" alt="">
-        <p class="item_titles post_headers">Hooke Ground Mounted Solar (Completed)</p>
-        <a class="buy_button" href="" title="Update your profile" style="margin-top: -5px;">Invest</a>
-        <div class="item_excerpt">
-          <p>A solar farm in sunny West Dorset. You can buy shares in this project and recive a portion of it's revenue.</p>
-          <p><b>Income / Month &nbsp:</b> <span class="icon ppcoin">&nbsp 100 PPCoin</span> &nbsp + &nbsp<span class="icon co2">160 Carbon Credits</span></p>
-        </div>
-      </li>
-
-      <li class="li_item">
-        <img class="item_thumbnail item_thumbnail--contain" src="../assets/img/windmill.svg" alt="Wind farm">
-        <p class="item_titles post_headers">Offshore Cornish Wind Farm (Proposed)</p>
-        <a class="buy_button" href="" title="Update your profile" style="margin-top: 5px;">Invest</a>
-        <div class="item_excerpt" style="margin-left: 130px;">
-          <p>The PeoplePower network is aiming to fund a wind farm off the coast of Cornwall. Any investments will help make this project a reality and with the potential of huge returns once the project gets completed. Don't miss out!</p>
-          <p><b>Income / Month &nbsp:</b> <span class="icon ppcoin">&nbsp 3000 PPCoin</span> &nbsp + &nbsp<span class="icon co2">4600 Carbon Credits</span></p>
-        </div>
-      </li>
-
+      
       <li class="li_item">
         <img class="item_thumbnail" src="../assets/img/treecoin.png" alt="">
         <p class="item_titles post_headers">TreeCoin</p>
         <a class="buy_button" href="" style="margin-top: -5px;">Invest</a>
         <div class="item_excerpt">
-          <p>For every Tree Token you invest in, a fast gowing Eucalyptus Hybrid tree will be planted in Paraguay. Eventually this tree will be cut down and you will earn money from the sale of this sustainable timber. These trees will not only be carbon sinks, but will also earn you money! Learn more about about the project at <a href="https://tree-coin.io/">tree-coin.io</a></p>
-          <p><b>Income / Month &nbsp:</b> <span class="icon ppcoin">&nbsp 30 PPCoin</span> &nbsp + &nbsp<span class="icon co2">46 Carbon Credits</span></p>
+          <p>Invest in fast growing Eucalyptus Hybrid trees in Paraguay. Earn money from the sale of sustainable timber.</p>
+          <p><b>Return &nbsp:</b> <span class="icon ppcoin">&nbsp Timber Sales</span> &nbsp + &nbsp<span class="icon co2">Carbon Credits</span></p>
         </div>
       </li>
 
@@ -164,8 +443,40 @@
         <p class="item_titles post_headers">Carbon Capture Plant</p>
         <a class="buy_button" href="" title="Update your profile" style="margin-top: -5px;">Invest</a>
         <div class="item_excerpt">
-          <p>This plant will remove carbon dioxide directly from the atmosphere and turn it into a useful product. This will not only remove carbon dioxide from the atmosphere but also earn you money. Furthermore, by investing in this technology when it is at such an early stage, you will help to improve the technology, making it more effecient in the future. <br> Learn more about about the project at <a href="https://www.climeworks.com/">climeworks.com</a></p>
-          <p><b>Income / Month &nbsp:</b> <span class="icon ppcoin">&nbsp 30 PPCoin</span> &nbsp + &nbsp<span class="icon co2">85 Carbon Credits</span></p>
+          <p>Direct air capture technology. Remove CO2 and turn it into useful products for a financial return.</p>
+          <p><b>Return &nbsp:</b> <span class="icon ppcoin">&nbsp Product Sales</span> &nbsp + &nbsp<span class="icon co2">85 Carbon Credits</span></p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Eco-Assets -->
+  <section class="pp-tab-panel" id="eco-assets" data-panel="eco-assets">
+    <div class="category-header">
+      <div class="category-header__icon"><img src="../assets/img/leaf_icon.png" alt=""></div>
+      <div class="category-header__content">
+        <h2>Eco-Assets</h2>
+        <p>Real-world ecological assets like trees and seagrass that yield Carbon Credits and PeoplePower Points to boost your impact.</p>
+      </div>
+    </div>
+    <ul class="li_container">
+      <li class="li_item">
+        <img class="item_thumbnail" src="../assets/img/oak.png" alt="">
+        <p class="item_titles post_headers">English Oak Tree</p>
+        <a class="buy_button" href="" title="Update your profile" style="margin-top: -10px;">Buy</a>
+        <div class="item_excerpt">
+          <p>Invest in your future by planting some Oak Trees in Somerset. A long-term carbon sink.</p>
+          <p><b>Yield &nbsp:</b> <span class="icon co2">100 Carbon Credits</span></p>
+        </div>
+      </li>
+
+      <li class="li_item">
+        <img class="item_thumbnail" src="../assets/img/seagrass.jpg" alt="">
+        <p class="item_titles post_headers">Sea Grass</p>
+        <a class="buy_button" href="" title="Update your profile" style="margin-top: 5px;">Buy</a>
+        <div class="item_excerpt">
+          <p>Deep water seagrass meadows are a powerful carbon sink. Fund a vast sea grass meadow in the Atlantic.</p>
+          <p><b>Yield &nbsp:</b> <span class="icon co2">500 Carbon Credits</span></p>
         </div>
       </li>
     </ul>
@@ -173,59 +484,63 @@
 
   <!-- Collectibles -->
   <section class="pp-tab-panel" id="collectibles" data-panel="collectibles">
+    <div class="category-header">
+      <div class="category-header__icon"><img src="../assets/img/heart.png" alt=""></div>
+      <div class="category-header__content">
+        <h2>Collectibles</h2>
+        <p>Support social movements and organizations you care about. Earn unique NFT badges and points for your profile.</p>
+      </div>
+    </div>
     <ul class="li_container">
       <li class="li_item">
         <img class="item_thumbnail" src="../assets/img/burn.png" alt="">
         <p class="item_titles post_headers">Stop Bolsonaro Burning The Amazon</p>
         <a class="buy_button" href="" title="Update your profile" style="margin-top: -5px;">Support</a>
         <div class="item_excerpt">
-          <p>Help support the Amazon by supporting Greenpeace's campaign focing companies to take a stand aginst Brazil's government who are aiding this destrucution. By clicking Support you will sign the petition and donate to the cause. In return you will recive a flaming tree to add to your farm.</p>
-          <p><b>Reward &nbsp: &nbsp Flaming Tree &nbsp + &nbsp<span class="icon co2">360 Carbon Credits</span></b></p>
+          <p>Help support the Amazon by supporting Greenpeace's campaign. Sign the petition and donate to the cause.</p>
+          <p><b>Reward &nbsp: &nbsp Flaming Tree &nbsp + &nbsp<span class="icon co2">360 Points</span></b></p>
         </div>
       </li>
 
       <li class="li_item">
         <img class="item_thumbnail" src="../assets/img/xr.jpg" alt="">
-        <p class="item_titles post_headers">Extinction Rebellion London Protests</p>
+        <p class="item_titles post_headers">Extinction Rebellion</p>
         <a class="buy_button" href="" title="Update your profile" style="margin-top: -5px;">Support</a>
         <div class="item_excerpt">
-          <p>To earn this collectible you must attend the Extinction Rebellion protest in Waterloo. When your at that location at the time of the protest, come back to this page and collect your reward!</p>
-          <p><b>Reward &nbsp: &nbsp XR Flag &nbsp + &nbsp<span class="icon co2">360 Carbon Credits</span></b></p>
+          <p>Support the Extinction Rebellion movement. Attend protests or donate to the organization.</p>
+          <p><b>Reward &nbsp: &nbsp XR Flag &nbsp + &nbsp<span class="icon co2">360 Points</span></b></p>
         </div>
       </li>
     </ul>
   </section>
 
-  <!-- P2P -->
-  <section class="pp-tab-panel" id="p2p" data-panel="p2p">
+  <!-- Liquidity -->
+  <section class="pp-tab-panel" id="liquidity" data-panel="liquidity">
+    <div class="category-header">
+      <div class="category-header__icon"><img src="../assets/img/gold.png" alt=""></div>
+      <div class="category-header__content">
+        <h2>Provide Liquidity</h2>
+        <p>Supply funds to investment pools to enable trading for others. Earn fees and yield in return for making the market liquid.</p>
+      </div>
+    </div>
     <ul class="li_container">
       <li class="li_item">
         <img class="item_thumbnail" src="../assets/img/geo.png" alt="">
-        <p class="item_titles post_headers">Eden Project - Geothermal Energy Power Plant</p>
-        <a class="buy_button" href="" title="Update your profile" style="margin-top: -5px;"><center>Make<br>Offer</center></a>
+        <p class="item_titles post_headers">Geothermal Liquidity Pool</p>
+        <a class="buy_button" href="" title="Update your profile" style="margin-top: -5px;"><center>Add<br>Liquidity</center></a>
         <div class="item_excerpt">
-          <p>A year ago I invested in a 7MW geothermal power plant that has generated renewable energy for the Eden Project site and the surrounding community. If anyone wants to buy these shares off me, send me an offer and I will consider it.</p>
-          <p><b>Income / Month &nbsp:</b> <span class="icon ppcoin">&nbsp 240 PPCoin</span> &nbsp + &nbsp<span class="icon co2">360 Carbon Credits</span></p>
+          <p>Supply capital to the Geothermal Energy pool to allow others to trade shares instantly.</p>
+          <p><b>Yield &nbsp:</b> <span class="icon ppcoin">&nbsp 5.2% Fees</span> &nbsp + &nbsp<span class="icon co2">LP Rewards</span></p>
         </div>
       </li>
 
       <li class="li_item">
         <img class="item_thumbnail" src="../assets/img/tide.jpg" alt="">
-        <p class="item_titles post_headers">Tidal Power</p>
-        <a class="buy_button" href="" title="Update your profile" style="margin-top: -10px;"><center>Make<br>Offer</center></a>
+        <p class="item_titles post_headers">Tidal Power Pool</p>
+        <a class="buy_button" href="" title="Update your profile" style="margin-top: -10px;"><center>Add<br>Liquidity</center></a>
         <div class="item_excerpt">
-          <p>The Government estimates that wave & tidal stream energy combined has the potential to deliver around 20 per cent of the UK’s current electricity needs which equates to an installed capacity of around 30 – 50GW.</p>
-          <p><b>Income / Month &nbsp:</b> <span class="icon ppcoin">&nbsp 180 PPCoin</span> &nbsp + &nbsp<span class="icon co2">240 Carbon Credits</span></p>
-        </div>
-      </li>
-
-      <li class="li_item">
-        <img class="item_thumbnail" src="../assets/img/willow.jpeg" alt="">
-        <p class="item_titles post_headers">Willow Tree</p>
-        <a class="buy_button" href="" title="Update your profile" style="margin-top: -20px;"><center>Make<br>Offer</center></a>
-        <div class="item_excerpt">
-          <p>Got a few willow trees so willing to sell one so I can buy an oak tree on the market.</p>
-          <p><b>Income / Month &nbsp:</b> <span class="icon co2">100 Carbon Credits</span></p>
+          <p>Support the Tidal Power market by providing liquidity. Enable seamless swaps for this asset.</p>
+          <p><b>Yield &nbsp:</b> <span class="icon ppcoin">&nbsp 4.8% Fees</span></p>
         </div>
       </li>
     </ul>
@@ -233,6 +548,13 @@
 
   <!-- Upgrades -->
   <section class="pp-tab-panel" id="upgrades" data-panel="upgrades">
+    <div class="category-header">
+      <div class="category-header__icon"><img src="../assets/img/gamebackground.png" style="border-radius: 50%; object-fit: cover;" alt=""></div>
+      <div class="category-header__content">
+        <h2>Upgrades</h2>
+        <p>Visual and aesthetic upgrades for your PeoplePower world. Spend your points and credits to customize your landscape.</p>
+      </div>
+    </div>
     <ul class="li_container">
       <li class="li_item">
         <img class="item_thumbnail" src="../assets/img/grass.jpg" alt="">
@@ -259,7 +581,7 @@
         <p class="item_titles post_headers" style="margin-top: 10px;">River</p>
         <a class="buy_button" href="" title="Update your profile" style="margin-top: -10px;">Buy</a>
         <div class="item_excerpt">
-          <p style="margin-top: 20px;">Add a river winding down from the mountains to the ocean. This unlocks a new Collectible as well.</p>
+          <p style="margin-top: 20px;">Add a river winding down from the mountains to the ocean.</p>
           <p style="margin-top: 15px;"><b>Cost &nbsp:</b> &nbsp<span class="icon co2">60 Carbon Credits</span></p>
         </div>
       </li>
@@ -285,49 +607,7 @@
       </li>
     </ul>
   </section>
-
-  <!-- Buy Coins -->
-  <section class="pp-tab-panel" id="buy-coins" data-panel="buy-coins">
-    <div class="wallet" style="margin-top: 80px;">
-      <center>
-        <div><h1>Your Wallet</h1></div>
-        <br>
-        <div class="ProfileHeader_customerNumber__ppcoin">
-          <span style="color: rgba(0, 0, 0, .7)">Username :</span> <br>&nbsp&nbsp&nbsp&nbspMerlin
-        </div>
-        <br>
-        <div class="ProfileHeader_customerNumber__ppcoin cc_icon">
-          <span style="color: rgba(0, 0, 0, .7)">Carbon Credits :</span> <br>1117
-        </div>
-        <br>
-        <div class="ProfileHeader_customerNumber__ppcoin ppcoin_icon">
-          <span style="color: rgba(0, 0, 0, .7)">PPCoins :</span> <br>256
-        </div>
-        <br>
-      </center>
-    </div>
-
-    <div class="buycoins" style="margin-top: 80px;">
-      <center>
-        <div><h1>Buy Coins</h1></div>
-        <br>
-        <div class="ProfileHeader_customerNumber__ppcoin">
-          <span style="color: rgba(0, 0, 0, .7)">Payment Method :</span>
-          <form>
-            <br>&nbsp&nbsp
-            <span class="visa"><input type="radio" name="payment" value="Visa" checked>Visa</span>
-            &nbsp &nbsp
-            <span class="paypal"><input type="radio" name="payment" value="Paypal">Paypal</span>
-            &nbsp&nbsp
-            <span class="crypto"><input type="radio" name="payment" value="Crypto">Crypto</span>
-          </form>
-        </div>
-        <br>
-        <a class="buycoinbtn" href="">Buy Coins</a>
-        <br>
-      </center>
-    </div>
-  </section>
+  </main>
 
   <script>
     (function(){
@@ -335,20 +615,64 @@
       const links = Array.from(document.querySelectorAll("#cssmenu a[data-tab]"));
       const lis = links.map(a => a.closest("li"));
 
+      function pressFeedback(link){
+        if (!link) return;
+        link.classList.add("is-pressed");
+        window.setTimeout(() => link.classList.remove("is-pressed"), 160);
+      }
+
       function setActive(tab){
-        const t = tab || "eco-assets";
-        panels.forEach(p => p.classList.toggle("is-active", p.getAttribute("data-panel") === t));
+        const t = tab || "overview";
+        const next = panels.find(p => p.getAttribute("data-panel") === t);
+        if (!next) return;
+
+        const current = panels.find(p => p.classList.contains("is-active"));
+        if (current && current === next) return;
+
+        // Mark current as exiting overlay (keeps layout stable)
+        if (current) {
+          current.classList.remove("is-active");
+          current.classList.add("is-exiting");
+          window.setTimeout(() => current.classList.remove("is-exiting"), 420);
+        }
+
+        // Activate next
+        next.classList.remove("is-exiting");
+        next.classList.add("is-active");
+
         lis.forEach(li => li && li.classList.remove("active"));
         const activeLink = links.find(a => a.getAttribute("data-tab") === t);
         if (activeLink && activeLink.closest("li")) activeLink.closest("li").classList.add("active");
+
+        // Ensure tab switch always starts at the top (avoid "slightly scrolled" state).
+        const scroller = document.scrollingElement || document.documentElement;
+        if (scroller) scroller.scrollTop = 0;
       }
 
       function currentTab(){
         const h = (location.hash || "").replace("#","");
-        return h || "eco-assets";
+        return h || "overview";
       }
 
+      // Intercept clicks so the browser doesn't "anchor scroll" to the hash target.
+      // We update the URL via history and manage the view ourselves.
+      links.forEach(a => {
+        a.addEventListener("click", (e) => {
+          e.preventDefault();
+          pressFeedback(a);
+          const tab = a.getAttribute("data-tab") || "overview";
+          setActive(tab);
+          try{
+            history.pushState({ ppMarketTab: tab }, "", `#${tab}`);
+          } catch (err) {
+            // fallback (may scroll a bit)
+            location.hash = tab;
+          }
+        });
+      });
+
       window.addEventListener("hashchange", () => setActive(currentTab()));
+      window.addEventListener("popstate", () => setActive(currentTab()));
       setActive(currentTab());
     })();
   </script>

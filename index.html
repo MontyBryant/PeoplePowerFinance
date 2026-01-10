@@ -4,6 +4,11 @@
 
 <head>
 
+<script>
+  // Page-load animation: apply initial state before CSS renders.
+  document.documentElement.classList.add("pp-preload");
+</script>
+
 
 <script src="assets/vendor/jquery.min.js"></script>
 
@@ -17,8 +22,11 @@
     <script defer src="assets/js/forest-modal.js"></script>
     <script defer src="assets/js/investment-modals.js"></script>
     <script defer src="assets/js/iframe-bridge.js"></script>
+    <script defer src="assets/js/fancybox-iframe-loader.js"></script>
     <script defer src="assets/js/scroll-reveal.js"></script>
     <script defer src="assets/js/edit-mode.js"></script>
+    <script defer src="assets/js/page-load-anim.js"></script>
+    <script defer src="assets/js/home-parallax.js"></script>
 
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -45,6 +53,7 @@
     <link href="assets/vendor/offset-earth/main.css" rel="stylesheet">
     <link href="assets/css/base.css" rel="stylesheet">
     <link href="assets/css/modals.css" rel="stylesheet">
+    <link href="assets/css/day.css" rel="stylesheet">
     <link id="pp-night-theme" href="assets/css/night.css" rel="stylesheet" media="not all">
     <script>
       (function () {
@@ -3351,7 +3360,9 @@
 
                                     <div class="pp-heroPanel" aria-label="Build a better future">
                                       <div class="pp-heroPanel__header">
-                                        <img alt="" class="pp-heroPanel__logo" src="assets/img/brandassets/icon%20white.png">
+                                        <div class="pp-heroPanel__logoWrap" aria-hidden="true">
+                                          <img alt="" class="pp-heroPanel__logo" src="assets/img/brandassets/icon%20white.png">
+                                        </div>
                                         <div class="pp-heroPanel__titles">
                                           <div class="pp-heroPanel__kicker">PeoplePower.fi</div>
                                           <div class="pp-heroPanel__headline">Invest for a better future</div>
@@ -3367,12 +3378,50 @@
 
                                         <div class="pp-heroPanel__wallet">
                                           <div class="pp-heroStat">
+                                            <div class="pp-heroStat__info">
+                                              i
+                                              <div class="pp-heroStat__tooltip">
+                                                <h3>Invested</h3>
+                                                <p>The total value of your investments in green energy projects.</p>
+                                              </div>
+                                            </div>
+                                            <img class="pp-heroStat__icon" src="assets/img/ppcoin.png" alt="">
+                                            <div class="pp-heroStat__label">Invested</div>
+                                            <div class="pp-heroStat__value">$1,250</div>
+                                          </div>
+                                          <div class="pp-heroStat">
+                                            <div class="pp-heroStat__info">
+                                              i
+                                              <div class="pp-heroStat__tooltip">
+                                                <h3>Yield for Harvest</h3>
+                                                <p>The return on your investments available for you to collect.</p>
+                                              </div>
+                                            </div>
+                                            <img class="pp-heroStat__icon" src="assets/img/leaf_icon.png" alt="">
+                                            <div class="pp-heroStat__label">Yield for harvest</div>
+                                            <div class="pp-heroStat__value">$45</div>
+                                          </div>
+                                          <div class="pp-heroStat">
+                                            <div class="pp-heroStat__info">
+                                              i
+                                              <div class="pp-heroStat__tooltip">
+                                                <h3>Carbon Credits</h3>
+                                                <p>Carbon Credits represent the amount of CO2 you have removed from the atmosphere.</p>
+                                              </div>
+                                            </div>
                                             <img class="pp-heroStat__icon" src="assets/img/co2w.png" alt="">
                                             <div class="pp-heroStat__label">Carbon Credits</div>
                                             <div class="pp-heroStat__value">843</div>
                                           </div>
                                           <div class="pp-heroStat">
-                                            <img class="pp-heroStat__icon" src="assets/img/ppcoin.png" alt="">
+                                            <div class="pp-heroStat__info">
+                                              i
+                                              <div class="pp-heroStat__tooltip">
+                                                <h3>PeoplePower Points</h3>
+                                                <p>Use points to buy upgrades to your peoplepower world in the marketplace 'Upgrades' section!</p>
+                                              </div>
+                                            </div>
+                                            <img class="pp-heroStat__icon" src="assets/img/gold.png" alt="">
                                             <div class="pp-heroStat__label">PeoplePower Points</div>
                                             <div class="pp-heroStat__value">1117</div>
                                           </div>
@@ -3418,18 +3467,16 @@
                                 </div>
 
 
-<a class="doorhover" data-fancybox data-src="#teslainfo" data-pp-clickhint="true" data-pp-clickhint-placement="center" data-pp-clickhint-offset="-10,0" aria-label="Open Tesla asset" href="javascript:;">
+<a class="doorhover" data-fancybox data-src="#teslainfo" data-pp-clickhint="true" data-pp-clickhint-placement="center" data-pp-clickhint-offset="-10,0" data-pp-asset-name="Tesla" data-pp-asset-stat-label="Stock" data-pp-asset-stat-value="Live" aria-label="Open Tesla asset" href="javascript:;">
     <img src="assets/img/doors@1.png" class="door1" data-pp-edit-group="doors" data-pp-edit-handle="true" data-pp-edit-label="Doors" style="">
   <img src="assets/img/doors@2.png" class="door2" data-pp-edit-group="doors" data-pp-edit-handle="true" data-pp-edit-label="Doors" style="">
 </a>
 
 
-<a data-fancybox data-type="inline" data-src="#pp-wind-modal" data-pp-clickhint="true" data-pp-clickhint-placement="top-right" data-pp-clickhint-offset="-160,-500" aria-label="Open wind asset" href="javascript:;">
-  <div class="BusinessPageHero_hills__3Rmsg" data-pp-edit-group="wind" data-pp-edit-label="Wind">
+<div class="BusinessPageHero_hills__3Rmsg" data-pp-edit-group="wind" data-pp-edit-label="Wind" data-pp-clickhint="true" data-pp-clickhint-trigger=".pp-wind-edit-handle" data-pp-clickhint-placement="top-right" data-pp-clickhint-offset="-160,-500" data-pp-asset-name="Wind Power Turkey" data-pp-asset-stat-label="Capacity" data-pp-asset-stat-value="31.5 MW">
     <!-- Edit handle: positioned to match the actual turbine art (drawn via :after) -->
     <div class="pp-wind-edit-handle" data-pp-edit-handle="true" data-pp-edit-label="Wind turbine" aria-hidden="true"></div>
   </div>
-</a>
 
 <li class="HomePageHero_leaderCol__HZ0gN" data-pp-edit-group="forestCollect" data-pp-edit-label="Forest collectible trees" style="margin-top: -205px; margin-left: 130px;"></li> 
 <li class="HomePageHero_leaderCol__HZ0gN" data-pp-edit-group="forestCollect" data-pp-edit-label="Forest collectible trees" style="margin-top: -205px; margin-left: -630px;"></li> 
@@ -3443,10 +3490,15 @@
      data-pp-edit-group="forestCollect"
      data-pp-edit-handle="true"
      data-pp-edit-label="Forest collectible trees"
+     data-pp-clickhint="true"
+     data-pp-clickhint-placement="center"
+     data-pp-asset-name="Your Forest"
+     data-pp-asset-stat-label="Trees Planted"
+     data-pp-asset-stat-value="28"
      aria-hidden="true"
-     style="left: 558px; top: 355px; width: 769px; height: 242px;"></div>
+     style="left: 558px; top: 435px; width: 769px; height: 242px;"></div>
 
-<a data-fancybox data-type="inline" data-src="#pp-solar-modal" data-pp-clickhint="true" data-pp-clickhint-placement="center" data-pp-clickhint-offset="40,0" aria-label="Open Hooke Solar Farm asset" href="javascript:;">
+<a data-fancybox data-type="inline" data-src="#pp-solar-modal" data-pp-clickhint="true" data-pp-clickhint-placement="center" data-pp-clickhint-offset="40,0" data-pp-asset-name="Hooke Solar Farm" data-pp-asset-stat-label="Location" data-pp-asset-stat-value="West Dorset" aria-label="Open Hooke Solar Farm asset" href="javascript:;">
   <img src="assets/img/solar.png" data-pp-edit-group="solar" data-pp-edit-handle="true" data-pp-edit-label="Hooke Solar" style="position: absolute; width: 290px; left: -1%; margin-top: -750px;">
   <img src="assets/img/solar.png" data-pp-edit-group="solar" data-pp-edit-handle="true" data-pp-edit-label="Hooke Solar" style="position: absolute; width: 290px; left: 3%; margin-top: -670px;">
 </a>
@@ -3458,10 +3510,7 @@
                                 <div title="Click to earn more trees"
                                      class="ProfileForest_scoreboard__2d1gG ProfileForest_scoreboardCenter__ZiNpF"
                                      role="button" tabindex="0" aria-label="Open Forest details"
-                                     data-fancybox data-type="inline" data-src="#pp-forest-modal"
-                                     data-pp-clickhint="true"
-                                     data-pp-clickhint-placement="right"
-                                     data-pp-clickhint-offset="18,-14">
+                                     data-fancybox data-type="inline" data-src="#pp-forest-modal">
                                 </div>
                             </section>
                             <div style="height: 0px; visibility: hidden;">
@@ -3976,39 +4025,12 @@
             </p>
           </div>
           <div class="pp-profileModal__actions">
-            <button class="Button_button__2Lf63 Button_buttonPrimary__3LC6Z Button_buttonSmall__ccNzV pp-profileModal__action"
+            <button class="Button_button__2Lf63 Button_buttonSmall__ccNzV pp-profileModal__action pp-profileModal__action--ghost"
               data-fancybox data-type="iframe" data-src="pages/marketplace.html" type="button">
               Open Marketplace
             </button>
-            <button class="Button_button__2Lf63 Button_buttonSmall__ccNzV pp-profileModal__action pp-profileModal__action--ghost"
-              data-fancybox data-type="iframe" data-src="pages/leaderboard.html" type="button">
-              View Leaderboard
-            </button>
-            <button class="Button_button__2Lf63 Button_buttonSmall__ccNzV pp-profileModal__action pp-profileModal__action--ghost"
-              type="button" data-pp-go-tab="edit">
-              Edit Profile
-            </button>
           </div>
         </header>
-
-        <section class="pp-profileModal__stats" aria-label="Key stats">
-          <div class="pp-profileStat">
-            <div class="pp-profileStat__label">CO2 Offset</div>
-            <div class="pp-profileStat__value">1.17t</div>
-          </div>
-          <div class="pp-profileStat">
-            <div class="pp-profileStat__label">Carbon Credits</div>
-            <div class="pp-profileStat__value">843</div>
-          </div>
-          <div class="pp-profileStat">
-            <div class="pp-profileStat__label">PeoplePower</div>
-            <div class="pp-profileStat__value">1117</div>
-          </div>
-          <div class="pp-profileStat">
-            <div class="pp-profileStat__label">Trees</div>
-            <div class="pp-profileStat__value">28</div>
-          </div>
-        </section>
 
         <nav class="pp-profileModal__tabs" aria-label="Profile tabs">
           <button class="pp-profileTab is-active" type="button" data-pp-tab="overview">Overview</button>
@@ -4018,53 +4040,75 @@
 
         <section class="pp-profileModal__panels">
           <div class="pp-profilePanel is-active" data-pp-panel="overview">
-            <div class="pp-profileGrid">
-              <div class="pp-profileCard">
-                <div class="pp-profileCard__title">Your impact world</div>
-                <div class="pp-profileCard__body">
-                  Your landscape evolves as you invest—projects you support become assets, achievements unlock, and your impact footprint grows.
-                </div>
+
+            <section class="pp-profileModal__stats" aria-label="Key stats" style="margin-top: 10px; margin-bottom: 20px;">
+              <div class="pp-profileStat">
+                <div class="pp-profileStat__label">Invested</div>
+                <div class="pp-profileStat__value">$1,250</div>
               </div>
-              <div class="pp-profileCard">
-                <div class="pp-profileCard__title">Next step</div>
-                <div class="pp-profileCard__body">
-                  Pick a new project in the Marketplace to expand your world and earn credits.
-                </div>
+              <div class="pp-profileStat">
+                <div class="pp-profileStat__label">Yield Available</div>
+                <div class="pp-profileStat__value" style="color: #20bf85;">$45</div>
+                <button class="pp-harvest-btn" onclick="alert('Yield Harvested! $45 added to your wallet.')">Harvest</button>
               </div>
-            </div>
+              <div class="pp-profileStat">
+                <div class="pp-profileStat__label">Carbon Credits</div>
+                <div class="pp-profileStat__value">843</div>
+              </div>
+              <div class="pp-profileStat">
+                <div class="pp-profileStat__label">Points</div>
+                <div class="pp-profileStat__value">1117</div>
+              </div>
+            </section>
 
             <div class="pp-profileSectionTitle">Portfolio</div>
             <div class="pp-profileList">
-              <div class="pp-profileItem">
+              <a class="pp-profileItem" href="javascript:;" data-fancybox data-type="inline" data-src="#pp-wind-modal" style="text-decoration: none;">
                 <div class="pp-profileItem__left">
                   <img src="assets/img/windmill.svg" alt="" class="pp-profileItem__icon">
                   <div>
-                    <div class="pp-profileItem__title">Eco-Assets</div>
-                    <div class="pp-profileItem__sub">3 collected</div>
+                    <div class="pp-profileItem__title">Wind Power Turkey</div>
+                    <div class="pp-profileItem__sub">Eco-Asset Investment</div>
                   </div>
                 </div>
-                <div class="pp-profileItem__right">Diversify to unlock new biomes</div>
-              </div>
-              <div class="pp-profileItem">
+                <div class="pp-profileItem__right">
+                  <div>$650.00</div>
+                  <div style="font-size: 11px; color: #20bf85;">+ $24.50 yield</div>
+                </div>
+              </a>
+              <a class="pp-profileItem" href="javascript:;" data-fancybox data-type="inline" data-src="#pp-solar-modal" style="text-decoration: none;">
+                <div class="pp-profileItem__left">
+                  <img src="assets/img/solar.png" alt="" class="pp-profileItem__icon">
+                  <div>
+                    <div class="pp-profileItem__title">Hooke Solar Farm</div>
+                    <div class="pp-profileItem__sub">Eco-Asset Investment</div>
+                  </div>
+                </div>
+                <div class="pp-profileItem__right">
+                   <div>$600.00</div>
+                   <div style="font-size: 11px; color: #20bf85;">+ $20.50 yield</div>
+                </div>
+              </a>
+              <a class="pp-profileItem" href="javascript:;" data-fancybox data-type="inline" data-src="#pp-forest-modal" style="text-decoration: none;">
                 <div class="pp-profileItem__left">
                   <img src="assets/img/oak.png" alt="" class="pp-profileItem__icon">
                   <div>
-                    <div class="pp-profileItem__title">Trees</div>
-                    <div class="pp-profileItem__sub">28 planted</div>
+                    <div class="pp-profileItem__title">Forest</div>
+                    <div class="pp-profileItem__sub">28 Trees Planted</div>
                   </div>
                 </div>
-                <div class="pp-profileItem__right">Planting streak: 180 days</div>
-              </div>
-              <div class="pp-profileItem">
+                <div class="pp-profileItem__right">Impact Asset</div>
+              </a>
+              <a class="pp-profileItem" href="javascript:;" data-fancybox data-type="inline" data-src="#teslainfo" style="text-decoration: none;">
                 <div class="pp-profileItem__left">
-                  <img src="assets/img/heart.png" alt="" class="pp-profileItem__icon">
+                  <img src="assets/img/teslaredlogo.png" alt="" class="pp-profileItem__icon">
                   <div>
-                    <div class="pp-profileItem__title">Collectibles</div>
-                    <div class="pp-profileItem__sub">1 NFT collectible</div>
+                    <div class="pp-profileItem__title">Tesla</div>
+                    <div class="pp-profileItem__sub">Stock Tracking</div>
                   </div>
                 </div>
-                <div class="pp-profileItem__right">Customise your world aesthetic</div>
-              </div>
+                <div class="pp-profileItem__right">Watchlist</div>
+              </a>
             </div>
 
             <div class="pp-profileSectionTitle">Achievements</div>

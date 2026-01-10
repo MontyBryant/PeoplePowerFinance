@@ -3,7 +3,92 @@
 
 /* Fancybox iframe sizing (keeps marketplace/leaderboard modals responsive) */
 .fancybox-slide--iframe .fancybox-content{
-  width: min(1000px, calc(100vw - 24px)) !important;
+  width: min(1080px, calc(100vw - 28px)) !important;
+  max-width: 1080px !important;
+  /* Let height auto-adjust or be set by Fancybox, but ensure it's large enough */
+  height: calc(100vh - 72px) !important;
+}
+
+/* ===== Fancybox entrance animation (premium feel) ===== */
+.fancybox-bg{
+  opacity: 0;
+  transition: opacity 240ms ease !important;
+  will-change: opacity;
+}
+.fancybox-is-open .fancybox-bg{
+  opacity: 1;
+}
+
+/* Slide content (inline + iframe) */
+.fancybox-slide .fancybox-content{
+  opacity: 0;
+  transform: translateY(14px) scale(.985);
+  transition:
+    opacity 260ms ease,
+    transform 420ms cubic-bezier(.16,1,.3,1) !important;
+  will-change: transform, opacity;
+}
+.fancybox-slide--current .fancybox-content{
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .fancybox-bg,
+  .fancybox-slide .fancybox-content{
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* ===== Iframe loader overlay (shown until iframe signals ready) ===== */
+.pp-iframeLoader{
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  gap: 12px;
+  text-align: center;
+  padding: 18px;
+  background:
+    radial-gradient(900px 420px at 20% 10%, rgba(32,191,133,.12), rgba(0,0,0,0) 58%),
+    rgba(255,255,255,.78);
+  -webkit-backdrop-filter: blur(14px) saturate(170%);
+  backdrop-filter: blur(14px) saturate(170%);
+  z-index: 10;
+}
+html[data-pp-theme="night"] .pp-iframeLoader{
+  background:
+    radial-gradient(900px 420px at 20% 10%, rgba(32,191,133,.16), rgba(0,0,0,0) 58%),
+    rgba(6, 8, 14, .72);
+}
+.pp-iframeLoader__spinner{
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 3px solid rgba(0,0,0,.12);
+  border-top-color: rgba(32,191,133,.95);
+  animation: pp-spin 900ms linear infinite;
+}
+html[data-pp-theme="night"] .pp-iframeLoader__spinner{
+  border-color: rgba(255,255,255,.18);
+  border-top-color: rgba(32,191,133,.95);
+}
+.pp-iframeLoader__label{
+  font-family: var(--pp-font-sans, sofiapro, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif);
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: rgba(0,0,0,.72);
+}
+html[data-pp-theme="night"] .pp-iframeLoader__label{
+  color: rgba(255,255,255,.78);
+}
+@keyframes pp-spin{ to{ transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce){
+  .pp-iframeLoader__spinner{ animation: none !important; }
 }
 
 /* removed external @import (render-blocking + http) */
@@ -33,27 +118,199 @@
 }
 #cssmenu {
   width: auto;
-  border-bottom: 3px solid #47c9af;
+  border-bottom: 1px solid rgba(0,0,0,0.08); /* Modernized border */
   font-family: Raleway, sans-serif;
   line-height: 1;
-  position: fixed; /* Set the navbar to fixed position */
-  top: 0; /* Position the navbar at the top of the page */
-  width: 100%; /* Full width */
-  margin-left: -8px;
-}
-
-/* Combined pages (marketplace + leaderboard) — normalize list alignment inside modals */
-body.market_page{
-  margin: 0;
-}
-body.market_page #cssmenu{
-  left: 0;
+  /* Removed fixed positioning here to allow sticky override above */
+  width: 100%;
   margin-left: 0;
 }
-body.market_page .li_container{
+
+/* Marketplace: modern sticky tabs + sticky category header */
+body.market_page{
+  --pp-market-tabs-h: 56px;
+  /* Use an opaque surface in day mode so it doesn't tint differently
+     depending on what scrolls underneath (fixes header mismatch). */
+  --pp-market-header-bg: #ffffff;
+  --pp-market-header-border: rgba(0,0,0,.08);
+  --pp-market-header-shadow: 0 10px 28px rgba(0,0,0,.08);
+  --pp-market-header-filter: blur(12px) saturate(180%);
+}
+
+/* Make marketplace tabs a compact "app header" */
+body.market_page #cssmenu{
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: var(--pp-market-tabs-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: var(--pp-market-header-bg);
+  border-bottom: 1px solid var(--pp-market-header-border);
+  -webkit-backdrop-filter: var(--pp-market-header-filter);
+  backdrop-filter: var(--pp-market-header-filter);
+  box-shadow: none; /* keep shadow on the category header edge */
+}
+/* Prevent legacy rules from painting a different strip behind the tabs */
+body.market_page #cssmenu ul{
+  background: transparent !important;
+}
+body.market_page #cssmenu > ul{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: transparent;
+}
+body.market_page #cssmenu > ul > li{ float: none; }
+body.market_page #cssmenu > ul > li > a{
   margin: 0;
-  padding: 0;
-  list-style: none;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(0,0,0,.75);
+  background: transparent;
+  border: 1px solid transparent;
+}
+body.market_page #cssmenu > ul > li > a:after{ content: none; }
+body.market_page #cssmenu > ul > li.active > a,
+body.market_page #cssmenu > ul > li:hover > a,
+body.market_page #cssmenu > ul > li > a:hover{
+  background: rgba(32, 191, 133, 0.18);
+  border-color: rgba(32, 191, 133, 0.35);
+  color: rgba(0,0,0,.90);
+}
+
+/* Category headers stick directly under the tabs */
+body.market_page .category-header{
+  position: sticky;
+  top: var(--pp-market-tabs-h);
+  z-index: 900;
+  background: var(--pp-market-header-bg);
+  border-bottom: 1px solid var(--pp-market-header-border);
+  -webkit-backdrop-filter: var(--pp-market-header-filter);
+  backdrop-filter: var(--pp-market-header-filter);
+  box-shadow: var(--pp-market-header-shadow);
+}
+
+/* Let list items scroll underneath the sticky headers (no extra gap) */
+body.market_page .li_container{
+  background: transparent;
+  padding-top: 0;
+}
+
+/* Night mode overrides */
+html[data-pp-theme="night"] body.market_page #cssmenu{
+  /* Keep in sync with `.category-header` via CSS vars */
+}
+html[data-pp-theme="night"] body.market_page #cssmenu > ul > li > a{
+  color: rgba(255,255,255,.78);
+  border-color: transparent;
+}
+html[data-pp-theme="night"] body.market_page #cssmenu > ul > li.active > a,
+html[data-pp-theme="night"] body.market_page #cssmenu > ul > li:hover > a,
+html[data-pp-theme="night"] body.market_page #cssmenu > ul > li > a:hover{
+  background: rgba(32, 191, 133, 0.20);
+  border-color: rgba(32, 191, 133, 0.40);
+  color: #fff;
+}
+html[data-pp-theme="night"] body.market_page .category-header{
+  /* Keep in sync with `#cssmenu` via CSS vars */
+}
+
+html[data-pp-theme="night"] body.market_page{
+  --pp-market-header-bg: rgba(12, 18, 30, 0.92);
+  --pp-market-header-border: rgba(255,255,255,.12);
+  --pp-market-header-shadow: 0 14px 34px rgba(0,0,0,.45);
+  --pp-market-header-filter: blur(12px) saturate(170%);
+
+  /* Marketplace night-mode palette (unified) */
+  --pp-market-bg: #060913;
+  --pp-market-surface: rgba(12, 18, 30, 0.62);
+  --pp-market-surface-2: rgba(12, 18, 30, 0.78);
+  --pp-market-border: rgba(255,255,255,.12);
+  --pp-market-border-2: rgba(255,255,255,.18);
+  --pp-market-text: rgba(255,255,255,.92);
+  --pp-market-text-dim: rgba(255,255,255,.70);
+  --pp-market-shadow: 0 18px 55px rgba(0,0,0,.45);
+}
+
+/* Night mode: override global night.css `#cssmenu { ... !important; }` */
+html[data-pp-theme="night"] body.market_page #cssmenu{
+  background: var(--pp-market-header-bg) !important;
+  border-bottom-color: var(--pp-market-header-border) !important;
+  -webkit-backdrop-filter: var(--pp-market-header-filter) !important;
+  backdrop-filter: var(--pp-market-header-filter) !important;
+  box-shadow: none !important;
+}
+html[data-pp-theme="night"] body.market_page #cssmenu ul{
+  background: transparent !important;
+}
+html[data-pp-theme="night"] body.market_page .category-header{
+  background: var(--pp-market-header-bg) !important;
+  border-bottom-color: var(--pp-market-header-border) !important;
+  -webkit-backdrop-filter: var(--pp-market-header-filter) !important;
+  backdrop-filter: var(--pp-market-header-filter) !important;
+}
+
+/* Marketplace night mode: unify overall background + item surfaces */
+html[data-pp-theme="night"] body.market_page{
+  background: radial-gradient(1000px 700px at 15% 10%, rgba(32,191,133,.14), transparent 58%),
+              radial-gradient(900px 650px at 85% 15%, rgba(102,217,239,.10), transparent 55%),
+              linear-gradient(180deg, #050713, var(--pp-market-bg)) !important;
+  color: var(--pp-market-text);
+}
+
+/* Ensure text inside marketplace isn't forced to black by legacy rules */
+html[data-pp-theme="night"] body.market_page .post_headers,
+html[data-pp-theme="night"] body.market_page .item_titles{
+  color: var(--pp-market-text) !important;
+}
+html[data-pp-theme="night"] body.market_page .item_excerpt,
+html[data-pp-theme="night"] body.market_page .item_excerpt p{
+  color: var(--pp-market-text-dim) !important;
+}
+
+/* Make the list items feel like unified cards */
+html[data-pp-theme="night"] body.market_page .li_item{
+  margin: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid var(--pp-market-border);
+  background: var(--pp-market-surface);
+  box-shadow: 0 10px 26px rgba(0,0,0,.22);
+  overflow: hidden;
+}
+html[data-pp-theme="night"] body.market_page .li_item:hover{
+  background: var(--pp-market-surface-2);
+  border-color: var(--pp-market-border-2);
+  box-shadow: var(--pp-market-shadow);
+}
+
+/* Kill the legacy hover "white glow" for marketplace in night mode */
+html[data-pp-theme="night"] body.market_page .li_item:hover{
+  -webkit-box-shadow: var(--pp-market-shadow) !important;
+  box-shadow: var(--pp-market-shadow) !important;
+}
+
+/* Buttons: make CTA readable on dark surfaces */
+html[data-pp-theme="night"] body.market_page .buy_button{
+  background: rgba(255, 215, 0, .95);
+  color: rgba(0,0,0,.92);
+}
+html[data-pp-theme="night"] body.market_page .buy_button:hover{
+  background: rgb(255, 215, 0);
+}
+
+/* Icons inside category header/overview cards */
+html[data-pp-theme="night"] body.market_page .category-header__icon{
+  border: 1px solid rgba(255,255,255,.10);
 }
 body.market_page .li_container > li{
   list-style: none;
@@ -73,12 +330,14 @@ html[data-pp-theme="day"] body.market_page .li_item:hover{
 
 /* Leaderboard/Loserboard: slim glassy tabs */
 body.board_page{
-  padding-top: 56px; /* keep content below fixed tabs */
+  /* Tabs are sticky (in-flow) via `body.market_page #cssmenu`,
+     so adding top padding here incorrectly pushes the tab bar down. */
+  padding-top: 0;
 }
 
 /* Marketplace: give the first list row a bit more breathing room under the fixed tab bar */
 body:not(.board_page){
-  padding-top: 62px;
+  padding-top: 0; /* Let flex layout handle it */
 }
 
 /* Marketplace: a touch more bottom padding per item */

@@ -1,6 +1,7 @@
 (() => {
   const FOREST_SELECTOR = '.ProfileForest_scoreboard__2d1gG[data-src="#pp-forest-modal"]';
   const FOREST_WRAPPER_SELECTOR = ".ProfileForest_wrapper__2BSF4";
+  const FOREST_HANDLE_SELECTOR = ".pp-forestCollect-handle";
   const WIND_HANDLE_SELECTOR = ".pp-wind-edit-handle";
   const EDIT_MODE_CLASS = "pp-edit-mode";
 
@@ -89,15 +90,7 @@
     // This prevents "click outside to close" from opening a different modal underneath.
     if (isFancyboxOpen()) return;
 
-    // Priority 1: wind turbine graphic area (can overlap forest visually)
-    const windRect = rectOf(WIND_HANDLE_SELECTOR);
-    if (windRect && withinRect(e, windRect, 4)) {
-      stop(e);
-      openWindModal();
-      return;
-    }
-
-    // Priority 2: explicit forest scoreboard button
+    // Priority 1: explicit forest scoreboard button
     const forestBtn = document.querySelector(FOREST_SELECTOR);
     if (forestBtn) {
       const btnRect = forestBtn.getBoundingClientRect();
@@ -108,6 +101,36 @@
       }
     }
 
+    function shouldIgnoreClick(e) {
+      if (e.target && e.target.closest) {
+        if (e.target.closest(".pp-heroPanel__ctaButtons")) return true;
+        if (e.target.closest("#ppEditModeToggle")) return true;
+      }
+      const doorsRect = rectOfGroup("doors");
+      if (doorsRect && withinRect(e, doorsRect, 0)) return true;
+      const solarRect = rectOfGroup("solar");
+      if (solarRect && withinRect(e, solarRect, 0)) return true;
+      return false;
+    }
+
+    // Priority 3: click within the "Your Forest" edit handle (dotted box area)
+    const forestHandleRect = rectOf(FOREST_HANDLE_SELECTOR);
+    if (forestHandleRect && withinRect(e, forestHandleRect, 0)) {
+      if (shouldIgnoreClick(e)) return;
+      stop(e);
+      openForestModal();
+      return;
+    }
+
+    // Priority 4: click within the Wind Turbine edit handle
+    const windRect = rectOf(WIND_HANDLE_SELECTOR);
+    if (windRect && withinRect(e, windRect, 4)) {
+      if (shouldIgnoreClick(e)) return;
+      stop(e);
+      openWindModal();
+      return;
+    }
+    /*
     // Priority 3: click anywhere on the forest section background, unless it's on another asset/button.
     const forestWrap = document.querySelector(FOREST_WRAPPER_SELECTOR);
     if (!forestWrap) return;
@@ -127,6 +150,7 @@
 
     stop(e);
     openForestModal();
+    */
   }
 
   function onKeydown(e) {

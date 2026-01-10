@@ -1,6 +1,57 @@
 (() => {
+  // --- EXISTING EDIT MODE CODE (omitted for brevity in this update) ---
+  // ... (keep all the existing edit mode code as is, only appending the tab logic below) ...
+
+  function initTabs() {
+    document.addEventListener("click", (e) => {
+      const tabBtn = e.target.closest("[data-pp-tab]");
+      if (!tabBtn) return;
+      
+      const tabId = tabBtn.getAttribute("data-pp-tab");
+      const container = tabBtn.closest(".pp-profileModal");
+      if (!container) return;
+
+      // Update tabs state
+      const tabs = container.querySelectorAll("[data-pp-tab]");
+      tabs.forEach(t => {
+        if (t.getAttribute("data-pp-tab") === tabId) {
+          t.classList.add("is-active");
+        } else {
+          t.classList.remove("is-active");
+        }
+      });
+
+      // Update panels state
+      const panels = container.querySelectorAll("[data-pp-panel]");
+      panels.forEach(p => {
+        if (p.getAttribute("data-pp-panel") === tabId) {
+          p.classList.add("is-active");
+        } else {
+          p.classList.remove("is-active");
+        }
+      });
+      
+      e.preventDefault();
+    });
+
+    // Handle "Go to Edit" links from within the modal
+    document.addEventListener("click", (e) => {
+      const link = e.target.closest("[data-pp-go-tab]");
+      if (!link) return;
+      const targetTab = link.getAttribute("data-pp-go-tab");
+      const container = link.closest(".pp-profileModal");
+      if (!container) return;
+      
+      const tabBtn = container.querySelector(`[data-pp-tab="${targetTab}"]`);
+      if (tabBtn) tabBtn.click();
+      
+      e.preventDefault();
+    });
+  }
+
   const STORAGE_KEY = "ppAssetLayout.v1";
   const ROOT_CLASS = "pp-edit-mode";
+  // ... (rest of existing edit mode variables and functions) ...
   const RESET_ID = "ppEditModeReset";
   const TOGGLE_ID = "ppEditModeToggle";
   const COORDS_ID = "ppEditCoords";
@@ -89,7 +140,7 @@
     btn.className = "pp-edit-toggle";
     btn.setAttribute("aria-pressed", "false");
     btn.setAttribute("aria-label", "Enable edit mode");
-    btn.textContent = "Edit";
+    btn.textContent = "Edit Mode";
     const actions = document.querySelector(".pp-topbar__actions");
     if (actions) {
       actions.appendChild(btn);
@@ -163,7 +214,7 @@
     if (btn) {
       btn.setAttribute("aria-pressed", on ? "true" : "false");
       btn.setAttribute("aria-label", on ? "Disable edit mode" : "Enable edit mode");
-      btn.textContent = on ? "Done" : "Edit";
+      btn.textContent = on ? "Done" : "Edit Mode";
     }
   }
 
@@ -273,6 +324,7 @@
     if (!document.body) return;
     cacheBaseTransforms();
     initPositions();
+    initTabs(); // Initialize tabs listener
 
     // forestCollect handle is page-anchored (position:absolute), so no portal/re-parenting needed.
 

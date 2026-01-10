@@ -1,0 +1,456 @@
+/* PeoplePower — Day mode (Solarpunk Glass)
+   Applies only when `html[data-pp-theme="day"]` is active. */
+
+html[data-pp-theme="day"]{
+  /* Typography */
+  --pp-font-sans: sofiapro, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+  --pp-font-display: gota2, sofiapro, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+
+  /* Palette (daytime sky) */
+  --pp-bg-sky-0: #eaf6ff; /* upper sky */
+  --pp-bg-sky-1: #d9f3ff; /* mid sky */
+  --pp-bg-sky-2: #fff3dd; /* warm horizon */
+
+  --pp-text: rgba(11, 18, 32, .92);
+  --pp-text-dim: rgba(11, 18, 32, .72);
+  --pp-text-faint: rgba(11, 18, 32, .56);
+
+  --pp-border: rgba(11, 18, 32, .10);
+  --pp-border-strong: rgba(11, 18, 32, .16);
+
+  /* Accents */
+  --pp-accent: #20bf85;
+  --pp-accent-2: #00b9e1;
+  --pp-danger: #e74c3c;
+  --pp-warn: #f8ce57;
+
+  /* Your preferred primary button color */
+  --pp-primary: #f73b53;
+  --pp-primary-hover: #ff5267;
+
+  /* Glass surfaces */
+  --pp-glass-weak: rgba(255, 255, 255, .38);
+  --pp-glass: rgba(255, 255, 255, .55);
+  --pp-glass-strong: rgba(255, 255, 255, .76);
+
+  --pp-shadow: 0 22px 70px rgba(11, 18, 32, .14);
+  --pp-shadow-soft: 0 14px 40px rgba(11, 18, 32, .10);
+
+  --pp-radius-xl: 28px;
+  --pp-radius-lg: 20px;
+  --pp-radius-md: 16px;
+  --pp-radius-sm: 12px;
+
+  --pp-blur: 16px;
+
+  --pp-focus: rgba(32, 191, 133, .36);
+}
+
+/* Homepage layout constants (day) */
+html[data-pp-theme="day"] body.pp-home{
+  --pp-stage-max: 1180px;
+  --pp-stage-gutter: 28px; /* matches mobile-safe padding */
+}
+
+/* Background */
+html[data-pp-theme="day"] body{
+  font-family: var(--pp-font-sans);
+  color: var(--pp-text);
+  background:
+    /* soft sun bloom */
+    radial-gradient(900px 520px at 20% 10%, rgba(255, 196, 55, .26), rgba(255,255,255,0) 62%),
+    /* solarpunk greens/cyans, very subtle */
+    radial-gradient(1100px 760px at 12% 14%, rgba(32,191,133,.10), rgba(255,255,255,0) 60%),
+    radial-gradient(1100px 760px at 88% 16%, rgba(0,185,225,.10), rgba(255,255,255,0) 60%),
+    /* daylight sky */
+    linear-gradient(180deg, var(--pp-bg-sky-0), var(--pp-bg-sky-1) 42%, var(--pp-bg-sky-2)) !important;
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Match night mode: make <body> the containing block for absolute hints */
+  position: relative;
+}
+
+/* Links */
+html[data-pp-theme="day"] a{
+  color: rgba(11, 18, 32, .86);
+  text-decoration-color: rgba(32,191,133,.35);
+  text-underline-offset: 3px;
+}
+html[data-pp-theme="day"] a:hover{
+  color: rgba(11, 18, 32, .96);
+  text-decoration: underline;
+}
+
+/* Button-like links should never underline */
+html[data-pp-theme="day"] :where(
+  .buy_button,
+  .buycoinbtn,
+  .pp-topbar__wallet,
+  .pp-topbar__btn,
+  .pp-heroPanel__cta,
+  .pp-profileModal__action,
+  .pp-profileTab,
+  .overview-card
+){
+  text-decoration: none !important;
+}
+html[data-pp-theme="day"] :where(
+  .buy_button,
+  .buycoinbtn,
+  .pp-topbar__wallet,
+  .pp-topbar__btn,
+  .pp-heroPanel__cta,
+  .pp-profileModal__action,
+  .pp-profileTab,
+  .overview-card
+):hover{
+  text-decoration: none !important;
+}
+
+/* Focus-visible */
+html[data-pp-theme="day"] :where(a, button, input, textarea, select, [role="button"], [tabindex]):focus-visible{
+  outline: 3px solid var(--pp-focus);
+  outline-offset: 3px;
+}
+
+/* Normalize legacy global typography coming from `assets/css/modals.css` */
+html[data-pp-theme="day"] body p{ font-weight: 600; line-height: 1.5; }
+html[data-pp-theme="day"] body b{ font-weight: 800; }
+
+/* Topbar: fix brand contrast in day mode */
+html[data-pp-theme="day"] .pp-topbar__brand{ color: rgba(11, 18, 32, .92) !important; }
+
+/* Homepage hero icon (day): keep it bright + “day glass”.
+   The source image is the white logo, so we invert it in day mode. */
+html[data-pp-theme="day"] body.pp-home .pp-heroPanel__logoWrap{
+  background:
+    radial-gradient(180px 150px at 28% 22%, rgba(32,191,133,.18), rgba(255,255,255,0) 62%),
+    radial-gradient(180px 150px at 78% 18%, rgba(0,185,225,.14), rgba(255,255,255,0) 62%),
+    rgba(255,255,255,.78);
+  border-color: rgba(11, 18, 32, .10);
+  box-shadow: 0 16px 44px rgba(11, 18, 32, .10);
+}
+html[data-pp-theme="day"] body.pp-home .pp-heroPanel__logo{
+  /* Keep the original white logo; add subtle shadow for contrast on light glass */
+  filter: drop-shadow(0 10px 22px rgba(11,18,32,.14)) drop-shadow(0 2px 6px rgba(11,18,32,.18));
+}
+
+/* === Day buttons (unified) === */
+html[data-pp-theme="day"] .buy_button,
+html[data-pp-theme="day"] .buycoinbtn,
+html[data-pp-theme="day"] .pp-topbar__btn--primary,
+html[data-pp-theme="day"] .pp-heroPanel__cta{
+  border-radius: 999px !important;
+  border: 1px solid rgba(11,18,32,.12) !important;
+  background: var(--pp-primary) !important;
+  color: #fff !important;
+  box-shadow: 0 12px 30px rgba(11,18,32,.14) !important;
+  font-weight: 800 !important;
+  letter-spacing: .6px !important;
+}
+html[data-pp-theme="day"] .buy_button:hover,
+html[data-pp-theme="day"] .buycoinbtn:hover,
+html[data-pp-theme="day"] .pp-topbar__btn--primary:hover,
+html[data-pp-theme="day"] .pp-heroPanel__cta:hover{
+  background: var(--pp-primary-hover) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 18px 45px rgba(11,18,32,.18) !important;
+}
+
+/* Secondary glass buttons */
+html[data-pp-theme="day"] .pp-topbar__btn:not(.pp-topbar__btn--primary){
+  background: var(--pp-glass-strong);
+  border-color: var(--pp-border);
+  color: rgba(11,18,32,.90);
+  -webkit-backdrop-filter: blur(var(--pp-blur)) saturate(190%);
+  backdrop-filter: blur(var(--pp-blur)) saturate(190%);
+}
+
+/* Vendor-ish buttons (day) */
+html[data-pp-theme="day"] [class*="Button_button"]{
+  font-family: var(--pp-font-sans) !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(11,18,32,.14) !important;
+  background: rgba(255,255,255,.72) !important;
+  color: rgba(11,18,32,.92) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(190%);
+  backdrop-filter: blur(14px) saturate(190%);
+  box-shadow: 0 10px 26px rgba(11,18,32,.10);
+  text-decoration: none !important;
+}
+html[data-pp-theme="day"] [class*="Button_button"]:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.84) !important;
+  border-color: rgba(11,18,32,.18) !important;
+  box-shadow: 0 16px 38px rgba(11,18,32,.14);
+}
+
+/* === Modals (Fancybox) — rounder in day mode === */
+html[data-pp-theme="day"] .fancybox-bg{ background: rgba(11, 18, 32, .22) !important; }
+html[data-pp-theme="day"] .fancybox-slide--iframe .fancybox-content,
+html[data-pp-theme="day"] .fancybox-content{
+  border-radius: var(--pp-radius-xl) !important;
+  overflow: hidden !important;
+  background: rgba(255,255,255,.88) !important;
+  border: 1px solid rgba(11,18,32,.12) !important;
+  box-shadow: var(--pp-shadow) !important;
+  -webkit-backdrop-filter: blur(var(--pp-blur)) saturate(190%);
+  backdrop-filter: blur(var(--pp-blur)) saturate(190%);
+}
+html[data-pp-theme="day"] .fancybox-close-small{
+  border-radius: 999px !important;
+  background: rgba(255,255,255,.72) !important;
+  border-color: rgba(11,18,32,.14) !important;
+}
+
+/* ====================================================================== */
+/* Homepage (day) — radical redesign for everything below the forest hero  */
+/* Targets: #impact, #leaderboard, #world, footer                          */
+/* ====================================================================== */
+
+html[data-pp-theme="day"] body.pp-home .pp-impact-badges{
+  position: relative;
+  background: transparent !important; /* override base.css + inline */
+}
+
+/* Impact section becomes a centered glass “stage” */
+html[data-pp-theme="day"] body.pp-home #impact.pp-impact-badges{
+  padding: 86px 0 64px;
+  margin-top: 64px;
+}
+html[data-pp-theme="day"] body.pp-home #impact.pp-impact-badges::before{
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 18px;
+  bottom: 18px;
+  width: min(var(--pp-stage-max), calc(100vw - var(--pp-stage-gutter)));
+  border-radius: var(--pp-radius-xl);
+  background:
+    radial-gradient(900px 420px at 14% 10%, rgba(32,191,133,.16), rgba(255,255,255,0) 62%),
+    radial-gradient(900px 420px at 92% 18%, rgba(0,185,225,.12), rgba(255,255,255,0) 60%),
+    rgba(255,255,255,.62);
+  border: 1px solid rgba(11,18,32,.10);
+  box-shadow: 0 18px 60px rgba(11,18,32,.12);
+  -webkit-backdrop-filter: blur(var(--pp-blur)) saturate(190%);
+  backdrop-filter: blur(var(--pp-blur)) saturate(190%);
+  pointer-events: none;
+}
+html[data-pp-theme="day"] body.pp-home #impact .Wrapper_wrapper__2gcWR{
+  position: relative;
+  z-index: 1;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+/* Remove vendor inline/legacy panel coloring */
+html[data-pp-theme="day"] body.pp-home #impact .ProfileImpact_profileImpact__orp8H{
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+/* Tighten the “Your Impact” typography */
+html[data-pp-theme="day"] body.pp-home #impact .Text_textHeading__37o8k{
+  color: var(--pp-text) !important;
+}
+html[data-pp-theme="day"] body.pp-home #impact .Text_textSubeading__3xsOT{
+  color: var(--pp-text-dim) !important;
+  font-size: 16px !important;
+  letter-spacing: .4px !important;
+  font-weight: 650 !important;
+  max-width: 70ch;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+/* Legacy class used for emphasis in this section */
+html[data-pp-theme="day"] body.pp-home #impact .post_headers{
+  color: var(--pp-text-dim) !important;
+  font-size: 16px !important;
+  letter-spacing: .4px !important;
+  font-weight: 650 !important;
+  text-transform: none !important;
+}
+
+/* Carbon equivalent cards: from loud blocks -> glass cards */
+html[data-pp-theme="day"] body.pp-home #impact .CarbonEquivalents_carbonEquivalentsList__1z_X5{
+  margin-top: 18px;
+  gap: 14px !important;
+}
+
+html[data-pp-theme="day"] body.pp-home #impact .EquivalentCard_equivalentCard__372LD{
+  background: rgba(255,255,255,.72) !important;
+  border: 1px solid rgba(11,18,32,.10);
+  border-radius: var(--pp-radius-lg);
+  box-shadow: 0 10px 26px rgba(11,18,32,.10);
+  padding: 18px 18px 16px 86px !important; /* make room for icon */
+  text-align: left !important;
+  overflow: hidden;
+  min-height: 86px;
+}
+html[data-pp-theme="day"] body.pp-home #impact .EquivalentCard_equivalentCard__372LD:before{
+  top: 16px !important;
+  left: 16px !important;
+  width: 54px !important;
+  height: 54px !important;
+  padding: 0 !important;
+  border-radius: 16px !important;
+  background-color: rgba(247,59,83,.14) !important;
+  background-size: 68% !important;
+  box-shadow: 0 10px 22px rgba(11,18,32,.10);
+  -webkit-transform: none !important;
+  transform: none !important;
+}
+html[data-pp-theme="day"] body.pp-home #impact .EquivalentCard_equivalentCardAmount__1fhHo{
+  margin: 0 0 4px !important;
+  font-size: 28px !important;
+  font-weight: 900 !important;
+  letter-spacing: .2px;
+  color: var(--pp-text) !important;
+}
+html[data-pp-theme="day"] body.pp-home #impact .EquivalentCard_equivalentCardTitle__2Cn42{
+  margin: 0 !important;
+  font-size: 14px !important;
+  line-height: 1.25 !important;
+  color: var(--pp-text-dim) !important;
+}
+
+/* Achievements row: give it breathing room + subtle divider */
+html[data-pp-theme="day"] body.pp-home #impact .ProfileAchievementsRow_ProfileAchievementsRow__1P_iw{
+  background: transparent !important;
+  padding: 26px 0 0 !important;
+  margin-top: 18px;
+  border-top: 1px solid rgba(11,18,32,.10);
+}
+html[data-pp-theme="day"] body.pp-home #impact .AchievementRow_badgesWrapper__3Wgor{
+  gap: 10px;
+}
+html[data-pp-theme="day"] body.pp-home #impact .AchievementRow_badgesWrapper__3Wgor > .AchievementRow_badge__4mLIk{
+  padding-bottom: 18px;
+}
+
+/* Leaderboard hero: turn it into a sleek glass callout (no harsh edges) */
+html[data-pp-theme="day"] body.pp-home .pp-leaderboard-hero{
+  position: relative;
+  margin: 36px auto 0;
+  padding: 70px 0 70px;
+  background: transparent !important;
+  /* Ensure the section spans full viewport so the stage can match #impact */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+html[data-pp-theme="day"] body.pp-home .pp-leaderboard-hero::before{
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 18px;
+  bottom: 18px;
+  width: min(var(--pp-stage-max), calc(100vw - var(--pp-stage-gutter)));
+  border-radius: var(--pp-radius-xl);
+  background:
+    radial-gradient(900px 520px at 80% 20%, rgba(0,185,225,.12), rgba(255,255,255,0) 60%),
+    radial-gradient(900px 520px at 15% 30%, rgba(32,191,133,.14), rgba(255,255,255,0) 62%),
+    rgba(255,255,255,.58);
+  border: 1px solid rgba(11,18,32,.10);
+  box-shadow: 0 18px 60px rgba(11,18,32,.12);
+  -webkit-backdrop-filter: blur(var(--pp-blur)) saturate(190%);
+  backdrop-filter: blur(var(--pp-blur)) saturate(190%);
+  pointer-events: none;
+}
+html[data-pp-theme="day"] body.pp-home .pp-leaderboard-hero__inner{
+  position: relative;
+  z-index: 1;
+}
+html[data-pp-theme="day"] body.pp-home .pp-leaderboard-hero__subtitle{
+  color: var(--pp-text-dim) !important;
+}
+html[data-pp-theme="day"] body.pp-home .pp-leaderboard-hero__globe{
+  filter: drop-shadow(0 20px 50px rgba(11,18,32,.14));
+}
+
+/* Game section: cohesive “panel on image” instead of raw background strip */
+html[data-pp-theme="day"] body.pp-home #world.pp-game-section{
+  position: relative;
+  margin-top: 36px;
+  padding: 70px 0;
+  border-bottom: none !important;
+  /* Day mode: remove gamebackground.png; use a clean “sky” stage */
+  background:
+    radial-gradient(900px 520px at 25% 10%, rgba(255, 196, 55, .22), rgba(255,255,255,0) 62%),
+    radial-gradient(900px 520px at 80% 20%, rgba(0,185,225,.12), rgba(255,255,255,0) 62%),
+    linear-gradient(180deg, rgba(255,255,255,.62), rgba(255,255,255,.42));
+}
+html[data-pp-theme="day"] body.pp-home #world.pp-game-section::before{
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 18px;
+  bottom: 18px;
+  width: min(1180px, calc(100% - 28px));
+  border-radius: var(--pp-radius-xl);
+  background: rgba(255,255,255,.62);
+  border: 1px solid rgba(11,18,32,.10);
+  box-shadow: 0 18px 60px rgba(11,18,32,.12);
+  -webkit-backdrop-filter: blur(var(--pp-blur)) saturate(190%);
+  backdrop-filter: blur(var(--pp-blur)) saturate(190%);
+  pointer-events: none;
+}
+html[data-pp-theme="day"] body.pp-home #world .pp-game{
+  position: relative;
+  z-index: 1;
+}
+html[data-pp-theme="day"] body.pp-home #world .pp-game__media{
+  border-radius: var(--pp-radius-xl);
+  border: 1px solid rgba(11,18,32,.10);
+  box-shadow: 0 16px 44px rgba(11,18,32,.14);
+  background: rgba(255,255,255,.80);
+}
+html[data-pp-theme="day"] body.pp-home #world .pp-game__copy{
+  color: var(--pp-text-dim) !important;
+}
+
+/* Footer: match the new day glass system, and remove the negative inline margin */
+html[data-pp-theme="day"] .Footer_footer__7dIj9{
+  margin-top: 56px !important;
+  background: transparent !important;
+}
+html[data-pp-theme="day"] .Footer_footerBox__q6Ada{
+  background: rgba(255,255,255,.66) !important;
+  border: 1px solid rgba(11,18,32,.10) !important;
+  border-radius: var(--pp-radius-lg);
+  box-shadow: 0 14px 40px rgba(11,18,32,.10);
+  -webkit-backdrop-filter: blur(var(--pp-blur)) saturate(190%);
+  backdrop-filter: blur(var(--pp-blur)) saturate(190%);
+}
+html[data-pp-theme="day"] .Footer_footerBoxHeader__3O_4k{
+  color: var(--pp-text) !important;
+}
+html[data-pp-theme="day"] .Footer_footerBoxItemHeader__3atQE{
+  border-bottom-color: rgba(11,18,32,.10) !important;
+}
+html[data-pp-theme="day"] .Footer_footerLink__38Wi9{
+  color: var(--pp-text-dim) !important;
+}
+html[data-pp-theme="day"] .Footer_footerLink__38Wi9:hover{
+  color: var(--pp-text) !important;
+  text-decoration: underline;
+  text-decoration-color: rgba(32,191,133,.35);
+}
+
+@media (max-width: 860px){
+  html[data-pp-theme="day"] body.pp-home #impact.pp-impact-badges,
+  html[data-pp-theme="day"] body.pp-home .pp-leaderboard-hero,
+  html[data-pp-theme="day"] body.pp-home #world.pp-game-section{
+    padding: 56px 0;
+  }
+  html[data-pp-theme="day"] body.pp-home #impact.pp-impact-badges::before,
+  html[data-pp-theme="day"] body.pp-home .pp-leaderboard-hero::before,
+  html[data-pp-theme="day"] body.pp-home #world.pp-game-section::before{
+    top: 12px;
+    bottom: 12px;
+  }
+}

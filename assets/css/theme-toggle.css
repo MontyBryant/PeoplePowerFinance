@@ -1,5 +1,6 @@
 /* Day/Night toggle button (minimal, should not disturb legacy layout) */
 .pp-theme-toggle{
+  --pp-control-h: 38px;
   position: relative;
   top: auto;
   right: auto;
@@ -8,9 +9,9 @@
   display: inline-grid;
   place-items: center;
 
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
+  width: var(--pp-control-h);
+  height: var(--pp-control-h);
+  min-width: var(--pp-control-h);
   padding: 0;
   border-radius: 999px;
   border: 1px solid rgba(0,0,0,.16);
@@ -35,8 +36,8 @@
 /* Icon */
 .pp-theme-toggle::before{
   content: "";
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;

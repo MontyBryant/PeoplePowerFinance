@@ -10,10 +10,94 @@ html, body{
   padding: 0;
 }
 
+/* Smooth anchor scrolling (guarded for accessibility) */
+html{
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+}
+
 /* Modal safety: prevent background scroll while Fancybox is open */
 html.pp-modal-open,
 body.pp-modal-open{
   overflow: hidden !important;
+}
+
+/* ===== Micro-interactions (site-wide) =====
+   Subtle lift/press feedback for primary interactive elements.
+*/
+:where(
+  .pp-topbar__wallet,
+  .pp-topbar__btn,
+  .pp-theme-toggle,
+  .pp-heroPanel__cta,
+  .pp-game__cta,
+  .pp-leaderboard-hero__button,
+  a.buy_button,
+  a.buycoinbtn,
+  button.buy_button,
+  button.buycoinbtn,
+  .overview-card,
+  [class*="Button_button"]
+){
+  transform: translateZ(0);
+  transition:
+    transform .16s ease,
+    box-shadow .18s ease,
+    filter .18s ease;
+  will-change: transform;
+}
+:where(
+  .pp-topbar__wallet,
+  .pp-topbar__btn,
+  .pp-theme-toggle,
+  .pp-heroPanel__cta,
+  .pp-game__cta,
+  .pp-leaderboard-hero__button,
+  a.buy_button,
+  a.buycoinbtn,
+  button.buy_button,
+  button.buycoinbtn,
+  .overview-card,
+  [class*="Button_button"]
+):hover{
+  transform: translateY(-1px);
+}
+:where(
+  .pp-topbar__wallet,
+  .pp-topbar__btn,
+  .pp-theme-toggle,
+  .pp-heroPanel__cta,
+  .pp-game__cta,
+  .pp-leaderboard-hero__button,
+  a.buy_button,
+  a.buycoinbtn,
+  button.buy_button,
+  button.buycoinbtn,
+  .overview-card,
+  [class*="Button_button"]
+):active{
+  transform: translateY(0px) scale(.99);
+}
+@media (prefers-reduced-motion: reduce){
+  :where(
+    .pp-topbar__wallet,
+    .pp-topbar__btn,
+    .pp-theme-toggle,
+    .pp-heroPanel__cta,
+    .pp-game__cta,
+    .pp-leaderboard-hero__button,
+    a.buy_button,
+    a.buycoinbtn,
+    button.buy_button,
+    button.buycoinbtn,
+    .overview-card,
+    [class*="Button_button"]
+  ){
+    transition: none !important;
+    transform: none !important;
+  }
 }
 
 /* Legacy “cute-*” syntax highlighting helpers (used by vendor widgets) */
@@ -212,11 +296,29 @@ body.pp-home #root > div:first-child{
   align-items: center;
 }
 
+/* Topbar actions: keep all controls same height and order */
+body.pp-home .pp-topbar__actions{
+  --pp-topbar-action-h: 38px;
+}
+body.pp-home #pp-theme-toggle-container{ order: 1; }
+body.pp-home #ppEditModeToggle{ order: 2; }
+body.pp-home .pp-topbar__wallet{ order: 3; }
+
+/* Match the theme toggle button (44px) */
+body.pp-home #pp-theme-toggle-container,
+body.pp-home #ppEditModeToggle,
+body.pp-home .pp-topbar__wallet{
+  min-height: var(--pp-topbar-action-h);
+  height: var(--pp-topbar-action-h);
+  display: inline-flex;
+  align-items: center;
+}
+
 .pp-topbar__wallet{
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 9px 12px;
+  padding: 0 12px;
   border-radius: 999px;
   background: rgba(255,255,255,.62);
   border: 1px solid rgba(0,0,0,.12);
@@ -299,6 +401,8 @@ body.pp-home #root > div:first-child{
 /* Hero “Build a better future” panel: give the topbar a touch more breathing room */
 .pp-home .ProfileForest_heading__3t_RQ{
   top: -260px; /* was -330px in vendor CSS; moved slightly higher */
+  z-index: 9999 !important; /* Force it above the scoreboard (z-index 200) */
+  pointer-events: auto; /* Ensure it captures clicks */
 }
 
 /* ==== HERO PANEL (homepage) ==== */
@@ -326,14 +430,24 @@ body.pp-home .ProfileForest_heading__3t_RQ{
   align-items: center;
   gap: 18px;
 }
-.pp-heroPanel__logo{
+/* Logo gets a wrapper so we can theme the tile separately from the image */
+.pp-heroPanel__logoWrap{
   box-sizing: border-box;
   width: 164px;
   height: 164px;
   border-radius: 34px;
   padding: 22px;
-  background: rgba(0,0,0,.78); /* icon is white; give it contrast in day mode */
+  /* Default (non-theme-specific) tile is neutral; day/night override it */
+  background: rgba(255,255,255,.72);
   border: 1px solid rgba(0,0,0,.10);
+  box-shadow: 0 18px 48px rgba(0,0,0,.10);
+  flex: 0 0 auto;
+}
+.pp-heroPanel__logo{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
 }
 .pp-heroPanel__titles{ min-width: 0; }
 .pp-heroPanel__kicker{
@@ -389,6 +503,94 @@ body.pp-home .ProfileForest_heading__3t_RQ{
   font-size: 28px;
   letter-spacing: 1px;
   color: rgba(0,0,0,.92);
+}
+.pp-heroStat__info{
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: rgba(0,0,0,.06);
+  color: rgba(0,0,0,.55);
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  font-weight: 800;
+  font-family: serif; 
+  text-decoration: none;
+  transition: background .2s ease, color .2s ease;
+  cursor: help;
+  z-index: 10;
+}
+.pp-heroStat__info:hover{
+  background: rgba(0,0,0,.12);
+  color: rgba(0,0,0,.85);
+}
+/* Tooltip logic */
+.pp-heroStat__tooltip{
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 220px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.15);
+  padding: 12px 14px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.18);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: all .2s cubic-bezier(.2,.8,.2,1);
+  z-index: 20;
+  pointer-events: none;
+  text-align: left;
+}
+.pp-heroStat__info:hover .pp-heroStat__tooltip{
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(4px);
+  pointer-events: auto;
+}
+.pp-heroStat__tooltip h3{
+  margin: 0 0 6px;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: rgba(0,0,0,.85);
+  letter-spacing: 1px;
+  line-height: 1.2;
+}
+.pp-heroStat__tooltip p{
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.4;
+  color: rgba(0,0,0,.70);
+}
+
+/* Remove old modal styles if desired, but keeping them harmless */
+.pp-infoModal{
+  display: none;
+  padding: 24px;
+  border-radius: 18px;
+  width: min(320px, calc(100vw - 40px));
+  text-align: center;
+  background: #fff;
+}
+.pp-infoModal h3{
+  margin: 0 0 12px;
+  font-size: 18px;
+  font-family: gota2, sofiapro, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: rgba(0,0,0,.85);
+  letter-spacing: 1px;
+}
+.pp-infoModal p{
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: rgba(0,0,0,.75);
 }
 
 .pp-heroPanel__holdings{
@@ -501,7 +703,8 @@ body.pp-home .ProfileForest_heading__3t_RQ{
 }
 
 /* ==== INVESTMENT MODALS (wind / solar) ==== */
-.pp-investModal{
+.pp-investModal,
+.pp-forestModal{
   background:
     radial-gradient(1200px 500px at 20% -10%, rgba(32,191,133,.18), rgba(255,255,255,0) 65%),
     radial-gradient(900px 420px at 110% 10%, rgba(0,185,225,.16), rgba(255,255,255,0) 55%),
@@ -516,6 +719,11 @@ body.pp-home .ProfileForest_heading__3t_RQ{
 }
 .pp-investModal--solar .pp-investModal__avatar{
   background: radial-gradient(circle at 30% 20%, rgba(255,176,0,.55), rgba(0,0,0,.88) 70%);
+}
+
+/* Forest modal: align styling to the same “investment modal” system */
+.pp-forestModal .pp-profileModal__avatar{
+  background: radial-gradient(circle at 30% 20%, rgba(32,191,133,.55), rgba(0,0,0,.88) 70%);
 }
 .pp-investModal__badgeRow{
   display: flex;
@@ -574,6 +782,28 @@ body.pp-home .ProfileForest_heading__3t_RQ{
   padding: 12px 12px 10px;
   background: rgba(255,255,255,.72);
   border: 1px solid rgba(0,0,0,.10);
+  position: relative;
+}
+.pp-harvest-btn {
+  background: #20bf85;
+  color: #fff;
+  border: none;
+  border-radius: 99px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 6px;
+  box-shadow: 0 4px 10px rgba(32, 191, 133, 0.4);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.pp-harvest-btn:hover {
+  background: #1da875;
+  transform: translateY(-1px);
+}
+.pp-harvest-btn:active {
+  transform: translateY(1px);
 }
 .pp-profileStat__label{
   font-weight: 800;
@@ -667,6 +897,13 @@ body.pp-home .ProfileForest_heading__3t_RQ{
   padding: 14px;
   background: rgba(255,255,255,.72);
   border: 1px solid rgba(0,0,0,.10);
+  transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+  cursor: pointer;
+}
+.pp-profileItem:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.85);
+  box-shadow: 0 4px 12px rgba(0,0,0,.08);
 }
 .pp-profileItem__left{
   display: flex;
@@ -1007,19 +1244,97 @@ body.pp-home .ProfileForest_heading__3t_RQ{
 .pp-clickhint--hover{
   animation-duration: .9s;
   transform: translate(-50%, -50%) scale(1.22);
+  background-color: #20bf85; /* Green pulse on hover */
   box-shadow:
-    0 0 0 8px var(--pp-clickhint-glow),
+    0 0 0 8px rgba(32, 191, 133, 0.22),
     0 14px 34px rgba(0,0,0,.22);
 }
 .pp-clickhint--hover::before,
 .pp-clickhint--hover::after{
-  border-color: rgba(255,255,255,.80);
+  border-color: #20bf85;
+}
+
+/* Tooltip popup on hover */
+.pp-clickhint-tooltip{
+  position: absolute;
+  left: 50%;
+  bottom: 100%; /* sit above the dot */
+  margin-bottom: 16px;
+  transform: translateX(-50%) translateY(10px) scale(0.95);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0,0,0,0.1);
+  padding: 10px 14px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  width: max-content;
+  max-width: 200px;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); /* bouncy pop-up */
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}
+/* Little triangle arrow */
+.pp-clickhint-tooltip::after{
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 10px;
+  height: 10px;
+  background: inherit;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  border-right: 1px solid rgba(0,0,0,0.1);
+}
+
+.pp-clickhint--hover .pp-clickhint-tooltip{
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+.pp-clickhint-tooltip__name{
+  display: block;
+  font-family: var(--pp-font-sans, sans-serif);
+  font-weight: 800;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #222;
+  margin-bottom: 2px;
+  letter-spacing: 0.5px;
+}
+
+.pp-clickhint-tooltip__stat{
+  display: block;
+  font-family: var(--pp-font-sans, sans-serif);
+  font-size: 11px;
+  color: #666;
+  margin-bottom: 6px;
+}
+.pp-clickhint-tooltip__stat b{
+  color: #20bf85; /* Brand green */
+}
+
+.pp-clickhint-tooltip__cta{
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #999;
+  letter-spacing: 1px;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  padding-top: 6px;
+  margin-top: 2px;
 }
 
 /* Ensure the forest scoreboard stays clickable above hero art overlays */
 .ProfileForest_scoreboard__2d1gG{
   z-index: 200;
 }
+/* REMOVE the previous pointer-events tweak if it exists, or just ensure this block is clean */
 
 /* The wind hero art uses large pseudo-elements (including transforms) that can
    overlap other UI. Keep it beneath the forest scoreboard for hit-testing. */
@@ -1133,17 +1448,19 @@ body.pp-modal-open .pp-clickhint{
   align-items: center;
   justify-content: center;
 
-  padding: 9px 16px;
+  padding: 0 16px;
   border-radius: 999px;
   border: 1px solid rgba(0,0,0,.12);
   background: rgba(255,255,255,.62);
   color: rgba(0,0,0,.82);
   
-  font-family: var(--pp-font-sans, sofiapro, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif);
-  font-size: 14px;
-  font-weight: 800;
-  letter-spacing: .8px;
-  text-transform: uppercase;
+  /* Match wallet label (`montymerlin.eth`) styling */
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: lowercase;
+  line-height: 1;
 
   cursor: pointer;
   transition: transform .15s ease, background .15s ease, border-color .15s ease;
@@ -1236,13 +1553,13 @@ html.pp-edit-mode.pp-edit-dragging [data-pp-edit-group]{
 .pp-forestCollect-handle{
   position: absolute;
   z-index: 1000000;
-  display: none;
-  pointer-events: none;
+  display: block;
+  pointer-events: auto; /* Allow hover state detection even in normal mode */
   border-radius: 10px;
+  cursor: pointer;
   /* outline comes from [data-pp-edit-handle="true"] rule in edit mode */
 }
 html.pp-edit-mode .pp-forestCollect-handle{
-  display: block;
   pointer-events: auto;
 }
 html.pp-edit-mode .pp-clickhint{
@@ -1257,10 +1574,139 @@ html.pp-edit-mode .pp-clickhint{
   width: 330px;
   height: 500px;
   transform: translateX(calc(-50% - 200px));
-  pointer-events: none; /* don't steal clicks in normal mode */
+  pointer-events: auto; /* enable dragging in edit mode AND hover cursor in normal mode */
+  cursor: pointer;
 }
 html.pp-edit-mode .pp-wind-edit-handle{
   pointer-events: auto; /* enable dragging in edit mode */
+}
+
+
+/* ===== Homepage load-in animation (sleek intro) =====
+   Driven by: `assets/js/page-load-anim.js`
+   - `html.pp-preload`: initial (hidden/offset) state
+   - `html.pp-loaded`: end state
+*/
+
+/* Transitions (only apply to key homepage elements) */
+body.pp-home .pp-topbar,
+body.pp-home .pp-celestial,
+body.pp-home .ProfileForest_wrapper__2BSF4,
+body.pp-home .pp-heroPanel,
+body.pp-home .pp-heroPanel__header,
+body.pp-home .pp-heroPanel__walletSection,
+body.pp-home .pp-heroStat,
+body.pp-home .pp-heroPill,
+body.pp-home .pp-heroPanel__ctaButtons > a,
+body.pp-home .pp-heroPanel__ctaButtons > button,
+body.pp-home .pp-heroPanel__hint{
+  transition:
+    opacity .62s ease,
+    transform .78s cubic-bezier(.2,.85,.2,1),
+    filter .78s ease;
+  will-change: opacity, transform, filter;
+}
+
+/* Initial state (only when the preloader class is present) */
+html.pp-preload body.pp-home .pp-topbar{
+  opacity: 0;
+  transform: translateY(-10px);
+  filter: blur(6px);
+}
+html.pp-preload body.pp-home .pp-celestial{
+  opacity: 0;
+  transform: translateY(-6px) scale(.985);
+  filter: blur(10px);
+}
+html.pp-preload body.pp-home .ProfileForest_wrapper__2BSF4{
+  opacity: 0;
+  transform: translateY(12px);
+}
+html.pp-preload body.pp-home .pp-heroPanel{
+  opacity: 0;
+  transform: translateY(18px) scale(.992);
+  filter: blur(12px);
+}
+html.pp-preload body.pp-home .pp-heroPanel__header,
+html.pp-preload body.pp-home .pp-heroPanel__walletSection,
+html.pp-preload body.pp-home .pp-heroStat,
+html.pp-preload body.pp-home .pp-heroPill,
+html.pp-preload body.pp-home .pp-heroPanel__ctaButtons > a,
+html.pp-preload body.pp-home .pp-heroPanel__ctaButtons > button,
+html.pp-preload body.pp-home .pp-heroPanel__hint{
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+/* End state + timing (stagger) */
+html.pp-loaded body.pp-home .pp-topbar{
+  opacity: 1;
+  transform: none;
+  filter: none;
+  transition-delay: 40ms;
+}
+html.pp-loaded body.pp-home .pp-celestial{
+  opacity: 1;
+  transform: none;
+  filter: none;
+  transition-delay: 120ms;
+}
+html.pp-loaded body.pp-home .ProfileForest_wrapper__2BSF4{
+  opacity: 1;
+  transform: none;
+  transition-delay: 90ms;
+}
+html.pp-loaded body.pp-home .pp-heroPanel{
+  opacity: 1;
+  transform: none;
+  filter: none;
+  transition-delay: 160ms;
+}
+html.pp-loaded body.pp-home .pp-heroPanel__header{ opacity: 1; transform: none; transition-delay: 260ms; }
+html.pp-loaded body.pp-home .pp-heroPanel__walletSection{ opacity: 1; transform: none; transition-delay: 340ms; }
+
+/* Wallet stats: gentle cascade */
+html.pp-loaded body.pp-home .pp-heroPanel__wallet .pp-heroStat{ opacity: 1; transform: none; transition-delay: 420ms; }
+html.pp-loaded body.pp-home .pp-heroPanel__wallet .pp-heroStat:nth-child(2){ transition-delay: 480ms; }
+html.pp-loaded body.pp-home .pp-heroPanel__wallet .pp-heroStat:nth-child(3){ transition-delay: 540ms; }
+html.pp-loaded body.pp-home .pp-heroPanel__wallet .pp-heroStat:nth-child(4){ transition-delay: 600ms; }
+
+html.pp-loaded body.pp-home .pp-heroPill{ opacity: 1; transform: none; transition-delay: 620ms; }
+html.pp-loaded body.pp-home .pp-heroPill:nth-child(2){ transition-delay: 670ms; }
+html.pp-loaded body.pp-home .pp-heroPill:nth-child(3){ transition-delay: 720ms; }
+
+html.pp-loaded body.pp-home .pp-heroPanel__ctaButtons > a,
+html.pp-loaded body.pp-home .pp-heroPanel__ctaButtons > button{
+  opacity: 1;
+  transform: none;
+  transition-delay: 760ms;
+}
+html.pp-loaded body.pp-home .pp-heroPanel__ctaButtons > button{
+  transition-delay: 820ms;
+}
+html.pp-loaded body.pp-home .pp-heroPanel__hint{
+  opacity: 1;
+  transform: none;
+  transition-delay: 900ms;
+}
+
+@media (prefers-reduced-motion: reduce){
+  body.pp-home .pp-topbar,
+  body.pp-home .pp-celestial,
+  body.pp-home .ProfileForest_wrapper__2BSF4,
+  body.pp-home .pp-heroPanel,
+  body.pp-home .pp-heroPanel__header,
+  body.pp-home .pp-heroPanel__walletSection,
+  body.pp-home .pp-heroStat,
+  body.pp-home .pp-heroPill,
+  body.pp-home .pp-heroPanel__ctaButtons > a,
+  body.pp-home .pp-heroPanel__ctaButtons > button,
+  body.pp-home .pp-heroPanel__hint{
+    transition: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 
